@@ -47,3 +47,8 @@ function toggleTab(tabIndex) {
         else $('#panel-content' + i).show();
     }
 }
+
+var poiData = null;
+$.get('api/poi.json', function(data) {
+    poiData = data;
+});

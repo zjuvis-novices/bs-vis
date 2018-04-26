@@ -11,12 +11,12 @@ app.use(express.static('public'));
 
 // API
 // Traffic
-app.get('/api/traffic', (req, res) => {
+app.get('/api/traffic.json', (req, res) => {
     requestHandler.handleTraffic(req, res);
 });
 
 // POI
-app.get('/api/poi', (req, res) => {
+app.get('/api/poi.json', (req, res) => {
     requestHandler.handlePOI(req, res);
 });
 
