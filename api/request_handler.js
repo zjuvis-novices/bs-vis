@@ -15,13 +15,19 @@ function handleTraffic(req, res) {
         responseExpr = dataModel.trafficData.getDensity(weekday, hour);
     }
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json;charset=UTF-8');
+    res.set({
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Cache-Control': 'public, max-age=31557600'
+    });
     res.end(JSON.stringify(responseExpr));
 }
 
 function handlePOI(req, res) {
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json;charset=UTF-8');
+    res.set({
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Cache-Control': 'public, max-age=31557600'
+    });
     res.end(JSON.stringify(dataModel.poiData));
 }
 

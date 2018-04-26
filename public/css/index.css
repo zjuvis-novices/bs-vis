@@ -2,7 +2,7 @@ body {
     margin: 0;
     display: block;
     overflow: hidden;
-    font-family: Roboto, Raleway, "Segoe UI", -apple-system, BlinkMacSystemFont, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', Helvetica, Arial "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Wenquanyi Micro Hei", "WenQuanYi Micro Hei Mono", "WenQuanYi Zen Hei", "WenQuanYi Zen Hei", "Apple LiGothic Medium", "SimHei", "ST Heiti", "WenQuanYi Zen Hei Sharp", sans-serif
+    font-family: Roboto, Raleway, 'Segoe UI', -apple-system, BlinkMacSystemFont, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', 'Noto Sans CJK SC', '思源黑体', 'Source Han Sans SC', '等线', '方正等线', 'Dengxian', 'Microsoft YaHei', 'Wenquanyi Micro Hei', 'WenQuanYi Micro Hei Mono', 'WenQuanYi Zen Hei', 'WenQuanYi Zen Hei', 'Apple LiGothic Medium', 'SimHei', 'ST Heiti', 'WenQuanYi Zen Hei Sharp', sans-serif
 }
 
 #header_type {
@@ -12,5 +12,27 @@ body {
 #container {
     position: absolute;
     bottom: 0;
-    background: black;
+    height: 100vh;
+    width: 100vw;
+}
+
+#preloader {
+    position: absolute;
+    right: 20px;
+    top: 80px;
+}
+
+#big-fab {
+    position: absolute;
+    margin: 32px;
+    bottom: 0;
+    right: 0;
+}
+
+#bottom-panel {
+    position: absolute;
+    margin: 20px;
+    width: 75%;
+    bottom: 0;
+    right: 0;
 }

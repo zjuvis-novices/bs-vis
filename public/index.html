@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>城市情感地图</title>
-    <link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css"/>
-    <script src="js/echarts.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
 </head>
+
 <body>
-    <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/materialize.js"></script>
-    <script src="js/index.js"></script>
     <div id="container"></div>
+    <script src="js/lib/jquery-3.3.1.js"></script>
+    <script src="js/lib/materialize.js"></script>
+    <script src="js/lib/echarts.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/visualization.js"></script>
     <!-- Drop down menu -->
     <ul id="dropdown1" class="dropdown-content">
         <li><a href="#!">One</a></li>
         <li><a href="#!">Two</a></li>
     </ul>
+    <!-- Head nav -->
     <nav class="z-depth-2">
         <div class="nav-wrapper red lighten-2" id="top_navi">
             <a class="brand-logo left" id="header_type">CityEmotion</a>
@@ -32,5 +36,60 @@
             </ul>
         </div>
     </nav>
-    </body>
+    <!-- FAB -->
+    <a class="btn-floating btn-large waves-effect waves-light red lighten-1" id="big-fab" href="javascript:toggleControl()">
+        <i class="material-icons">face</i>
+    </a>
+    <!-- Bottom panel -->
+    <div class="card" id="bottom-panel">
+        <div class="card-image">
+            <div class="nav-content">
+                <ul class="tabs">
+                    <!-- Don't forget to modify this tabNumber when tab changed. -->
+                    <script>var tabNumber = 4;</script>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(1)">Tab 1</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(2)">Tab 2</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(3)">Tab 3</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(4)">Tab 4</a></li>
+                </ul>
+                <div class="divider"></div>
+            </div>
+            <a class="btn-floating halfway-fab waves-effect waves-light red" href="javascript:toggleControl()">
+                <i class="material-icons">close</i>
+            </a>
+        </div>
+        <div class="card-content" id="panel-content1">
+            <p>Content 1</p>
+        </div>
+        <div class="card-content" id="panel-content2">
+            <p>Content 2</p>
+        </div>
+        <div class="card-content" id="panel-content3">
+            <p>Content 3</p>
+        </div>
+        <div class="card-content" id="panel-content4">
+            <p>Content 4</p>
+        </div>
+    </div>
+    <!-- A short script to hide the panel and tab page contents -->
+    <script>
+        $('#bottom-panel').hide();
+        for(var i = 2; i <= tabNumber; i++) $('#panel-content' + i).hide();
+    </script>
+    <!-- Preloader -->
+    <div class="preloader-wrapper active" id="preloader">
+        <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
