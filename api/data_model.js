@@ -54,5 +54,14 @@ var trafficData = {
 // A list of POI (Place Of Interests) data
 var poiData = JSON.parse(fs.readFileSync(dir + 'traffic_data/poi_data.json'));
 
+var weatherData = {
+    humidity: JSON.parse(fs.readFileSync(dir + 'weather_data/humidity.json')),
+    pressure: JSON.parse(fs.readFileSync(dir + 'weather_data/pressure.json')),
+    sunlight: JSON.parse(fs.readFileSync(dir + 'weather_data/sunlight.json')),
+    temperature: JSON.parse(fs.readFileSync(dir + 'weather_data/temperature.json')),
+    windspeed: JSON.parse(fs.readFileSync(dir + 'weather_data/wind.json'))
+}
+
 exports.trafficData = trafficData;
 exports.poiData = poiData;
+exports.weatherData = weatherData;
