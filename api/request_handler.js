@@ -23,12 +23,17 @@ function getTraffic(req, res) {
     } else if(type === 'density') {
         responseExpr = dataModel.trafficData.getDensity(weekday, hour);
     }
-    res.statusCode = 200;
-    res.set({
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Cache-Control': 'public, max-age=31557600'
-    });
-    res.end(JSON.stringify(responseExpr));
+    if(responseExpr === null) {
+        res.statusCode = 404;
+        res.end();
+    } else {
+        res.statusCode = 200;
+        res.set({
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Cache-Control': 'public, max-age=31557600'
+        });
+        res.end(JSON.stringify(responseExpr));
+    }
 }
 
 function getPOI(req, res) {
