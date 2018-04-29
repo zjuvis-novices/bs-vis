@@ -1,5 +1,6 @@
-const url = require('url');
-var dataModel = require('./data_model');
+const url           = require('url');
+var dataModel       = require('./data_model');
+var emotionModel    = require('./emotion_model');
 
 function getTraffic(req, res) {
     // Get parameter list
@@ -43,6 +44,28 @@ function getWeather(req, res) {
         return;
     }
     type = type.toLowerCase().split('.')[0];
+    if(type === 'pmv') {
+        res.set({
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Cache-Control': 'public, max-age=31557600'
+        });
+        res.end(JSON.stringify(
+            Array.apply(null, Array(dataModel.weatherData.dataLength))
+                .map(function(_, i) { return dataModel.weatherData.PMV(i); })
+        ));
+        return;
+    }
+    if(type === 'ppd') {
+        res.set({
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Cache-Control': 'public, max-age=31557600'
+        });
+        res.end(JSON.stringify(
+            Array.apply(null, Array(dataModel.weatherData.dataLength))
+                .map(function(_, i) { return dataModel.weatherData.PPD(i); })
+        ));
+        return;
+    }
     if(dataModel.weatherData[type] === undefined) {
         res.statusCode = 404;
         res.end();
@@ -56,6 +79,26 @@ function getWeather(req, res) {
     res.end(JSON.stringify(dataModel.weatherData[type]));
 }
 
-exports.getTraffic      = getTraffic;
-exports.getPOI          = getPOI;
-exports.getWeather      = getWeather;
+function getWeatherEmotion(req, res) {
+    var type = req.params['type'];
+    if(type && typeof type !== 'string') {
+        res.statusCode = 404;
+        res.end();
+        return;
+    }
+    type = type.toLowerCase();
+    var result;
+    result = emotionModel.weatherEmotion[type];
+    if(result === undefined) result = null;
+    res.statusCode = 200;
+    res.set({
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Cache-Control': 'public, max-age=31557600'
+    });
+    res.end(JSON.stringify(result));
+}
+
+exports.getTraffic          = getTraffic;
+exports.getPOI              = getPOI;
+exports.getWeather          = getWeather;
+exports.getWeatherEmotion   = getWeatherEmotion;

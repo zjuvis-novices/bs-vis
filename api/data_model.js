@@ -144,7 +144,7 @@ function weatherObj() {
     // Note that in Javascript, the index of month is the number of month - 1
     var epoch = this.epoch = new Date(2017, 6, 1, 0);
     // Data length
-    var dataLength = this.dataLength = 4416;
+    var dataLength = this.dataLength = humidity.length;
     // This function maps the date string and hour to the index of weather
     // time series
     var dateStr2Index = this.dateStr2Index = (dateStr, hour) => {
@@ -154,8 +154,8 @@ function weatherObj() {
         // epoch.setHours(0);
         return ((dateObj.valueOf() - epoch.valueOf())/3600000)|0;
     };
-    // Get PWV object
-    var getPWVObject = this.getPWVObject = (m, w, icl, dateStr, hour) => {
+    // Get PMV object
+    function getPMVObject(m, w, icl, dateStr, hour) {
         var index = dateStr2Index(dateStr, hour);
         if(index >= dataLength || index < 0) return null;
         // In Celcius
@@ -166,11 +166,11 @@ function weatherObj() {
         var rh = humidity[index] * 100;
         return new PMV(m, w, temp, temp, icl, velocity, rh);
     };
-    var getPWV = this.getPWV = (m, w, icl, dateStr, hour) => {
-        return getPWVObject(m, w, icl, dateStr, hour).PMV;
+    var getPMV = this.getPMV = (m, w, icl, dateStr, hour) => {
+        return getPMVObject(m, w, icl, dateStr, hour).PMV;
     };
     var getPPD = this.getPPD = (m, w, icl, dateStr, hour) => {
-        return getPWVObject(m, w, icl, dateStr, hour).PPD;
+        return getPMVObject(m, w, icl, dateStr, hour).PPD;
     };
     // Metabolic rate definitions
     // See ISO 7730:2005 Annex B
@@ -189,36 +189,51 @@ function weatherObj() {
     var mediumClothing      = this.mediumClothing = 1.2;
     var heavyClothing       = this.heavyClothing = 2.6;
     // Assuming that people are clever enough
-    // -30 deg -> 2.6
-    //  35 deg -> 0.5
+    //  -6 deg -> 2.6
+    //  36 deg -> 0.5
     var getClothing = this.getClothing = (temp) => {
-        var result = -0.032 * temp + 1.62;
+        var result = -0.05 * temp + 2.3;
         if(result < 0.5) return 0.5;
         return result;
     };
     // Assuming that most people has a metabolic rate of 1.2 daily
     // And 0.9 at night, because so many people don't sleep at all!
-    var getMetabolic = this.getMetabolic = (dateStr, hour) => {
-        var index = dateStr2Index(dateStr, hour);
+    var getMetabolic = this.getMetabolic = () => {
+        var index;
+        if(arguments.length == 1) {
+            index = arguments[0];
+        } else {
+            index = dateStr2Index(arguments[0], arguments[1]);
+        }
         if(index >= dataLength || index < 0) return null;
         if(sunlight[index] === 0.) {
             return 0.9;
         }
         return 1.2;
     };
-    this.PWV = (dateStr, hour) => {
-        var index = dateStr2Index(dateStr, hour);
+    this.PMV = function () {
+        var index;
+        if(arguments.length == 1) {
+            index = arguments[0];
+        } else {
+            index = dateStr2Index(arguments[0], arguments[1]);
+        }
         if(index >= dataLength || index < 0) return null;
         var temp = temperature[index];
-        return getPWV(getMetabolic(dateStr, hour), 0, getClothing(temp),
-                dateStr, hour);
+        return getPMV(getMetabolic(index), 0, getClothing(temp),
+            arguments[0], arguments[1]);
     };
-    this.PPD = (dateStr, hour) => {
-        var index = dateStr2Index(dateStr, hour);
+    this.PPD = function () {
+        var index;
+        if(arguments.length == 1) {
+            index = arguments[0];
+        } else {
+            index = dateStr2Index(arguments[0], arguments[1]);
+        }
         if(index >= dataLength || index < 0) return null;
         var temp = temperature[index];
-        return getPPD(getMetabolic(dateStr, hour), 0, getClothing(temp),
-                dateStr, hour);
+        return getPPD(getMetabolic(index), 0, getClothing(temp),
+            arguments[0], arguments[1]);
     };
 }
 

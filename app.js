@@ -18,7 +18,11 @@ app.get('/api/poi', requestHandler.getPOI);
 app.get('/api/poi.*', requestHandler.getPOI);
 
 // Weather
-app.get('/api/weather/:type',  requestHandler.getWeather);
+app.get('/api/weather/:type', requestHandler.getWeather);
+
+// Emotion
+app.get('/api/emotion/:type/weather', requestHandler.getWeatherEmotion);
+app.get('/api/emotion/:type/weather.*', requestHandler.getWeatherEmotion);
 
 var server = app.listen(port, () => {
     console.log('Server running at ' + hostname + ':' + port);
