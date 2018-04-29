@@ -120,7 +120,7 @@ function PMV(m, w, ta, tr, icl, va, rh) {
 	this.convection     = - fcl * hc * (this.tcl - ta);
 	
 	this.PMV            = (0.303 * Math.exp(-0.036 * m) + 0.028) * (m - w + this.evaporation + this.respiration + this.radiation + this.convection);
-	this.PPD            = 100 - 95 * Math.exp(-0.03353 * Math.pow(this.pmv, 4) - 0.2179 * Math.pow(this.pmv, 2));
+	this.PPD            = 100 - 95 * Math.exp(-0.03353 * Math.pow(this.PMV, 4) - 0.2179 * Math.pow(this.PMV, 2));
 
 	this.balance        = this.m - this.w + this.radiation + this.convection + this.evaporation + this.respiration;
 };
@@ -128,7 +128,7 @@ function PMV(m, w, ta, tr, icl, va, rh) {
 // A list of POI (Place Of Interests) data
 var poiData = JSON.parse(fs.readFileSync(dir + 'traffic_data/poi_data.json'));
 
-function weatherProto() {
+function weatherObj() {
     // Relative humidity in percentage * 100
     var humidity = this.humidity = JSON.parse(fs.readFileSync(dir + 'weather_data/humidity.json'));
     // Pressure in mbar, 1 mbar = 100 Pa
@@ -224,4 +224,4 @@ function weatherProto() {
 
 exports.trafficData = trafficData;
 exports.poiData = poiData;
-exports.weatherData = new weatherProto();
+exports.weatherData = new weatherObj();
