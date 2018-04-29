@@ -1,16 +1,6 @@
 const url = require('url');
 var dataModel = require('./data_model');
 
-// This function maps the date string and hour to the index of weather
-// time series
-function dateStr2Index(dateStr, hour) {
-    var dateObj = new Date(dateStr);
-    dateObj.setHours(hour);
-    var epoch = new Date('2017-7-1');
-    epoch.setHours(0);
-    return (dateObj.valueOf() - epoch.valueOf())/3600000;
-}
-
 function getTraffic(req, res) {
     // Get parameter list
     var responseExpr    = null;

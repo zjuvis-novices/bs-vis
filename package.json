@@ -7,8 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "~4.16.3"    
+    "express": "~4.16.3",
+    "jerzy": "~0.2.1"    
   },
   "author": "Celestial Phineas",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/city-emotion/city-emotion.git"
+  }
 }
