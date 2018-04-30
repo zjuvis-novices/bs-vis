@@ -1,5 +1,6 @@
 const url           = require('url');
 var dataModel       = require('./data_model');
+var trafficModel    = require('./traffic_model');
 var emotionModel    = require('./emotion_model');
 
 function getTraffic(req, res) {
@@ -13,6 +14,8 @@ function getTraffic(req, res) {
         responseExpr = dataModel.trafficData.getSpeed(weekday, hour);
     } else if(type === 'density') {
         responseExpr = dataModel.trafficData.getDensity(weekday, hour);
+    } else if(type === 'index') {
+        responseExpr = trafficModel.getTrafficIndexByWeekday(weekday, hour);
     }
     if(responseExpr === null) {
         res.statusCode = 404;

@@ -27,7 +27,17 @@ var trafficIndex = trafficData.averageSpeed.map(
     )
 );
 
-function getTrafficIndex() {
+function getTrafficIndexByWeekday(weekday, hour) {
+    var upperWeekday = weekday.toUpperCase();
+    if(trafficData[upperWeekday] === undefined) return null;
+    if(!(trafficData[upperWeekday] >= 0 && trafficData[upperWeekday] <= 6)) return null;
+    weekdayIndex = trafficData[upperWeekday];
+    // Not a valid hour
+    if(!(hour >= 0 && hour < 24)) return null;
+    return trafficIndex[weekdayIndex][hour];
+}
+
+function getTrafficIndexByDate() {
     var index;
     if(arguments.length == 1) {
         index = arguments[0];
@@ -38,6 +48,7 @@ function getTrafficIndex() {
     return trafficIndex[index2Weekday(x)][hour];
 }
 
-exports.index2Weekday = index2Weekday;
-exports.trafficIndex = trafficIndex;
-exports.getTrafficIndex = getTrafficIndex;
+exports.index2Weekday               = index2Weekday;
+exports.trafficIndex                = trafficIndex;
+exports.getTrafficIndexByWeekday    = getTrafficIndexByWeekday;
+exports.getTrafficIndexByDate       = getTrafficIndexByDate;
