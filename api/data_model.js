@@ -155,8 +155,10 @@ function weatherObj() {
         return ((dateObj.valueOf() - epoch.valueOf())/3600000);
     };
     // Get PMV object
-    function getPMVObject(m, w, icl, dateStr, hour) {
-        var index = dateStr2Index(dateStr, hour);
+    function getPMVObject(m, w, icl) {
+        var index = arguments[3];
+        if(arguments.length === 5)
+            index = dateStr2Index(arguments[3], arguments[4]);
         if(index >= dataLength || index < 0) return null;
         // In Celcius
         var temp = temperature[index];
@@ -165,12 +167,6 @@ function weatherObj() {
         // In percentage * 100
         var rh = humidity[index] * 100;
         return new PMV(m, w, temp, temp, icl, velocity, rh);
-    };
-    var getPMV = this.getPMV = (m, w, icl, dateStr, hour) => {
-        return getPMVObject(m, w, icl, dateStr, hour).PMV;
-    };
-    var getPPD = this.getPPD = (m, w, icl, dateStr, hour) => {
-        return getPMVObject(m, w, icl, dateStr, hour).PPD;
     };
     // Metabolic rate definitions
     // See ISO 7730:2005 Annex B
@@ -220,8 +216,7 @@ function weatherObj() {
         }
         if(index >= dataLength || index < 0) return null;
         var temp = temperature[index];
-        return getPMV(getMetabolic(index), 0, getClothing(temp),
-            arguments[0], arguments[1]);
+        return getPMVObject(getMetabolic(index), 0, getClothing(temp), index).PMV;
     };
     this.PPD = function () {
         var index;
@@ -232,8 +227,7 @@ function weatherObj() {
         }
         if(index >= dataLength || index < 0) return null;
         var temp = temperature[index];
-        return getPPD(getMetabolic(index), 0, getClothing(temp),
-            arguments[0], arguments[1]);
+        return getPMVObject(getMetabolic(index), 0, getClothing(temp), index).PPD;
     };
 }
 

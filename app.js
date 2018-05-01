@@ -23,6 +23,7 @@ app.get('/api/weather/:type', requestHandler.getWeather);
 // Emotion
 app.get('/api/emotion/:type/weather', requestHandler.getWeatherEmotion);
 app.get('/api/emotion/:type/weather.*', requestHandler.getWeatherEmotion);
+app.get('/api/emotion/:type/average', requestHandler.getAverage);
 app.get('/api/emotion/:type/average.*', requestHandler.getAverage);
 app.get('/api/emotion/:type/:date/:hour', requestHandler.getEmotionByDate);
 app.get('/api/emotion/:type/:index', requestHandler.getEmotionByIndex);

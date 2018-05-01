@@ -39,6 +39,11 @@ function getPOI(req, res) {
     res.end(JSON.stringify(dataModel.poiData));
 }
 
+var PPDarray = Array.apply(null, Array(dataModel.weatherData.dataLength))
+                .map(function(_, i) { return dataModel.weatherData.PPD(i); })
+var PMVarray = Array.apply(null, Array(dataModel.weatherData.dataLength))
+                .map(function(_, i) { return dataModel.weatherData.PMV(i); })
+
 function getWeather(req, res) {
     var type = req.params['type'];
     if(type && typeof type !== 'string') {
@@ -52,10 +57,7 @@ function getWeather(req, res) {
             'Content-Type': 'application/json;charset=UTF-8',
             'Cache-Control': 'public, max-age=31557600'
         });
-        res.end(JSON.stringify(
-            Array.apply(null, Array(dataModel.weatherData.dataLength))
-                .map(function(_, i) { return dataModel.weatherData.PMV(i); })
-        ));
+        res.end(JSON.stringify(PMVarray));
         return;
     }
     if(type === 'ppd') {
@@ -63,10 +65,7 @@ function getWeather(req, res) {
             'Content-Type': 'application/json;charset=UTF-8',
             'Cache-Control': 'public, max-age=31557600'
         });
-        res.end(JSON.stringify(
-            Array.apply(null, Array(dataModel.weatherData.dataLength))
-                .map(function(_, i) { return dataModel.weatherData.PPD(i); })
-        ));
+        res.end(JSON.stringify(PPDarray));
         return;
     }
     if(dataModel.weatherData[type] === undefined) {
@@ -134,7 +133,9 @@ function getEmotionByDate(req, res) {
 
 function getEmotionByIndex(req, res) {
     var type = req.params['type'];
-    var index = req.params['index'];
+    var index = req.params['index'].split('.')[0];
+    index = parseInt(index);
+    if(isNaN(index)) return null;
     var result = null;
     switch(type.toLowerCase()) {
         case 'positive':
@@ -165,7 +166,7 @@ function getEmotionByIndex(req, res) {
 exports.getTraffic          = getTraffic;
 exports.getPOI              = getPOI;
 exports.getWeather          = getWeather;
-exports.getAverage          = getWeather;
+exports.getAverage          = getWeatherEmotion;
 exports.getWeatherEmotion   = getWeatherEmotion;
 exports.getEmotionByDate    = getEmotionByDate;
 exports.getEmotionByIndex   = getEmotionByIndex;
