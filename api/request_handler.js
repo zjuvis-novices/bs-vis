@@ -165,6 +165,7 @@ function getEmotionByIndex(req, res) {
 exports.getTraffic          = getTraffic;
 exports.getPOI              = getPOI;
 exports.getWeather          = getWeather;
+exports.getAverage          = getWeather;
 exports.getWeatherEmotion   = getWeatherEmotion;
 exports.getEmotionByDate    = getEmotionByDate;
 exports.getEmotionByIndex   = getEmotionByIndex;
