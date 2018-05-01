@@ -152,7 +152,7 @@ function weatherObj() {
         dateObj.setHours(hour);
         // var epoch = new Date('2017-7-1');
         // epoch.setHours(0);
-        return ((dateObj.valueOf() - epoch.valueOf())/3600000)|0;
+        return ((dateObj.valueOf() - epoch.valueOf())/3600000);
     };
     // Get PMV object
     function getPMVObject(m, w, icl, dateStr, hour) {

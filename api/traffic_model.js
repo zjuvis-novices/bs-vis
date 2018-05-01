@@ -39,13 +39,16 @@ function getTrafficIndexByWeekday(weekday, hour) {
 
 function getTrafficIndexByDate() {
     var index;
-    if(arguments.length == 1) {
+    if(arguments.length === 1) {
         index = arguments[0];
     } else {
         index = weatherData.dateStr2Index(arguments[0], arguments[1]);
     }
+    if(isNaN(index2Weekday(index))) return null;
+    if(index >= weatherData.dataLength) return null;
     var hour = index % 24;
-    return trafficIndex[index2Weekday(x)][hour];
+    if(trafficIndex[index2Weekday(index)][hour] === undefined)  return null;
+    return trafficIndex[index2Weekday(index)][hour];
 }
 
 exports.index2Weekday               = index2Weekday;

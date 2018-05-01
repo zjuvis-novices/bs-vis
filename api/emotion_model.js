@@ -1,5 +1,6 @@
 const jerzy         = require('jerzy');
 var dataModel       = require('./data_model');
+var trafficModel    = require('./traffic_model');
 var trafficData     = dataModel.trafficData;
 var poiData         = dataModel.poiData;
 var weatherData     = dataModel.weatherData;
@@ -66,4 +67,46 @@ var weatherEmotion = {
     tiredness:  weatherTiredness
 };
 
-exports.weatherEmotion = weatherEmotion;
+function getPositive() {
+    var index;
+    if(arguments.length === 1) {
+        index = arguments[0];
+    } else {
+        index = weatherData.dateStr2Index(arguments[0], arguments[1]);
+    }
+    if(trafficModel.getTrafficIndexByDate(index) !== null)
+        return trafficModel.getTrafficIndexByDate(index)
+                .map((base) => (1 - base) * 0.5 + weatherPostive[index] * 0.5);
+    return null;
+}
+
+function getNegative() {
+    var index;
+    if(arguments.length === 1) {
+        index = arguments[0];
+    } else {
+        index = weatherData.dateStr2Index(arguments[0], arguments[1]);
+    }
+    if(trafficModel.getTrafficIndexByDate(index) !== null)
+        return trafficModel.getTrafficIndexByDate(index)
+                .map((base) => base * 0.5 + weatherNegative[index] * 0.5);
+    return null;
+}
+
+function getTiredness() {
+    var index;
+    if(arguments.length === 1) {
+        index = arguments[0];
+    } else {
+        index = weatherData.dateStr2Index(arguments[0], arguments[1]);
+    }
+    if(trafficModel.getTrafficIndexByDate(index) !== null)
+        return trafficModel.getTrafficIndexByDate(index)
+                .map((base) => base * 0.5 + weatherTiredness[index] * 0.5);
+    return null;
+}
+
+exports.weatherEmotion  = weatherEmotion;
+exports.getPositive     = getPositive;
+exports.getNegative     = getNegative;
+exports.getTiredness    = getTiredness;
