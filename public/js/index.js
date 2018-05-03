@@ -51,4 +51,11 @@ function toggleTab(tabIndex) {
 var poiData = null;
 $.get('api/poi.json', function(data) {
     poiData = data;
+    console.log(poiData)
 });
+
+var weatherData = null;
+$.get('api/traffic/speed/monday/0.json', function (data) {
+    weatherData = data;
+    console.log(weatherData)
+})
