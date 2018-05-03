@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 </head>
 
 <body>
@@ -48,31 +50,15 @@
     <a class="btn-floating btn-large waves-effect waves-light red lighten-1" id="big-fab" href="javascript:toggleControl()">
         <i class="material-icons">face</i>
     </a>
-    <div id = "Btn">
-        <div class="switch" id = "heatmapBtn" >
-            <label>
-                热力图
-                <input type="checkbox">
-                <span class="lever"></span>
-            </label>
-        </div>
-        <div class="switch" id = "bubbleBtn" >
-            <label>
-                气泡图
-                <input type="checkbox">
-                <span class="lever"></span>
-            </label>
-        </div>
-    </div>
 
     <!-- Bottom panel -->
-    <div class="card" id="bottom-panel">
+    <div class="card" id="bottom-panel" style="width: 800px">
         <div class="card-image">
             <div class="nav-content">
                 <ul class="tabs">
                     <!-- Don't forget to modify this tabNumber when tab changed. -->
                     <script>var tabNumber = 4;</script>
-                    <li class="tab"><a class="active" href="javascript:toggleTab(1)">交通</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(1)">控制板</a></li>
                     <li class="tab"><a class="active" href="javascript:toggleTab(2)">天气</a></li>
                     <li class="tab"><a class="active" href="javascript:toggleTab(3)">情感</a></li>
                     <li class="tab"><a class="active" href="javascript:toggleTab(4)">日历图</a></li>
@@ -83,61 +69,76 @@
                 <i class="material-icons">close</i>
             </a>
         </div>
-        <div class="card-content" id="panel-content1" style="float: left; display: inline-block">
+        <div class="card-content" id="panel-content1" style="overflow: hidden" >
             <div>
-            <label>种类</label>
-            <select class="browser-default" style = "width: 90px; height: 30px" id = "traffictype">
-                <option value="" disabled selected>交通信息</option>
-                <option value=1>平均车速</option>
-                <option value=2>车流密度</option>
-            </select>
+            <div id = "left" >
+                <LABEL class="material-icons">杭州</LABEL>
+                <span id = "temperature" >28</span>
+                <span style="margin-right: 13px" >℃</span>
+                <i class="material-icons" style="margin-right: 6px">sentiment_very_satisfied</i>
+                <span id = "weather">PPD: 23</span>
+                <div>
+                    <label>日期</label>
+                    <input type = "text" class="datepicker" style="height: 24px" placeholder="Jan 01, 2017">
+                </div>
+                <div class="row">
+                    <form action="#" class="col s12">
+                        <div class="row">
+                            <label>时间</label>
+                            <p class="range-field">
+                            <input type="range" id = "hour" min="0" max="23">
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div>
-            <label>星期</label>
-            <select class="browser-default" style = "width: 90px; height: 30px" id = "week">
-                <option value="" disabled selected>星期</option>
-                <option value="monday">星期一</option>
-                <option value="tuesday">星期二</option>
-                <option value="wednesday">星期三</option>
-                <option value="thursday">星期四</option>
-                <option value="friday">星期五</option>
-                <option value="saturday">星期六</option>
-                <option value="sunday">星期日</option>
-            </select>
+            <div id = "right">
+                <div id = "emotion" >
+                    <div class="switch" style="float: left">
+                        <label>
+                            积极
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                    <div class="switch" style="float: left">
+                        <label>
+                            消极
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                    <div class="switch" style="float: left">
+                        <label>
+                            疲倦
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </div>
+                <label>展示形式</label>
+                    <select>
+                        <option value="1">气泡图</option>
+                        <option value="2">热力图</option>
+                    </select>
+                <div id = "displaycontent">
+                    <div class="switch" style="float: left">
+                        <label>
+                            情感显示
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                    <div class="switch" style="float: left">
+                        <label>
+                            交通显示
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label>小时</label>
-                <select class="browser-default" style = "width: 90px; height: 30px" id = "hour">
-                    <option value="" disabled selected>小时</option>
-                    <option value="0">0:00</option>
-                    <option value="1">1:00</option>
-                    <option value="2">2:00</option>
-                    <option value="3">3:00</option>
-                    <option value="4">4:00</option>
-                    <option value="5">5:00</option>
-                    <option value="6">6:00</option>
-                    <option value="7">7:00</option>
-                    <option value="8">8:00</option>
-                    <option value="9">9:00</option>
-                    <option value="10">10:00</option>
-                    <option value="11">11:00</option>
-                    <option value="12">12:00</option>
-                    <option value="13">13:00</option>
-                    <option value="14">14:00</option>
-                    <option value="15">15:00</option>
-                    <option value="16">16:00</option>
-                    <option value="17">17:00</option>
-                    <option value="18">18:00</option>
-                    <option value="19">19:00</option>
-                    <option value="20">20:00</option>
-                    <option value="21">21:00</option>
-                    <option value="22">22:00</option>
-                    <option value="23">23:00</option>
-                </select>
             </div>
-            <br>
-            <button  class="btn waves-effect waves-light" name="traffic" onclick="trafficDisplay()">确认</button>
-        </div>
         <div class="card-content" id="panel-content2">
             <p>Content 2</p>
         </div>

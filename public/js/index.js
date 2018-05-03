@@ -17,6 +17,7 @@ $(document).ready(function (){
     $('#preloader').hide();
     containerResize('#container');
     $('select').formSelect();
+    $('.datepicker').datepicker();
 });
 
 // Window resize callback
