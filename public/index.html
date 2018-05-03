@@ -86,28 +86,28 @@
         <div class="card-content" id="panel-content1" style="float: left; display: inline-block">
             <div>
             <label>种类</label>
-            <select class="browser-default" style = "width: 90px; height: 30px">
+            <select class="browser-default" style = "width: 90px; height: 30px" id = "traffictype">
                 <option value="" disabled selected>交通信息</option>
-                <option value="1">平均车速</option>
-                <option value="2">车流密度</option>
+                <option value=1>平均车速</option>
+                <option value=2>车流密度</option>
             </select>
             </div>
             <div>
             <label>星期</label>
-            <select class="browser-default" style = "width: 90px; height: 30px">
+            <select class="browser-default" style = "width: 90px; height: 30px" id = "week">
                 <option value="" disabled selected>星期</option>
-                <option value="1">星期一</option>
-                <option value="2">星期二</option>
-                <option value="3">星期三</option>
-                <option value="4">星期四</option>
-                <option value="5">星期五</option>
-                <option value="6">星期六</option>
-                <option value="0">星期日</option>
+                <option value="monday">星期一</option>
+                <option value="tuesday">星期二</option>
+                <option value="wednesday">星期三</option>
+                <option value="thursday">星期四</option>
+                <option value="friday">星期五</option>
+                <option value="saturday">星期六</option>
+                <option value="sunday">星期日</option>
             </select>
             </div>
             <div>
                 <label>小时</label>
-                <select class="browser-default" style = "width: 90px; height: 30px">
+                <select class="browser-default" style = "width: 90px; height: 30px" id = "hour">
                     <option value="" disabled selected>小时</option>
                     <option value="0">0:00</option>
                     <option value="1">1:00</option>
@@ -136,7 +136,7 @@
                 </select>
             </div>
             <br>
-            <button  class="btn waves-effect waves-light" type="submit" name="traffic">确认</button>
+            <button  class="btn waves-effect waves-light" name="traffic" onclick="trafficDisplay()">确认</button>
         </div>
         <div class="card-content" id="panel-content2">
             <p>Content 2</p>

@@ -16,6 +16,7 @@ $(document).ready(function (){
     $('.collapsible').collapsible();
     $('#preloader').hide();
     containerResize('#container');
+    $('select').formSelect();
 });
 
 // Window resize callback
@@ -54,8 +55,5 @@ $.get('api/poi.json', function(data) {
     console.log(poiData)
 });
 
-var weatherData = null;
-$.get('api/traffic/speed/monday/0.json', function (data) {
-    weatherData = data;
-    console.log(weatherData)
-})
+
+
