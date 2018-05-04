@@ -38,7 +38,7 @@
     <!-- Head nav -->
     <nav class="z-depth-2">
         <div class="nav-wrapper red lighten-2" id="top_navi">
-            <a class="brand-logo left" id="header_type">CityEmotion</a>
+            <a class="brand-logo left" id="header-title">CityEmotion</a>
             <ul id="nav-mobile" class="right">
                 <li>
                     <a class="dropdown-trigger" href="#!" data-target="dropdown1">
@@ -74,7 +74,7 @@
         </div>
         <div class="card-content" id="panel-content1" style="overflow: hidden" >
             <div class="row" style="margin-bottom: 0">
-                <div class="col s6">
+                <div class="col s6" style="padding-right: 10px">
                     <div class="row" style="height: 30pt">
                         <div id="location-title" class="col s3 valign-wrapper" style="height: inherit;">杭州</div>
                         <div class="col s9 valign-wrapper" style="height: inherit">
@@ -107,44 +107,46 @@
                         </form>
                     </div>
                 </div>
-                <div class="col s6">
-                    <div id = "emotion" >
-                        <div class="switch" style="float: left">
+                <div class="col s6" style="padding-left: 10px">
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="switch col s4">
                             <label>
                                 积极
                                 <input type="checkbox">
-                                <span class="lever"></span>
+                                <span class="lever"/>
                             </label>
                         </div>
-                        <div class="switch" style="float: left">
+                        <div class="switch col s4">
                             <label>
                                 消极
                                 <input type="checkbox">
-                                <span class="lever"></span>
+                                <span class="lever"/>
                             </label>
                         </div>
-                        <div class="switch" style="float: left">
+                        <div class="switch col s4">
                             <label>
                                 疲倦
                                 <input type="checkbox">
-                                <span class="lever"></span>
+                                <span class="lever"/>
                             </label>
                         </div>
                     </div>
-                    <label>展示形式</label>
+                    <div class="row" style="padding: 10px">
+                        <label>展示形式</label>
                         <select>
                             <option value="1">气泡图</option>
                             <option value="2">热力图</option>
                         </select>
-                    <div id = "displaycontent">
-                        <div class="switch" style="float: left">
+                    </div>
+                    <div class="row">
+                        <div class="switch col s6">
                             <label>
                                 情感显示
                                 <input type="checkbox">
                                 <span class="lever"></span>
                             </label>
                         </div>
-                        <div class="switch" style="float: left">
+                        <div class="switch col s6">
                             <label>
                                 交通显示
                                 <input type="checkbox">

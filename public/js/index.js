@@ -10,13 +10,7 @@ function containerResizeWidth(selector) {
     $(selector).css('width', $(window).width());
 }
 
-
-// Document ready function
-$(document).ready(function (){
-    $('.dropdown-trigger').dropdown();
-    $('.collapsible').collapsible();
-    // Initialize date pickers
-    var elems = document.querySelector('#date-selection');
+function initDatePicker(elems) {
     var instances = M.Datepicker.init(elems, {
         autoClose:      true,
         showMonthAfterYear: true,
@@ -39,6 +33,16 @@ $(document).ready(function (){
         // onOpen:         calendarOpen(),
         // onClose:        calendarClose(),
     });
+    return instances;
+}
+
+// Document ready function
+$(document).ready(function (){
+    $('.dropdown-trigger').dropdown();
+    $('.collapsible').collapsible();
+    // Initialize date pickers
+    var elems = document.querySelector('#date-selection');
+    initDatePicker(elems);
     $('#preloader').hide();
     $('select').formSelect();
     containerResize('#container');
