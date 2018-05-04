@@ -39,11 +39,12 @@ function initDatePicker(elems) {
 $(document).ready(function (){
     $('.dropdown-trigger').dropdown();
     $('.collapsible').collapsible();
+    $('select').formSelect();
+    $('.tabs').tabs();
     // Initialize date pickers
     var elems = document.querySelector('#date-selection');
     initDatePicker(elems);
     $('#preloader').hide();
-    $('select').formSelect();
     containerResize('#container');
 });
 
@@ -67,14 +68,6 @@ function toggleControl() {
     } else {
         $('#bottom-panel').hide(500);
         $('#big-fab').removeClass('scale-out').addClass('scale-in');
-    }
-}
-
-// Toggle tab
-function toggleTab(tabIndex) {
-    for(var i = 1; i <= tabNumber; i++) {
-        if(i != tabIndex) $('#panel-content' + i).hide();
-        else $('#panel-content' + i).show();
     }
 }
 

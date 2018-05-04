@@ -9,15 +9,6 @@
     <link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-
 </head>
 
 <body>
@@ -66,10 +57,10 @@
                 <ul class="tabs">
                     <!-- Don't forget to modify this tabNumber when tab changed. -->
                     <script>var tabNumber = 4;</script>
-                    <li class="tab"><a class="active" href="javascript:toggleTab(1)" onclick="javascript:toggleTab(1)">控制板</a></li>
-                    <li class="tab"><a href="javascript:toggleTab(2)" onclick="javascript:toggleTab(2)">天气</a></li>
-                    <li class="tab"><a href="javascript:toggleTab(3)" onclick="javascript:toggleTab(3)">情感</a></li>
-                    <li class="tab"><a href="javascript:toggleTab(4)" onclick="javascript:toggleTab(4)">日历图</a></li>
+                    <li class="tab"><a class="active" href="#panel-content1">控制板</a></li>
+                    <li class="tab"><a href="#panel-content2">天气</a></li>
+                    <li class="tab"><a href="#panel-content3">情感</a></li>
+                    <li class="tab"><a href="#panel-content4">日历图</a></li>
                 </ul>
                 <div class="divider"></div>
             </div>
@@ -99,11 +90,11 @@
                             </span>
                         </div>
                     </div>
-                    <div class="row" style="padding: 10px">
+                    <div class="row" style="padding: 10px; margin-bottom: 0">
                         <label>日期</label>
-                        <input type="text" class="datepicker" style="height: 24px" placeholder="2017/7/1" id="date-selection">
+                        <input type="text" class="datepicker" id="date-selection">
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 0">
                         <form action="#" class="col s12">
                             <label>时间</label>
                             <p class="range-field">
@@ -143,7 +134,7 @@
                             <option value="2">热力图</option>
                         </select>
                     </div>
-                    <div class="row">
+                    <div class="row" style="padding-top: 10px">
                         <div class="switch col s6">
                             <label>
                                 情感显示
@@ -161,6 +152,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         <div class="card-content" id="panel-content2">
             <p>Content 2</p>
         </div>
