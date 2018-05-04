@@ -5,3 +5,12 @@ var map = new AMap.Map('container', {
     center:[120.2,30.25],
     mapStyle: 'amap://styles/grey'
 });
+
+var heatmap;
+map.plugin(["AMap.Heatmap"], function() {
+    //初始化heatmap对象
+    heatmap = new AMap.Heatmap(map, {
+        radius: 25, //给定半径
+        opacity: [0, 0.8]
+    });
+});
