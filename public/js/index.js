@@ -64,10 +64,10 @@ $(document).on({
 function toggleControl() {
     if(!$('#bottom-panel').is(':visible')) {
         $('#bottom-panel').show(500);
-        $('#big-fab').hide(100);
+        $('#big-fab').removeClass('scale-in').addClass('scale-out');
     } else {
         $('#bottom-panel').hide(500);
-        $('#big-fab').show(100);
+        $('#big-fab').removeClass('scale-out').addClass('scale-in');
     }
 }
 
