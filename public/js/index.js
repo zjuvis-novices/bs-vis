@@ -32,11 +32,11 @@ function initDatePicker(elems) {
         },
         // onOpen:         calendarOpen(),
         // onClose:        calendarClose(),
-        onSelect: function selectaDate(){
-            var elem = document.querySelector('#date-selection');
-            var instance = M.Datepicker.getInstance(elem);
-            console.log(instance.)
-            var year =
+        onSelect: function selectaDate(selectedDate){
+            var month = selectedDate.getMonth()
+            var date = selectedDate.getDate()
+            var weekday = selectedDate.getDay()
+
         }
     });
     return instances;
