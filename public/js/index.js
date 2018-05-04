@@ -6,7 +6,8 @@ var currenttemp = null;
 var currentPPD = null;
 var temperaturedata = null;
 var PPDdata = null;
-var speeddata = null;
+var speeddatacache = [];
+var speeddata = [];
 var densitydata = null;
 $.get('api/weather/temperature.json', function(data){
     temperaturedata = data;
@@ -34,7 +35,7 @@ function refreshHeatmap(){
         Poi.lng = poiData[i]['location'][0];
         Poi.lat = poiData[i]['location'][1];
         if($("#traffic").is(':checked'))
-            Poi.count = speeddata[i]
+            Poi.count = speeddata[i+parseInt($('#hour').val())*24]
         else{
             //TODO
         }
@@ -56,6 +57,7 @@ function refreshBubblemap(){
 function onTimeChange() {
     $('#time-string').text($('#hour').val() + ':00');
     var currentdate = globalDate.getDate();
+    var deltahour = null;
     switch (globalDate.getMonth())
     {
         case 6:
@@ -83,21 +85,7 @@ function onTimeChange() {
     currentPPD = parseInt(PPDdata[deltahour]);
     $('#temperature-value').text(currenttemp);
     $('#ppd-value').text(currentPPD);
-    //get traffic data
-    var weekday = null;
-    switch (globalDate.getDay())
-    {
-        case 0: weekday = "sunday"; break;
-        case 1: weekday = "monday"; break;
-        case 2: weekday = "tuesday"; break;
-        case 3: weekday = "wednesday"; break;
-        case 4: weekday = "thursday"; break;
-        case 5: weekday = "friday"; break;
-        case 6: weekday = "saturday"; break;
-    }
-    $.get('api/traffic/speed/'+weekday+'/'+$('#hour').val(), function (data) {
-        speeddata = data;
-    })
+
     if($("#displaytype").val() == 2)
         refreshHeatmap();
     else{
@@ -129,13 +117,44 @@ function initDatePicker(elems) {
         onSelect:  function () {
             globalDate = this.date;
             console.log(globalDate);
+            var weekday = null;
+            switch (globalDate.getDay())
+            {
+                case 0: weekday = "sunday"; break;
+                case 1: weekday = "monday"; break;
+                case 2: weekday = "tuesday"; break;
+                case 3: weekday = "wednesday"; break;
+                case 4: weekday = "thursday"; break;
+                case 5: weekday = "friday"; break;
+                case 6: weekday = "saturday"; break;
+            }
+            if (speeddatacache.length!=5)
+            {
+                var curspeed = null;
+                dailyspeed = new Object();
+                dailyspeed.date = this.date.toString();
+                for(var i = 0; i<24; i++)
+                {
+                    //setTimeout(get(i,speeddata, weekday), 500);
+                    $.get('api/traffic/speed/'+weekday+'/'+i, function (data) {
+                        speeddata = speeddata.concat(data);
+                    })
+                }
+                dailyspeed.speed = speeddata;
 
+            }
         }
 
     });
     return instances;
 }
 
+
+function get(i, speeddata, weekday){
+    $.get('api/traffic/speed/'+weekday+'/'+i, function (data) {
+        speeddata = speeddata.concat(data);
+    })
+}
 // Document ready function
 $(document).ready(function (){
     M.AutoInit();
