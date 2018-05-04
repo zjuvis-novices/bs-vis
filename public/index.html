@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>城市情感地图</title>
+    <!-- jquery -->
+    <script src="js/lib/jquery-3.3.1.js"></script>
+    <!-- Materialize -->
+    <script src="js/lib/materialize.js"></script>
     <link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/index.css" />
@@ -14,10 +18,6 @@
 <body>
     <div id="container"></div>
     <div id="dialog-container"></div>
-    <!-- jquery -->
-    <script src="js/lib/jquery-3.3.1.js"></script>
-    <!-- Materialize -->
-    <script src="js/lib/materialize.js"></script>
     <!-- AMap API -->
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=0cbdd5372598ad308f0c50435293e012"></script>
     <!-- Echart -->
@@ -92,15 +92,18 @@
                     </div>
                     <div class="row" style="padding: 10px; margin-bottom: 0">
                         <label>日期</label>
-                        <input type="text" class="datepicker" id="date-selection">
+                        <input type="text" class="datepicker no-autoinit" id="date-selection">
                     </div>
                     <div class="row" style="margin-bottom: 0">
-                        <form action="#" class="col s12">
+                        <form action="#" class="col s9">
                             <label>时间</label>
                             <p class="range-field">
-                                <input type="range" id = "hour" min="0" max="23">
+                                <input type="range" id="hour" min="0" max="23" value="8" onmousemove="javascript:onTimeChange()">
                             </p>
                         </form>
+                        <div class="col s3" id="time-string" style="margin-top:28px">
+                            8:00
+                        </div>
                     </div>
                 </div>
                 <div class="col s6" style="padding-left: 10px">
@@ -134,7 +137,7 @@
                             <option value="2">热力图</option>
                         </select>
                     </div>
-                    <div class="row" style="padding-top: 10px">
+                    <div class="row" style="padding-top: 5px">
                         <div class="switch col s6">
                             <label>
                                 情感显示

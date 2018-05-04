@@ -10,6 +10,12 @@ function containerResizeWidth(selector) {
     $(selector).css('width', $(window).width());
 }
 
+// Time changing event
+function onTimeChange() {
+    $('#time-string').text($('#hour').val() + ':00');
+    // TODO...
+}
+
 function initDatePicker(elems) {
     var instances = M.Datepicker.init(elems, {
         autoClose:      true,
@@ -30,17 +36,14 @@ function initDatePicker(elems) {
             weekdaysShort:  ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             weekdaysAbbrev: ['日', '一', '二', '三', '四', '五', '六'],
         },
-        onSelect:           function () { console.log(this.date); }
+        onSelect:           function () { console.log(this.date); /* TODO */ }
     });
     return instances;
 }
 
 // Document ready function
 $(document).ready(function (){
-    $('.dropdown-trigger').dropdown();
-    $('.collapsible').collapsible();
-    $('select').formSelect();
-    $('.tabs').tabs();
+    M.AutoInit();
     // Initialize date pickers
     var elems = document.querySelector('#date-selection');
     initDatePicker(elems);
