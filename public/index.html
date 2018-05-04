@@ -72,74 +72,88 @@
             </a>
         </div>
         <div class="card-content" id="panel-content1" style="overflow: hidden" >
-            <div>
-            <div id = "left" >
-                <LABEL class="material-icons">杭州</LABEL>
-                <span id = "temperature" >28</span>
-                <span style="margin-right: 13px" >℃</span>
-                <i class="material-icons" style="margin-right: 6px">sentiment_very_satisfied</i>
-                <span id = "weather">PPD: 23</span>
-                <div>
-                    <label>日期</label>
-                    <input type = "text" class="datepicker" style="height: 24px" placeholder="Jan 01, 2017" id="datepick">
-                </div>
-                <div class="row">
-                    <form action="#" class="col s12">
-                        <div class="row">
-                            <label>时间</label>
-                            <p class="range-field">
-                            <input type="range" id = "hour" min="0" max="23">
-                            </p>
+            <div class="row">
+                <div class="col s6">
+                    <div class="row" style="height: 30pt">
+                        <div id="location-title" class="col s3 valign-wrapper" style="height: inherit;">杭州</div>
+                        <div class="col s9 valign-wrapper" style="height: inherit">
+                            <span class="valign-wrapper">
+                                <i class="material-icons" style="margin-right: 0.5em">
+                                    wb_sunny
+                                </i>
+                                <span id="temperature-value">28</span>
+                                <span style="margin-right: 1.5em;">℃</span>
+                            </span>
+                            <span class="valign-wrapper">
+                                <i class="material-icons" style="margin-right: 0.5em">
+                                    sentiment_very_satisfied
+                                </i>
+                                PPD: 
+                                <span id="ppd-value">23</span>
+                            </span>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div id = "right">
-                <div id = "emotion" >
-                    <div class="switch" style="float: left">
-                        <label>
-                            积极
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                        </label>
                     </div>
-                    <div class="switch" style="float: left">
-                        <label>
-                            消极
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                        </label>
+                    <div>
+                        <label>日期</label>
+                        <input type = "text" class="datepicker" style="height: 24px" placeholder="Jan 01, 2017" id="datepick">
                     </div>
-                    <div class="switch" style="float: left">
-                        <label>
-                            疲倦
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                        </label>
+                    <div class="row">
+                        <form action="#" class="col s12">
+                            <div class="row">
+                                <label>时间</label>
+                                <p class="range-field">
+                                <input type="range" id = "hour" min="0" max="23">
+                                </p>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <label>展示形式</label>
-                    <select>
-                        <option value="1">气泡图</option>
-                        <option value="2">热力图</option>
-                    </select>
-                <div id = "displaycontent">
-                    <div class="switch" style="float: left">
-                        <label>
-                            情感显示
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                        </label>
+                <div class="col s6">
+                    <div id = "emotion" >
+                        <div class="switch" style="float: left">
+                            <label>
+                                积极
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                        <div class="switch" style="float: left">
+                            <label>
+                                消极
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                        <div class="switch" style="float: left">
+                            <label>
+                                疲倦
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="switch" style="float: left">
-                        <label>
-                            交通显示
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                        </label>
+                    <label>展示形式</label>
+                        <select>
+                            <option value="1">气泡图</option>
+                            <option value="2">热力图</option>
+                        </select>
+                    <div id = "displaycontent">
+                        <div class="switch" style="float: left">
+                            <label>
+                                情感显示
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                        <div class="switch" style="float: left">
+                            <label>
+                                交通显示
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         <div class="card-content" id="panel-content2">
             <p>Content 2</p>
