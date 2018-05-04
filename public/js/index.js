@@ -10,6 +10,7 @@ function containerResizeWidth(selector) {
     $(selector).css('width', $(window).width());
 }
 
+
 // Document ready function
 $(document).ready(function (){
     $('.dropdown-trigger').dropdown();
@@ -17,8 +18,13 @@ $(document).ready(function (){
     $('#preloader').hide();
     containerResize('#container');
     $('select').formSelect();
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({
+        onSelect: function () {
+            console.log("~")
+        }
+    });
 });
+
 
 // Window resize callback
 $(window).resize(function (){
