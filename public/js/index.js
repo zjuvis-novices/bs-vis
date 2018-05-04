@@ -30,14 +30,7 @@ function initDatePicker(elems) {
             weekdaysShort:  ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             weekdaysAbbrev: ['日', '一', '二', '三', '四', '五', '六'],
         },
-        onOpen:         function () {},
-        onClose:        function () {},
-        // onSelect: function selectaDate(){
-        //     var elem = document.querySelector('#date-selection');
-        //     var instance = M.Datepicker.getInstance(elem);
-        //     console.log(instance.)
-        //     var year =
-        // }
+        onSelect:           function () { console.log(this.date); }
     });
     return instances;
 }
