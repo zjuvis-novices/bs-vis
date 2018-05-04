@@ -17,6 +17,11 @@ body {
     background: rgb(0, 40, 50)
 }
 
+#dialog-container .modal-content {
+    padding: 0;
+    overflow: hidden;
+}
+
 #preloader {
     position: absolute;
     right: 20px;

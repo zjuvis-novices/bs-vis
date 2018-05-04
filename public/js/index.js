@@ -15,14 +15,33 @@ function containerResizeWidth(selector) {
 $(document).ready(function (){
     $('.dropdown-trigger').dropdown();
     $('.collapsible').collapsible();
-    $('#preloader').hide();
-    containerResize('#container');
-    $('select').formSelect();
-    $('.datepicker').datepicker({
-        onSelect: function () {
-            console.log("~")
+    // Initialize date pickers
+    var elems = document.querySelector('#date-selection');
+    var instances = M.Datepicker.init(elems, {
+        autoClose:      true,
+        showMonthAfterYear: true,
+        format:         'yyyy/mm/dd',
+        defaultDate:    new Date('2017/07/01'),
+        minDate:        new Date('2017/07/01'),
+        maxDate:        new Date('2017/12/31'),
+        setDefaultDate: true,
+        container:      '#dialog-container',
+        i18n:           {
+            cancel:         '取消',
+            clear:          '清除',
+            done:           '确认',
+            months:         ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            monthsShort:    ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            weekdays:       ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+            weekdaysShort:  ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+            weekdaysAbbrev: ['日', '一', '二', '三', '四', '五', '六'],
         }
+        // onOpen:         calendarOpen(),
+        // onClose:        calendarClose(),
     });
+    $('#preloader').hide();
+    $('select').formSelect();
+    containerResize('#container');
 });
 
 
@@ -59,7 +78,6 @@ function toggleTab(tabIndex) {
 var poiData = null;
 $.get('api/poi.json', function(data) {
     poiData = data;
-    console.log(poiData)
 });
 
 

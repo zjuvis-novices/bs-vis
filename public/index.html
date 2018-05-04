@@ -17,6 +17,7 @@
 
 <body>
     <div id="container"></div>
+    <div id="dialog-container"></div>
     <!-- jquery -->
     <script src="js/lib/jquery-3.3.1.js"></script>
     <!-- Materialize -->
@@ -60,10 +61,10 @@
                 <ul class="tabs">
                     <!-- Don't forget to modify this tabNumber when tab changed. -->
                     <script>var tabNumber = 4;</script>
-                    <li class="tab"><a class="active" href="javascript:toggleTab(1)">控制板</a></li>
-                    <li class="tab"><a class="active" href="javascript:toggleTab(2)">天气</a></li>
-                    <li class="tab"><a class="active" href="javascript:toggleTab(3)">情感</a></li>
-                    <li class="tab"><a class="active" href="javascript:toggleTab(4)">日历图</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(1)" onclick="javascript:toggleTab(1)">控制板</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(2)" onclick="javascript:toggleTab(2)">天气</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(3)" onclick="javascript:toggleTab(3)">情感</a></li>
+                    <li class="tab"><a class="active" href="javascript:toggleTab(4)" onclick="javascript:toggleTab(4)">日历图</a></li>
                 </ul>
                 <div class="divider"></div>
             </div>
@@ -72,7 +73,7 @@
             </a>
         </div>
         <div class="card-content" id="panel-content1" style="overflow: hidden" >
-            <div class="row">
+            <div class="row" style="margin-bottom: 0">
                 <div class="col s6">
                     <div class="row" style="height: 30pt">
                         <div id="location-title" class="col s3 valign-wrapper" style="height: inherit;">杭州</div>
@@ -93,18 +94,16 @@
                             </span>
                         </div>
                     </div>
-                    <div>
+                    <div class="row" style="padding: 10px">
                         <label>日期</label>
-                        <input type = "text" class="datepicker" style="height: 24px" placeholder="Jan 01, 2017" id="datepick">
+                        <input type="text" class="datepicker" style="height: 24px" placeholder="2017/7/1" id="date-selection">
                     </div>
                     <div class="row">
                         <form action="#" class="col s12">
-                            <div class="row">
-                                <label>时间</label>
-                                <p class="range-field">
+                            <label>时间</label>
+                            <p class="range-field">
                                 <input type="range" id = "hour" min="0" max="23">
-                                </p>
-                            </div>
+                            </p>
                         </form>
                     </div>
                 </div>
