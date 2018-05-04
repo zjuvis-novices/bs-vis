@@ -1,5 +1,17 @@
 // UI control
 // Resize element to fit the screen width and height
+//global date object
+var globalDate = new Date()
+var currenttemp = null;
+var currentPPD = null;
+var temperaturedata = null;
+var PPDdata = null;
+$.get('api/weather/temperature.json', function(data){
+    temperaturedata = data;
+    });
+$.get('api/weather/ppd.json', function(data){
+    PPDdata = data;
+});
 function containerResize(selector) {
     $(selector).css('width', $(window).width());
     $(selector).css('height', $(window).height() - 20);
@@ -13,7 +25,34 @@ function containerResizeWidth(selector) {
 // Time changing event
 function onTimeChange() {
     $('#time-string').text($('#hour').val() + ':00');
-    // TODO...
+    var currentdate = globalDate.getDate();
+        switch (globalDate.getMonth())
+        {
+            case 6:
+                deltahour = (currentdate-1)*24;
+                break;
+            case 7:
+                deltahour = (currentdate+30)*24;
+                break;
+            case 8:
+                deltahour = (currentdate+61)*24;
+                break;
+            case 9:
+                deltahour = (currentdate+91)*24;
+                break;
+            case 10:
+                deltahour = (currentdate+122)*24;
+                break;
+            case 11:
+                deltahour = (currentdate+152)*24;
+                break;
+        }
+        var hour = parseInt($('#hour').val());
+        deltahour = deltahour+hour;
+        currenttemp = temperaturedata[deltahour];
+        currentPPD = parseInt(PPDdata[deltahour]);
+        $('#temperature-value').text(currenttemp)
+        $('#ppd-value').text(currentPPD);
 }
 
 function initDatePicker(elems) {
@@ -36,7 +75,11 @@ function initDatePicker(elems) {
             weekdaysShort:  ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             weekdaysAbbrev: ['日', '一', '二', '三', '四', '五', '六'],
         },
-        onSelect:           function () { console.log(this.date); /* TODO */ }
+        onSelect:  function () {
+            globalDate = this.date;
+            console.log(globalDate);
+
+        }
 
     });
     return instances;
