@@ -10,6 +10,12 @@ function containerResizeWidth(selector) {
     $(selector).css('width', $(window).width());
 }
 
+// Time changing event
+function onTimeChange() {
+    $('#time-string').text($('#hour').val() + ':00');
+    // TODO...
+}
+
 function initDatePicker(elems) {
     var instances = M.Datepicker.init(elems, {
         autoClose:      true,
@@ -30,27 +36,19 @@ function initDatePicker(elems) {
             weekdaysShort:  ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             weekdaysAbbrev: ['日', '一', '二', '三', '四', '五', '六'],
         },
-        // onOpen:         calendarOpen(),
-        // onClose:        calendarClose(),
-        onSelect: function selectaDate(selectedDate){
-            var month = selectedDate.getMonth()
-            var date = selectedDate.getDate()
-            var weekday = selectedDate.getDay()
+        onSelect:           function () { console.log(this.date); /* TODO */ }
 
-        }
     });
     return instances;
 }
 
 // Document ready function
 $(document).ready(function (){
-    $('.dropdown-trigger').dropdown();
-    $('.collapsible').collapsible();
+    M.AutoInit();
     // Initialize date pickers
     var elems = document.querySelector('#date-selection');
     initDatePicker(elems);
     $('#preloader').hide();
-    $('select').formSelect();
     containerResize('#container');
 });
 
@@ -74,14 +72,6 @@ function toggleControl() {
     } else {
         $('#bottom-panel').hide(500);
         $('#big-fab').removeClass('scale-out').addClass('scale-in');
-    }
-}
-
-// Toggle tab
-function toggleTab(tabIndex) {
-    for(var i = 1; i <= tabNumber; i++) {
-        if(i != tabIndex) $('#panel-content' + i).hide();
-        else $('#panel-content' + i).show();
     }
 }
 
