@@ -29,9 +29,10 @@ function initDatePicker(elems) {
             weekdays:       ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             weekdaysShort:  ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             weekdaysAbbrev: ['日', '一', '二', '三', '四', '五', '六'],
-        }
-        // onOpen:         calendarOpen(),
-        // onClose:        calendarClose(),
+        },
+        // Call-back functions
+        onOpen:         function () { console.log(this.date); },
+        onClose:        function () { console.log(this.date); }
     });
     return instances;
 }
