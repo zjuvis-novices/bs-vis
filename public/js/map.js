@@ -14,3 +14,14 @@ map.plugin(["AMap.Heatmap"], function() {
         opacity: [0, 0.8]
     });
 });
+
+function changedisplay() {
+    if($("#displaytype").val() == 1)
+    {
+        heatmap.hide()
+    }
+    else if($("#displaytype").val() == 2)
+    {
+        heatmap.show()
+    }
+}
