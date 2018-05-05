@@ -8,7 +8,11 @@ var temperaturedata = null;
 var PPDdata = null;
 var speeddatacache = [];
 var speeddata = [];
+var positivedata = [];
+var negativedata = [];
+var tirednessdata = [];
 var densitydata = null;
+var myChart = null;
 $.get('api/weather/temperature.json', function(data){
     temperaturedata = data;
     });
@@ -36,8 +40,17 @@ function refreshHeatmap(){
         Poi.lat = poiData[i]['location'][1];
         if($("#traffic").is(':checked'))
             Poi.count = speeddata[i+parseInt($('#hour').val())*24]
-        else{
-            //TODO
+        else if($("#emotion").is(':checked')){
+            if($("#positive").is(':checked')){
+                Poi.count = 100*positivedata[i+parseInt($('#hour').val())*24]
+               // console.log("~")
+            }
+            else if($("#negative").is(':checked')){
+                Poi.count = 100*negativedata[i+parseInt($('#hour').val())*24]
+            }
+            else if($("#tiredness").is(':checked')){
+                Poi.count = 100*tirednessdata[i+parseInt($('#hour').val())*24]
+            }
         }
         heatmapdata.push(Poi);
     }
@@ -50,12 +63,32 @@ function refreshHeatmap(){
 
 //refreshBubblemap
 function refreshBubblemap(){
+    var bubblemapdata = []
+    //convert data
+    for(var i=0; i<1856; i++){
+        bubblemapdata.push({
+            name: poiData[i]['name'],
+            value: poiData[i]['location'].concat(speeddata[i+parseInt($('#hour').val())*24])
+        })
+    }
+    console.log(bubblemapdata)
 
+    setTimeout(()=>{
+    myChart.setOption({
+        series: [
+            {
+                name: 'speed',
+                type: 'scatter',
+                coordinateSystem: 'bmap',
+                data: bubblemapdata
+            }]
+    })},500)
 }
 
 // Time changing event
 function onTimeChange() {
     $('#time-string').text($('#hour').val() + ':00');
+    //console.log(positivedata)
     var currentdate = globalDate.getDate();
     var deltahour = null;
     switch (globalDate.getMonth())
@@ -89,7 +122,7 @@ function onTimeChange() {
     if($("#displaytype").val() == 2)
         refreshHeatmap();
     else{
-        refreshBubblemap();
+        //refreshBubblemap();
     }
 
 }
@@ -115,6 +148,10 @@ function initDatePicker(elems) {
             weekdaysAbbrev: ['日', '一', '二', '三', '四', '五', '六'],
         },
         onSelect:  function () {
+            speeddata =[];
+            negativedata = [];
+            positivedata = [];
+            tirednessdata = [];
             globalDate = this.date;
             console.log(globalDate);
             var weekday = null;
@@ -128,28 +165,36 @@ function initDatePicker(elems) {
                 case 5: weekday = "friday"; break;
                 case 6: weekday = "saturday"; break;
             }
-            if (speeddatacache.length!=5)
-            {
-                var curspeed = null;
-                dailyspeed = new Object();
-                dailyspeed.date = this.date.toString();
                 for(var i = 0; i<24; i++)
                 {
                     //setTimeout(get(i,speeddata, weekday), 500);
                     $.get('api/traffic/speed/'+weekday+'/'+i, function (data) {
                         speeddata = speeddata.concat(data);
                     })
-                }
-                dailyspeed.speed = speeddata;
+                    $.get('api/emotion/positive/'+globalDate.getFullYear()+'-'+(parseInt(globalDate.getMonth())+1)+'-'+globalDate.getDate()+'/'+i, function (data) {
+                        positivedata = positivedata.concat(data);
+                    })
+                    $.get('api/emotion/negative/'+globalDate.getFullYear()+'-'+(parseInt(globalDate.getMonth())+1)+'-'+globalDate.getDate()+'/'+i, function (data) {
+                        negativedata = negativedata.concat(data);
+                    })
+                    $.get('api/emotion/tiredness/'+globalDate.getFullYear()+'-'+(parseInt(globalDate.getMonth())+1)+'-'+globalDate.getDate()+'/'+i, function (data) {
+                        tirednessdata = tirednessdata.concat(data);
+                    })
 
-            }
+                }
+
+
+
         }
 
     });
     return instances;
 }
 
-
+function initEcharts(){
+    myChart = echarts.init(document.getElementById('container'));
+    myChart.setOption(option)
+}
 function get(i, speeddata, weekday){
     $.get('api/traffic/speed/'+weekday+'/'+i, function (data) {
         speeddata = speeddata.concat(data);
@@ -161,8 +206,11 @@ $(document).ready(function (){
     // Initialize date pickers
     var elems = document.querySelector('#date-selection');
     initDatePicker(elems);
+    //initEcharts();
     $('#preloader').hide();
     containerResize('#container');
+
+
 });
 
 

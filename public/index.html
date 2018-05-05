@@ -111,21 +111,21 @@
                         <div class="switch col s4">
                             <label>
                                 积极
-                                <input type="checkbox">
+                                <input id = "positive" type="checkbox">
                                 <span class="lever"/>
                             </label>
                         </div>
                         <div class="switch col s4">
                             <label>
                                 消极
-                                <input type="checkbox">
+                                <input id = "negative" type="checkbox">
                                 <span class="lever"/>
                             </label>
                         </div>
                         <div class="switch col s4">
                             <label>
                                 疲倦
-                                <input type="checkbox">
+                                <input id = "tiredness" type="checkbox">
                                 <span class="lever"/>
                             </label>
                         </div>
@@ -141,14 +141,14 @@
                         <div class="switch col s6">
                             <label>
                                 情感显示
-                                <input type="checkbox">
+                                <input id ="emotion" type="checkbox" onpropertychange = "mapdisplay()">
                                 <span class="lever"></span>
                             </label>
                         </div>
                         <div class="switch col s6">
                             <label>
                                 交通显示
-                                <input id="traffic" type="checkbox">
+                                <input id="traffic" type="checkbox" onpropertychange = "mapdisplay()">
                                 <span class="lever"></span>
                             </label>
                         </div>
