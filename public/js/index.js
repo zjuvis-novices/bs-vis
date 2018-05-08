@@ -120,3 +120,99 @@ function onDateSelection(date) {
         window[callback].apply(this, onDateSelectionCallbacks[callback]);
     }
 }
+
+var currentDisplay = {
+    overlayType: {'emotion': true},
+    visualStyle: 'bubble',
+    emotionType: {'positive': true}
+};
+
+// This stuff is ugly. It should have better design.
+function updateDisplayStatus() {
+    if($('#display-type').val() === '1') {
+        currentDisplay.visualStyle = 'bubble';
+    } else {
+        currentDisplay.visualStyle = 'thermo';
+    }
+    if(currentDisplay.visualStyle === 'bubble') {
+        if($('#emotion-display').is(':checked')) {
+            currentDisplay.overlayType['emotion'] = true;
+        } else {
+            delete currentDisplay.overlayType['emotion'];
+        }
+        if($('#traffic-display').is(':checked')) {
+            currentDisplay.overlayType['traffic'] = true;
+        } else {
+            delete currentDisplay.overlayType['traffic'];
+        }
+    } else {
+        if($('#emotion-display').is(':checked')) {
+            currentDisplay.overlayType = {'emotion': true};
+        } else if($('#traffic-display').is(':checked')) {
+            currentDisplay.overlayType = {'traffic': true};
+        } else { currentDisplay.overlayType = {}; }
+    }
+    if(currentDisplay.visualStyle === 'bubble') {
+        // currentDisplay.emotionType
+        if($('#positive').is(':checked')) {
+            currentDisplay.emotionType['positive'] = true;
+        } else {
+            delete currentDisplay.emotionType['positive'];
+        }
+        if($('#negative').is(':checked')) {
+            currentDisplay.emotionType['negative'] = true;
+        } else {
+            delete currentDisplay.emotionType['negative'];
+        }
+        if($('#tiredness').is(':checked')) {
+            currentDisplay.emotionType['tiredness'] = true;
+        } else {
+            delete currentDisplay.emotionType['tiredness'];
+        }
+    } else {
+        currentDisplay.emotionType = {};
+        var toastStr = '热力图只支持显示一类数据，当前为';
+        if(!$.isEmptyObject(currentDisplay.overlayType)) {
+            if(currentDisplay.overlayType['traffic']) {
+                M.toast({html: toastStr + '交通'});
+            } else if($('#positive').is(':checked')) {
+                currentDisplay.emotionType['positive'] = true;
+                M.toast({html: toastStr + '正向情感'});
+            } else if($('#negative').is(':checked')) {
+                currentDisplay.emotionType['negative'] = true;
+                M.toast({html: toastStr + '负向情感'});
+            } else if($('#tiredness').is(':checked')) {
+                currentDisplay.emotionType['tiredness'] = true;
+                M.toast({html: toastStr + '疲倦'});
+            }
+        }
+    }
+}
+
+
+var onToggleEmotionCallbacks = {};
+function onToggleEmotion() {
+    updateDisplayStatus();
+    for(callback in onToggleEmotionCallbacks) {
+        // Function call
+        window[callback].apply(this, onToggleEmotionCallbacks[callback]);
+    }
+}
+
+var onChangeVisualCallbacks = {};
+function onChangeVisual() {
+    updateDisplayStatus();
+    for(callback in onChangeVisualCallbacks) {
+        // Function call
+        window[callback].apply(this, onChangeVisualCallbacks[callback]);
+    }
+}
+
+var onToggleDispalyCallbacks = {};
+function onToggleDispaly() {
+    updateDisplayStatus();
+    for(callback in onToggleDispalyCallbacks) {
+        // Function call
+        window[callback].apply(this, onToggleDispalyCallbacks[callback]);
+    }
+}

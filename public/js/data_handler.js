@@ -62,7 +62,6 @@ getPPDbyHour.done(function() {
     refreshHourlyPPD();
 });
 
-
 // //create emotion object
 // function create_emotion(loc_list, color){
 //     var result = [];
