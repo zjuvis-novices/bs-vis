@@ -24,6 +24,7 @@
     <script src="js/lib/echarts.js"></script>
     <!-- Application -->
     <script src="js/index.js"></script>
+    <script src="js/data_handler.js"></script>
     <script src="js/map.js"></script>
     <script src="js/visualization.js"></script>
     <!-- Drop down menu -->
@@ -98,7 +99,7 @@
                         <form action="#" class="col s9">
                             <label>时间</label>
                             <p class="range-field">
-                                <input type="range" id="hour" min="0" max="23" value="8" onmousemove="javascript:onTimeChange()">
+                                <input type="range" id="hour" min="0" max="23" value="8" oninput="javascript:onTimeChange()">
                             </p>
                         </form>
                         <div class="col s3" id="time-string" style="margin-top:28px">
