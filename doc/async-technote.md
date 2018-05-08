@@ -88,7 +88,7 @@ onTimeChangeCallbacks.fooBar = [];
 
 * [使用 promises](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Using_promises)
 * [Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-* [.promise()|jQuery](https://api.jquery.com/promise/)
-* [jQuery.get()|jQuery](https://api.jquery.com/jQuery.get/)
+* [.promise() | jQuery](https://api.jquery.com/promise/)
+* [jQuery.get() | jQuery](https://api.jquery.com/jQuery.get/)
 
 在现在的代码中，我们使用了`get`函数的promise接口，它与jQuery的promise方法是一致的。
