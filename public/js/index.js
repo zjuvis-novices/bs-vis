@@ -172,18 +172,16 @@ function updateDisplayStatus() {
     } else {
         currentDisplay.emotionType = {};
         var toastStr = '热力图只支持显示一类数据，当前为';
-        if(!$.isEmptyObject(currentDisplay.overlayType)) {
-            if(currentDisplay.overlayType['traffic']) {
-                M.toast({html: toastStr + '交通'});
-            } else if($('#positive').is(':checked')) {
+        if(currentDisplay.overlayType['emotion']) {
+            if($('#positive').is(':checked')) {
                 currentDisplay.emotionType['positive'] = true;
-                M.toast({html: toastStr + '正向情感'});
+                M.toast({html: toastStr + '正向情感', classes: 'rounded'});
             } else if($('#negative').is(':checked')) {
                 currentDisplay.emotionType['negative'] = true;
-                M.toast({html: toastStr + '负向情感'});
+                M.toast({html: toastStr + '负向情感', classes: 'rounded'});
             } else if($('#tiredness').is(':checked')) {
                 currentDisplay.emotionType['tiredness'] = true;
-                M.toast({html: toastStr + '疲倦'});
+                M.toast({html: toastStr + '疲倦', classes: 'rounded'});
             }
         }
     }
