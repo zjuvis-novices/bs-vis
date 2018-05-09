@@ -99,6 +99,7 @@ poiData = poiData.done(function(poiDataContent) {
 });
 
 // Update visual data and returns a promise object
+onDateSelectionCallbacks.updateVisualData = [];
 function updateVisualData() {
     var promises = [];
     if(dateString(dataDate) === dateString(currentDate)) {
