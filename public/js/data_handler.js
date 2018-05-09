@@ -1,21 +1,3 @@
-// var globalDate = new Date()
-// var currenttemp = null;
-// var currentPPD = null;
-// var temperaturedata = null;
-// var PPDdata = null;
-// var speeddata = [];
-// var positivedata = [];
-// var negativedata = [];
-// var tirednessdata = [];
-// var densitydata = null;
-// var positive_raw = [];
-// var negative_raw = [];
-// var tiredness_raw = [];
-// var pos = null;
-// var neg = null;
-// var tir = null;
-// var show_emotion = {pos: false, neg: false, tir: false}
-
 // ================ POI ================
 var poiData = $.get('api/poi.json');
 
@@ -81,30 +63,44 @@ function dateString(date) {
 //              'traffic'   : [0.4, ... 24 objects]
 //          }, ... 1000+ objects
 // }
+// dataDate is the date of currentVisualData
+// currentVisualData is the current data
+// it updates when a new date is picked on UI
 var dataDate = epoch;
 var currentVisualData;
 
 // Initialize currentVisualData
 poiData = poiData.done(function(poiDataContent) {
     currentVisualData = poiDataContent.map(function (x) {
-        return {
-            'lnglat'        : x['location'],
-            'positive'      : Array.from(new Array(24), function () {return null;}),
-            'negative'      : Array.from(new Array(24), function () {return null;}),
-            'tiredness'     : Array.from(new Array(24), function () {return null;}),
-            'traffic'       : Array.from(new Array(24), function () {return null;})
+        return new function () {
+            this['lnglat'] = x['location'];
+            for(var i = 0; i < 24; i++) {
+                this['positive' + i]    = Array.from(new Array(24), function () {return null;});
+                this['negative' + i]    = Array.from(new Array(24), function () {return null;});
+                this['tiredness' + i]   = Array.from(new Array(24), function () {return null;});
+                this['traffic' + i]     = Array.from(new Array(24), function () {return null;});
+            }
         };
+        // return {
+        //     'lnglat'        : x['location'],
+        //     'positive'      : Array.from(new Array(24), function () {return null;}),
+        //     'negative'      : Array.from(new Array(24), function () {return null;}),
+        //     'tiredness'     : Array.from(new Array(24), function () {return null;}),
+        //     'traffic'       : Array.from(new Array(24), function () {return null;})
+        // };
     });
-    updateVisualData();
-});
+}).done(updateVisualData);
 
-// Update visual data and returns a promise object
+// Bind the updateVisualData method to 
 onDateSelectionCallbacks.updateVisualData = [];
+// Update visual data and return a promise object
 function updateVisualData() {
     var promises = [];
-    if(dateString(dataDate) === dateString(currentDate)) {
+    if(currentVisualData[0]['positive0'][0] !== null
+        && dateString(dataDate) === dateString(currentDate)) {
         return $.when.apply(this, promises);
     }
+    
     dataDate.setTime(currentDate.getTime());
     function getEmotion(emotion) {
         for(var i = 0; i < 24; i++) {
@@ -112,7 +108,7 @@ function updateVisualData() {
                 var promise = $.get('api/emotion/' + emotion + '/' + dateString(dataDate) + '/' + i)
                     .done(function (dataContent) {
                         for(var index = 0; index < currentVisualData.length; index++) {
-                            currentVisualData[index][emotion][i]
+                            currentVisualData[index][emotion + i]
                                 = dataContent[index];
                         }
                     });
@@ -130,7 +126,7 @@ function updateVisualData() {
             var promise = $.get('api/traffic/speed/' + weekdays[dataDate.getDay()] + '/' + i)
                 .done(function(dataContent) {
                     for(var index = 0; index < currentVisualData.length; index++) {
-                        currentVisualData[index]['traffic'][i]
+                        currentVisualData[index]['traffic' + i]
                             = dataContent[index];
                     }
                 });

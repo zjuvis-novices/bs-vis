@@ -132,7 +132,7 @@ function updateDisplayStatus() {
     if($('#display-type').val() === '1') {
         currentDisplay.visualStyle = 'bubble';
     } else {
-        currentDisplay.visualStyle = 'thermo';
+        currentDisplay.visualStyle = 'heat';
     }
     if(currentDisplay.visualStyle === 'bubble') {
         if($('#emotion-display').is(':checked')) {
