@@ -1,10 +1,18 @@
 // Initialize AMap Loca
-var map = new Loca.create('container', {
+var map = Loca.create('container', {
     resizeEnable: true,
     zoom: 10,
     center:[120.2,30.25],
     mapStyle: 'amap://styles/grey'
 });
+
+var heatLayer = Loca.visualLayer({
+    container: map,
+    type: 'heatmap',
+    shape: 'normal'
+});
+
+
 
 // var heatmap;
 // map.plugin(["AMap.Heatmap"], function() {

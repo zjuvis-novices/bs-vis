@@ -1,20 +1,20 @@
-var globalDate = new Date()
-var currenttemp = null;
-var currentPPD = null;
-var temperaturedata = null;
-var PPDdata = null;
-var speeddata = [];
-var positivedata = [];
-var negativedata = [];
-var tirednessdata = [];
-var densitydata = null;
-var positive_raw = [];
-var negative_raw = [];
-var tiredness_raw = [];
-var pos = null;
-var neg = null;
-var tir = null;
-var show_emotion = {pos: false, neg: false, tir: false}
+// var globalDate = new Date()
+// var currenttemp = null;
+// var currentPPD = null;
+// var temperaturedata = null;
+// var PPDdata = null;
+// var speeddata = [];
+// var positivedata = [];
+// var negativedata = [];
+// var tirednessdata = [];
+// var densitydata = null;
+// var positive_raw = [];
+// var negative_raw = [];
+// var tiredness_raw = [];
+// var pos = null;
+// var neg = null;
+// var tir = null;
+// var show_emotion = {pos: false, neg: false, tir: false}
 
 // ================ POI ================
 var poiData = $.get('api/poi.json');
@@ -61,6 +61,83 @@ getPPDbyHour.done(function() {
     PPDbyHour = getPPDbyHour.responseJSON;
     refreshHourlyPPD();
 });
+
+
+// ================ Emotion & Traffic ================
+function dateString(date) {
+    var year    = date.getFullYear();
+    var month   = date.getMonth() + 1;
+    var date    = date.getDate();
+    return '' + year + '-' + month + '-' + date;
+}
+
+// structure of currentVisualData:
+// currentVisualData = {
+//          {
+//              'lnglat'    : [120, 45],
+//              'positive'  : [0.2, ... 24 objects],
+//              'negative'  : [0.3, ... 24 objects],
+//              'tiredness' : [0.7, ... 24 objects],
+//              'traffic'   : [0.4, ... 24 objects]
+//          }, ... 1000+ objects
+// }
+var dataDate = epoch;
+var currentVisualData;
+
+// Initialize currentVisualData
+poiData = poiData.done(function(poiDataContent) {
+    currentVisualData = poiDataContent.map(function (x) {
+        return {
+            'lnglat'        : x['location'],
+            'positive'      : Array.from(new Array(24), function () {return null;}),
+            'negative'      : Array.from(new Array(24), function () {return null;}),
+            'tiredness'     : Array.from(new Array(24), function () {return null;}),
+            'traffic'       : Array.from(new Array(24), function () {return null;})
+        };
+    });
+    updateVisualData();
+});
+
+// Update visual data and returns a promise object
+function updateVisualData() {
+    var promises = [];
+    if(dateString(dataDate) === dateString(currentDate)) {
+        return $.when.apply(this, promises);
+    }
+    dataDate.setTime(currentDate.getTime());
+    function getEmotion(emotion) {
+        for(var i = 0; i < 24; i++) {
+            (function (i) {
+                var promise = $.get('api/emotion/' + emotion + '/' + dateString(dataDate) + '/' + i)
+                    .done(function (dataContent) {
+                        for(var index = 0; index < currentVisualData.length; index++) {
+                            currentVisualData[index][emotion][i]
+                                = dataContent[index];
+                        }
+                    });
+                promises.push(promise);
+            } (i));
+        }
+    }
+    getEmotion('positive');
+    getEmotion('negative');
+    getEmotion('tiredness');
+    var weekdays = ['sunday', 'monday', 'tuesday', 'wednesday',
+        'thursday', 'friday', 'saturday'];
+    for(var i = 0; i < 24; i++) {
+        (function (i) {
+            var promise = $.get('api/traffic/speed/' + weekdays[dataDate.getDay()] + '/' + i)
+                .done(function(dataContent) {
+                    for(var index = 0; index < currentVisualData.length; index++) {
+                        currentVisualData[index]['traffic'][i]
+                            = dataContent[index];
+                    }
+                });
+            promises.push(promise);
+        } (i));
+    }
+    return $.when.apply(this, promises);
+}
 
 // //create emotion object
 // function create_emotion(loc_list, color){
