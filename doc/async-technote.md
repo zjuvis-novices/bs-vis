@@ -25,7 +25,7 @@ var onTimeChangeCallbacks = {
     refreshTimeString: []
 };
 function onTimeChange() {
-    currentHour = parseInt($('#hour').val());
+    currentHour = parseInt($('.hour').val());
     var callback;
     // Call all the associated callbacks
     for(callback in onTimeChangeCallbacks) {

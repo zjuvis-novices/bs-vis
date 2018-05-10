@@ -26,7 +26,7 @@ function containerResizeWidth(selector) {
 $(document).ready(function (){
     M.AutoInit();
     // Initialize date pickers
-    var elems = document.querySelector('#date-selection');
+    var elems = document.querySelectorAll('.date-selection');
     initDatePicker(elems);
     $('#preloader').hide();
     containerResize('#container');
@@ -84,7 +84,7 @@ function initDatePicker(elems) {
 
 // Refresh the UI element of time display
 function refreshTimeString() {
-    $('#time-string').text(currentHour + ':00');
+    $('.time-string').text(currentHour + ':00');
 }
 
 // On time change event
@@ -98,8 +98,17 @@ function refreshTimeString() {
 var onTimeChangeCallbacks = {
     refreshTimeString: []
 };
-function onTimeChange() {
-    currentHour = parseInt($('#hour').val());
+
+function dateSlashString(date) {
+    var year    = date.getFullYear();
+    var month   = date.getMonth() + 1;
+    var date    = date.getDate();
+    return '' + year + '/' + (month<10?'0'+month:month) + '/'
+            + (date<10?'0'+date:date);
+}
+function onTimeChange(id) {
+    currentHour = parseInt($('#' + id).val());
+    $('.hour[id!="' + id + '"]').val(currentHour);
     var callback;
     // Call all the associated callbacks
     for(callback in onTimeChangeCallbacks) {
@@ -114,6 +123,7 @@ var onDateSelectionCallbacks = {
 };
 function onDateSelection(date) {
     currentDate = date;
+    $('.date-selection').val(dateSlashString(date));
     var callback;
     for(callback in onDateSelectionCallbacks) {
         // Function call

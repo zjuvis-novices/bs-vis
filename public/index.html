@@ -26,7 +26,7 @@
     <script src="js/index.js"></script>
     <script src="js/data_handler.js"></script>
     <script src="js/map.js"></script>
-    <script src="js/visualization.js"></script>
+    <script src="js/rader.js"></script>
     <!-- Drop down menu -->
     <ul id="dropdown1" class="dropdown-content">
         <li><a href="#!">关于</a></li>
@@ -56,10 +56,11 @@
             <div class="nav-content">
                 <ul class="tabs">
                     <!-- Don't forget to modify this tabNumber when tab changed. -->
-                    <script>var tabNumber = 3;</script>
-                    <li class="tab"><a class="active" href="#panel-content1">控制板</a></li>
+                    <script>var tabNumber = 4;</script>
+                    <li class="tab"><a class="active" href="#panel-content1">控制</a></li>
                     <li class="tab"><a href="#panel-content2">今日</a></li>
-                    <li class="tab"><a href="#panel-content3">日历图</a></li>
+                    <li class="tab"><a href="#panel-content3">雷达图</a></li>
+                    <li class="tab"><a href="#panel-content4">日历图</a></li>
                 </ul>
                 <div class="divider"></div>
             </div>
@@ -71,13 +72,13 @@
             <div class="row" style="margin-bottom: 0">
                 <div class="col s6" style="padding-right: 10px">
                     <div class="row" style="height: 30pt">
-                        <div id="location-title" class="col s3 valign-wrapper" style="height: inherit;">杭州</div>
+                        <div class="col s3 valign-wrapper location-title" style="height: inherit;">杭州</div>
                         <div class="col s9 valign-wrapper" style="height: inherit">
                             <span class="valign-wrapper">
                                 <i class="material-icons" style="margin-right: 0.5em">
                                     wb_sunny
                                 </i>
-                                <span id="temperature-value">28</span>
+                                <span class="temperature-value">28</span>
                                 <span style="margin-right: 1.5em;">℃</span>
                             </span>
                             <span class="valign-wrapper">
@@ -85,22 +86,22 @@
                                     sentiment_very_satisfied
                                 </i>
                                 PPD:&nbsp;
-                                <span id="ppd-value">23</span>
+                                <span class="ppd-value">23</span>
                             </span>
                         </div>
                     </div>
                     <div class="row" style="padding: 10px; margin-bottom: 0">
                         <label>日期</label>
-                        <input type="text" class="datepicker no-autoinit" id="date-selection">
+                        <input type="text" class="datepicker no-autoinit date-selection">
                     </div>
                     <div class="row" style="margin-bottom: 0">
                         <form action="#" class="col s9">
                             <label>时间</label>
                             <p class="range-field">
-                                <input type="range" id="hour" min="0" max="23" value="8" oninput="onTimeChange()">
+                                <input type="range" class="hour" id="hour0" min="0" max="23" value="8" oninput="onTimeChange('hour0')">
                             </p>
                         </form>
-                        <div class="col s3" id="time-string" style="margin-top:28px">
+                        <div class="col s3 time-string" style="margin-top:28px">
                             8:00
                         </div>
                     </div>
@@ -109,14 +110,14 @@
                     <div class="row" style="margin-top: 20px;">
                         <div class="switch col s4">
                             <label>
-                                积极
+                                正向
                                 <input id = "positive" type="checkbox" checked="true" onclick = "onToggleEmotion()">
                                 <span class="lever"/>
                             </label>
                         </div>
                         <div class="switch col s4">
                             <label>
-                                消极
+                                负向
                                 <input id = "negative" type="checkbox" onclick = "onToggleEmotion()">
                                 <span class="lever"/>
                             </label>
@@ -159,7 +160,50 @@
             <p>Content 2</p>
         </div>
         <div class="card-content" id="panel-content3">
-            <p>Content 3</p>
+            <div class="row" style="margin-bottom: 0">
+                <div class="col s5" style="padding-right: 10px">
+                    <div id="rader-container" style="width: 220px; height: 220px;"></div>
+                </div>
+                <div class="col s7" style="padding-left: 10px">
+                    <div class="row" style="height: 30pt">
+                        <div class="col s3 valign-wrapper location-title" style="height: inherit;">杭州</div>
+                        <div class="col s9 valign-wrapper" style="height: inherit">
+                            <span class="valign-wrapper">
+                                <i class="material-icons" style="margin-right: 0.5em">
+                                    wb_sunny
+                                </i>
+                                <span class="temperature-value">28</span>
+                                <span style="margin-right: 1.5em;">℃</span>
+                            </span>
+                            <span class="valign-wrapper">
+                                <i class="material-icons" style="margin-right: 0.5em">
+                                    sentiment_very_satisfied
+                                </i>
+                                PPD:&nbsp;
+                                <span class="ppd-value">23</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 10px; margin-bottom: 0">
+                        <label>日期</label>
+                        <input type="text" class="datepicker no-autoinit date-selection">
+                    </div>
+                    <div class="row" style="margin-bottom: 0">
+                        <form action="#" class="col s9">
+                            <label>时间</label>
+                            <p class="range-field">
+                                <input type="range" class="hour" id="hour1" min="0" max="23" value="8" oninput="onTimeChange('hour1')">
+                            </p>
+                        </form>
+                        <div class="col s3 time-string" style="margin-top:28px">
+                            8:00
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-content" id="panel-content4">
+            <p>Content 4</p>
         </div>
     </div>
     <!-- A short script to hide the panel and tab page contents -->

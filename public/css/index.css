@@ -47,6 +47,6 @@ button, input, optgroup, select, textarea {
     right: 0;
 }
 
-#location-title {
+.location-title {
     font-size: 26pt;
 }

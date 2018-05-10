@@ -7,7 +7,7 @@ var poiData = $.get('api/poi.json');
 var getTemperatureByHour = $.get('api/weather/temperature.json');
 var temperatureByHour;
 function refreshHourlyTemperature() {
-    $('#temperature-value').text(
+    $('.temperature-value').text(
         Math.round(temperatureByHour[getCurrentIndex()])
     );
 };
@@ -30,7 +30,7 @@ getTemperatureByHour.done(function() {
 var getPPDbyHour = $.get('api/weather/ppd.json');
 var PPDbyHour;
 function refreshHourlyPPD() {
-    $('#ppd-value').text(
+    $('.ppd-value').text(
         Math.round(PPDbyHour[getCurrentIndex()])
     );
 };
