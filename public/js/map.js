@@ -199,7 +199,6 @@ heatLayer.setOptions({
 // of a Loca layer object.
 // Note that the 'this' pointer is dynamically binded
 function BubbleLayerOptions() {
-    this.fitView    = true;
     this.container  = map;
     this.type       = 'point';
     this.shape      = 'circle';
