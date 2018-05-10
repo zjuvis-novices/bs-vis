@@ -33,6 +33,7 @@ heatLayer.updateData = function() {
         lnglat  : 'lnglat',
         value   : currentHeat + currentHour
     })
+    return this;
 };
 
 // Update data binding of layers
@@ -86,6 +87,7 @@ poiData.done(function () {
 
 function updateLayerVisibility() {
     if(currentDisplay['bubble']) {
+        heatLayer.hide();
         if(currentDisplay['emotion']) {
             if(currentDisplay['positive'])  positiveLayer.show();
             else                            positiveLayer.hide();
@@ -119,10 +121,22 @@ function updateLayerVisibility() {
     }
 }
 
+function updateDataByTime() {
+    setTimeout(function () {
+        if(positiveLayer.shown)     positiveLayer.updateData().render();
+        if(negativeLayer.shown)     negativeLayer.updateData().render();
+        if(tirednessLayer.shown)    tirednessLayer.updateData().render();
+        if(trafficLayer.shown)      trafficLayer.updateData().render();
+        if(heatLayer.shown)         heatLayer.updateData().render();
+    });
+}
+
 // Update binding to event
 onToggleEmotionCallbacks.updateLayerVisibility  = [];
 onToggleDispalyCallbacks.updateLayerVisibility  = [];
 onChangeVisualCallbacks.updateLayerVisibility   = [];
+onTimeChangeCallbacks.updateDataByTime          = [];
+onDateSelectionCallbacks.updateDataByTime       = [];
 
 // --------------------------------
 // These are the visual style options of layers
@@ -158,9 +172,9 @@ tirednessLayer.setOptions({
 
 trafficLayer.setOptions({
     style: {
-        radius: function (data) { return data.value['traffic' + currentHour]; },
+        radius: function (data) { return Math.pow(data.value['traffic' + currentHour], 5) * 200; },
         fill: '#08519c',
-        opacity: 1,
+        opacity: function (data) { return Math.pow(data.value['traffic' + currentHour], 2); },
         lineWidth: 1,
         stroke: '#50abff'
     }
@@ -223,42 +237,3 @@ function updateLayerData(typeStr) {
         return this;
     };
 }
-
-// heatLayer.setData(districts, {lnglat:'center'});
-
-// poiData.then(updateVisualData).then(function() {
-//     negativeLayer.updateData();
-//     negativeLayer.render();
-// });
-
-// updateDisplayLayers()
-
-
-
-// var heatmap;
-// map.plugin(["AMap.Heatmap"], function() {
-//     //初始化heatmap对象
-//     heatmap = new AMap.Heatmap(map, {
-//         radius: 25, //给定半径
-//         opacity: [0, 0.8]
-//     });
-// });
-
-// function changedisplay() {
-//     if($("#displaytype").val() == 1)
-//     {
-//         heatmap.hide()
-//        // myChart.show()
-//     }
-//     else if($("#displaytype").val() == 2)
-//     {
-//         heatmap.show()
-//        // myChart.hide()
-//     }
-// }
-
-// function mapdisplay() {
-//     if(!$("#traffic").is(':checked')&&!$("#emotion").is(':checked')){
-//         heatmap.hide()
-//     }
-// }
