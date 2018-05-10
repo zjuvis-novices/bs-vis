@@ -121,72 +121,48 @@ function onDateSelection(date) {
     }
 }
 
-var currentDisplay = {
-    overlayType: {'emotion': true},
-    visualStyle: 'bubble',
-    emotionType: {'positive': true}
-};
+var currentDisplay = {};
 
 // This stuff is ugly. It should have better design.
 function updateDisplayStatus() {
     if($('#display-type').val() === '1') {
-        currentDisplay.visualStyle = 'bubble';
+        currentDisplay['bubble'] = true;
+        delete currentDisplay['heat'];
     } else {
-        currentDisplay.visualStyle = 'heat';
+        currentDisplay['heat'] = true;
+        delete currentDisplay['bubble'];
     }
-    if(currentDisplay.visualStyle === 'bubble') {
-        if($('#emotion-display').is(':checked')) {
-            currentDisplay.overlayType['emotion'] = true;
-        } else {
-            delete currentDisplay.overlayType['emotion'];
-        }
-        if($('#traffic-display').is(':checked')) {
-            currentDisplay.overlayType['traffic'] = true;
-        } else {
-            delete currentDisplay.overlayType['traffic'];
-        }
+
+    if($('#emotion-display').is(':checked')) {
+        currentDisplay['emotion'] = true;
     } else {
-        if($('#emotion-display').is(':checked')) {
-            currentDisplay.overlayType = {'emotion': true};
-        } else if($('#traffic-display').is(':checked')) {
-            currentDisplay.overlayType = {'traffic': true};
-        } else { currentDisplay.overlayType = {}; }
+        delete currentDisplay['emotion'];
     }
-    if(currentDisplay.visualStyle === 'bubble') {
-        // currentDisplay.emotionType
-        if($('#positive').is(':checked')) {
-            currentDisplay.emotionType['positive'] = true;
-        } else {
-            delete currentDisplay.emotionType['positive'];
-        }
-        if($('#negative').is(':checked')) {
-            currentDisplay.emotionType['negative'] = true;
-        } else {
-            delete currentDisplay.emotionType['negative'];
-        }
-        if($('#tiredness').is(':checked')) {
-            currentDisplay.emotionType['tiredness'] = true;
-        } else {
-            delete currentDisplay.emotionType['tiredness'];
-        }
+
+    if($('#traffic-display').is(':checked')) {
+        currentDisplay['traffic'] = true;
     } else {
-        currentDisplay.emotionType = {};
-        var toastStr = '热力图只支持显示一类数据，当前为';
-        if(currentDisplay.overlayType['emotion']) {
-            if($('#positive').is(':checked')) {
-                currentDisplay.emotionType['positive'] = true;
-                M.toast({html: toastStr + '正向情感', classes: 'rounded'});
-            } else if($('#negative').is(':checked')) {
-                currentDisplay.emotionType['negative'] = true;
-                M.toast({html: toastStr + '负向情感', classes: 'rounded'});
-            } else if($('#tiredness').is(':checked')) {
-                currentDisplay.emotionType['tiredness'] = true;
-                M.toast({html: toastStr + '疲倦', classes: 'rounded'});
-            }
-        }
+        delete currentDisplay['traffic'];
+    }
+
+    if($('#positive').is(':checked')) {
+        currentDisplay['positive'] = true;
+    } else {
+        delete currentDisplay['positive'];
+    }
+
+    if($('#negative').is(':checked')) {
+        currentDisplay['negative'] = true;
+    } else {
+        delete currentDisplay['negative'];
+    }
+
+    if($('#tiredness').is(':checked')) {
+        currentDisplay['tiredness'] = true;
+    } else {
+        delete currentDisplay['tiredness'];
     }
 }
-
 
 var onToggleEmotionCallbacks = {};
 function onToggleEmotion() {

@@ -70,7 +70,7 @@ var dataDate = epoch;
 var currentVisualData;
 
 // Initialize currentVisualData
-poiData = poiData.done(function(poiDataContent) {
+poiData = poiData.done(function (poiDataContent) {
     currentVisualData = poiDataContent.map(function (x) {
         return new function () {
             this['lnglat'] = x['location'];
@@ -89,7 +89,7 @@ poiData = poiData.done(function(poiDataContent) {
         //     'traffic'       : Array.from(new Array(24), function () {return null;})
         // };
     });
-}).done(updateVisualData);
+});
 
 // Bind the updateVisualData method to 
 onDateSelectionCallbacks.updateVisualData = [];

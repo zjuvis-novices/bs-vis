@@ -6,67 +6,26 @@ var map = Loca.create('container', {
     mapStyle: 'amap://styles/grey'
 });
 
+// Heat layer initialization
 var heatLayer = Loca.visualLayer({
     container: map,
     type: 'heatmap',
     shape: 'normal'
 });
-
-var positiveLayer = Loca.visualLayer({
-    fitView: true,
-    container: map,
-    type: 'point',
-    shape: 'circle'
-});
-
-var negativeLayer = Loca.visualLayer({
-    fitView: true,
-    container: map,
-    type: 'point',
-    shape: 'circle'
-});
-
-var tirednessLayer = Loca.visualLayer({
-    fitView: true,
-    container: map,
-    type: 'point',
-    shape: 'circle'
-});
-
-var trafficLayer = Loca.visualLayer({
-    fitView: true,
-    container: map,
-    type: 'point',
-    shape: 'circle'
-});
-
-positiveLayer.updateData = function () {
-    positiveLayer.setData(currentVisualData, {
-        lnglat  : 'lnglat',
-        value   : 'positive' + currentHour
-    });
-};
-
-negativeLayer.updateData = function () {
-    negativeLayer.setData(currentVisualData, {
-        lnglat  : 'lnglat',
-        value   : 'negative' + currentHour
-    });
-};
-
-tirednessLayer.updateData = function() {
-    tirednessLayer.setData(currentVisualData, {
-        lnglat  : 'lnglat',
-        value   : 'tiredness' + currentHour
-    });
-};
-
-trafficLayer.updateData = function() {
-    trafficLayer.setData(currentVisualData, {
-        lnglat  : 'lnglat',
-        value   : 'traffic' + currentHour
-    })
-};
+heatLayer.hide = hideLayer;    heatLayer.show = showLayer;
+// Bubble layer initialization
+var positiveLayer = Loca.visualLayer(new BubbleLayerOptions());
+positiveLayer.hide = hideLayer;     positiveLayer.show = showLayer;
+positiveLayer.updateData = updateLayerData('positive');
+var negativeLayer = Loca.visualLayer(new BubbleLayerOptions());
+negativeLayer.hide = hideLayer;     negativeLayer.show = showLayer;
+negativeLayer.updateData = updateLayerData('negative');
+var tirednessLayer = Loca.visualLayer(new BubbleLayerOptions());
+tirednessLayer.hide = hideLayer;    tirednessLayer.show = showLayer;
+tirednessLayer.updateData = updateLayerData('tiredness');
+var trafficLayer = Loca.visualLayer(new BubbleLayerOptions());
+trafficLayer.hide   = hideLayer;    trafficLayer.show   = showLayer;
+trafficLayer.updateData = updateLayerData('traffic');
 
 var currentHeat = 'positive';
 heatLayer.updateData = function() {
@@ -76,41 +35,97 @@ heatLayer.updateData = function() {
     })
 };
 
+// Update data binding of layers
 function updateVisualDataBinding() {
-    if(currentDisplay.visualStyle === 'bubble') {
-        if(currentDisplay.overlayType['emotion']) {
-            if(currentDisplay.emotionType['positive']) {
+    if(currentDisplay['heat']) {
+        if(currentDisplay['emotion']) {
+            if(currentDisplay['positive']) {
                 positiveLayer.updateData();
-            } else if(currentDisplay.emotionType['negative']) {
+            } else if(currentDisplay['negative']) {
                 negativeLayer.updateData();
-            } else if(currentDisplay.emotionType['tiredness']) {
+            } else if(currentDisplay['tiredness']) {
                 tirednessLayer.updateData();
             }
         }
-        if(currentDisplay.overlayType['traffic']) {
+        if(currentDisplay['traffic']) {
             trafficLayer.updateData();
         }
     } else {
-        if(currentDisplay.overlayType['emotion']) {
-            if(currentDisplay.overlayType['positive']) {
+        if(currentDisplay['emotion']) {
+            if(currentDisplay['positive']) {
                 currentHeat = 'positive';
-            } else if(currentDisplay.overlayType['negative']) {
+            } else if(currentDisplay['negative']) {
                 currentHeat = 'negative';
             } else {
                 currentHeat = 'tiredness';
             }
             heatLayer.updateData();
-        } else if(currentDisplay.overlayType['traffic']) {
+        } else if(currentDisplay['traffic']) {
             currentHeat = 'traffic';
             heatLayer.updateData();
         }
     }
 }
 
-function updateVisualRendering() {
-    
+// This code fragment is to:
+// When getting POI data is done asyncly,
+// update current visual data asyncly.
+// When updating current visual data is done,
+// update the data binding to the layers
+// and update the layers' visibility syncly.
+poiData.done(function () {
+    updateDisplayStatus();
+    updateVisualData().done(function() {
+        positiveLayer.updateData();
+        negativeLayer.updateData();
+        tirednessLayer.updateData();
+        trafficLayer.updateData();
+        heatLayer.updateData();
+    }).done(updateLayerVisibility);
+});
+
+function updateLayerVisibility() {
+    if(currentDisplay['bubble']) {
+        if(currentDisplay['emotion']) {
+            if(currentDisplay['positive'])  positiveLayer.show();
+            else                            positiveLayer.hide();
+            if(currentDisplay['negative'])  negativeLayer.show();
+            else                            negativeLayer.hide();
+            if(currentDisplay['tiredness']) tirednessLayer.show();
+            else                            tirednessLayer.hide();
+        } else {
+            positiveLayer.hide(); negativeLayer.hide(); tirednessLayer.hide();
+        }
+        if(currentDisplay['traffic'])   trafficLayer.show();
+        else                            trafficLayer.hide();
+    } else {
+        positiveLayer.hide();   negativeLayer.hide();
+        tirednessLayer.hide();  trafficLayer.hide();
+        if(currentDisplay['traffic']) {
+            currentHeat = 'traffic';
+            heatLayer.updateData();
+            if(!heatLayer.shown) heatLayer.show();
+            else heatLayer.render()
+        } else if(currentDisplay['emotion']) {
+            if(currentDisplay['positive'])  currentHeat = 'positive';
+            if(currentDisplay['negative'])  currentHeat = 'negative';
+            if(currentDisplay['tiredness']) currentHeat = 'tiredness';
+            heatLayer.updateData();
+            if(!heatLayer.shown) heatLayer.show();
+            else heatLayer.render();
+        } else {
+            if(heatLayer.shown) heatLayer.hide();
+        }
+    }
 }
 
+// Update binding to event
+onToggleEmotionCallbacks.updateLayerVisibility  = [];
+onToggleDispalyCallbacks.updateLayerVisibility  = [];
+onChangeVisualCallbacks.updateLayerVisibility   = [];
+
+// --------------------------------
+// These are the visual style options of layers
 positiveLayer.setOptions({
     style: {
         radius: function (data) { return data.value['positive' + currentHour] * 15; },
@@ -165,12 +180,56 @@ heatLayer.setOptions({
     }
 });
 
+// --------------------------------
+// These functions are used to extend the functionality
+// of a Loca layer object.
+// Note that the 'this' pointer is dynamically binded
+function BubbleLayerOptions() {
+    this.fitView    = true;
+    this.container  = map;
+    this.type       = 'point';
+    this.shape      = 'circle';
+}
+
+function hideLayer() {
+    if(this._dataSet) {
+        if(this.shown) {
+            if(this.shown !== undefined) {
+                map.removeLayer(this);
+            }
+            this.shown = false;
+        }
+    }
+    return this;
+}
+
+function showLayer() {
+    if(this._dataSet) {
+        if(!this.shown) {
+            this.shown = true;
+            map.addLayer(this);
+            this.render();
+        }
+    }
+    return this;
+}
+
+function updateLayerData(typeStr) {
+    return function() {
+        this.setData(currentVisualData, {
+            lnglat  : 'lnglat',
+            value   : typeStr + currentHour
+        });
+        return this;
+    };
+}
+
 // heatLayer.setData(districts, {lnglat:'center'});
 
-poiData.then(updateVisualData).then(function() {
-    negativeLayer.updateData();
-    negativeLayer.render();
-});
+// poiData.then(updateVisualData).then(function() {
+//     negativeLayer.updateData();
+//     negativeLayer.render();
+// });
 
 // updateDisplayLayers()
 
