@@ -135,3 +135,7 @@ function updateVisualData() {
     }
     return $.when.apply(this, promises);
 }
+
+var positiveAverageGet  = $.get('api/emotion/positive/average.json');
+var negativeAverageGet  = $.get('api/emotion/negative/average.json');
+var tirednessAverageGet = $.get('api/emotion/tiredness/average.json');
