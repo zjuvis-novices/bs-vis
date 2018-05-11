@@ -66,7 +66,7 @@ function dateString(date) {
 // dataDate is the date of currentVisualData
 // currentVisualData is the current data
 // it updates when a new date is picked on UI
-var dataDate = epoch;
+var dataDate = new Date(epoch);
 var currentVisualData;
 
 // Initialize currentVisualData
