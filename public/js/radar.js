@@ -1,16 +1,14 @@
 // Visualization
 // Use function 'getCurrentIndex' to know the index of current hour
 var radar;
-var positiveByHour = [];
-var negativeByHour = [];
-var tirednessByHour = [];
+
 $('#radar-container').promise().then(function() {
     radar = echarts.init(document.getElementById('radar-container'));
 });
 
 var currentdata = [];
 
-radarOptions = {
+var radarOptions = {
     // title : {
     //     text: '情感分布',
     //     subtext: ''
@@ -73,15 +71,7 @@ onDateSelectionCallbacks.updateradarData = [];
 
 // The initialization of data options should be delayed until the average
 // data get requests are done.
-$.when(
-    positiveAverageGet,
-    negativeAverageGet,
-    tirednessAverageGet
-).done(function () {
-    // These data are only available when the initialization is done
-    positiveByHour = positiveAverageGet.responseJSON;
-    negativeByHour = negativeAverageGet.responseJSON;
-    tirednessByHour = tirednessAverageGet.responseJSON;
+getAverageData = getAverageData.done(function () {
     // Do initial data/option binding
     var index = getCurrentIndex();
     currentdata[0] = positiveByHour[index];

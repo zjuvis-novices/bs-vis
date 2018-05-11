@@ -1,18 +1,37 @@
 var calendar;
-var positiveByHour = [];
-var negativeByHour = [];
-var tirednessByHour = [];
-// The initialization of data options should be delayed until the average
-// data get requests are done.
-$.when(
-    positiveAverageGet,
-    negativeAverageGet,
-    tirednessAverageGet
-).done(function () {
-    // These data are only available when the initialization is done
-    positiveByHour = positiveAverageGet.responseJSON;
-    negativeByHour = negativeAverageGet.responseJSON;
-    tirednessByHour = tirednessAverageGet.responseJSON;
-    // Do initial data/option binding
-    //calendar.setOption(calendarOptions);
+var positiveByDay = [];
+var negativeByDay = [];
+var tirednessByDay = [];
+$('#calendar-container').promise().then(function() {
+    calendar = echarts.init(document.getElementById('calendar-container'));
 });
+
+var calendarOptions = {
+    visualMap: {
+        show: false,
+        min: 0,
+        max: 10
+    },
+    calendar: {
+        range: '2017'
+    },
+    series: {
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data: []
+    }
+}
+
+getAverageData = getAverageData.done(function () {
+    // These are ready to use:
+    // positiveByHour
+    // negativeByHour
+    // tirednessByHour
+    
+    calendar.setOption(calendarOptions);
+});
+
+
+
+
+

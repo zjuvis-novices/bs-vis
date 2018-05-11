@@ -139,3 +139,15 @@ function updateVisualData() {
 var positiveAverageGet  = $.get('api/emotion/positive/average.json');
 var negativeAverageGet  = $.get('api/emotion/negative/average.json');
 var tirednessAverageGet = $.get('api/emotion/tiredness/average.json');
+var positiveByHour = [];
+var negativeByHour = [];
+var tirednessByHour = [];
+var getAverageData = $.when(
+    positiveAverageGet,
+    negativeAverageGet,
+    tirednessAverageGet
+).done(function () {
+    positiveByHour = positiveAverageGet.responseJSON;
+    negativeByHour = negativeAverageGet.responseJSON;
+    tirednessByHour = tirednessAverageGet.responseJSON;
+});
