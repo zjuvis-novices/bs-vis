@@ -199,6 +199,34 @@ function onToggleDispaly() {
     }
 }
 
+function updateLineDisplayStatus(){
+    if($('#positiveLine').is(':checked')) {
+        currentLineDisplay['positive'] = true;
+    }
+    else{
+        currentLineDisplay['tiredness'] = false;
+    }
+    if($('#negativeLine').is(':checked')) {
+        currentLineDisplay['negative'] = true;
+    }
+    else{
+        currentLineDisplay['tiredness'] = false;
+    }
+    if($('#tirednessLine').is(':checked')) {
+        currentLineDisplay['tiredness'] = true;
+    }
+    else{
+        currentLineDisplay['tiredness'] = false;
+    }
+}
+var currentLineDisplay = {};
+var onToggleLineCallbacks = {};
+function  onToggleLine() {
+    updateLineDisplayStatus();
+    for(var callback in onToggleLineCallbacks){
+        window[callback].apply(this, onToggleLineCallbacks[callback]);
+    }
+}
 var currentCalendarType = 'positive';
 var onToggleCalendarCallbacks = {};
 function onToggleCalendar() {

@@ -159,7 +159,36 @@
             </div>
         </div>
         <div class="card-content" id="panel-content2">
-            <p>Content 2</p>
+            <div class="row" style="margin-bottom: 0">
+                <div id="line-container" style="width: 750px; height: 300px;"></div>
+            </div>
+            <div class="row" style="display: inline">
+                <div class="col s5">
+                    <label>日期</label>
+                    <input type="text" class="datepicker no-autoinit date-selection">
+                </div>
+                <div class="switch col s2" style="padding-top: 20px">
+                    <label>
+                        积极
+                        <input id = "positiveLine" type="checkbox" checked="true" onClick="onToggleLine()"/>
+                        <span class="lever"></span>
+                    </label>
+                </div>
+                <div class="switch col s2" style="padding-top: 20px">
+                    <label>
+                        消极
+                        <input id = "negativeLine" type="checkbox" onClick="onToggleLine()"/>
+                        <span class="lever"></span>
+                    </label>
+                </div>
+                <div class="switch col s2" style="padding-top: 20px">
+                    <label>
+                        疲惫
+                        <input id = "tirednessLine" type="checkbox" onClick="onToggleLine()"/>
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="card-content" id="panel-content3">
             <div class="row" style="margin-bottom: 0">

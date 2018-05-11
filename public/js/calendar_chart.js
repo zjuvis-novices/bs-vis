@@ -72,7 +72,6 @@ function updateCalendarData(){
         case 'tiredness':   currentCalendarData = tirednessCalendarData; break;
     }
     calendarOptions.series.data = currentCalendarData
-    //console.log(currentCalendarData)
     calendar.setOption(calendarOptions)
 }
 
