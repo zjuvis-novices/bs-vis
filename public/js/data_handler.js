@@ -142,12 +142,25 @@ var tirednessAverageGet = $.get('api/emotion/tiredness/average.json');
 var positiveByHour = [];
 var negativeByHour = [];
 var tirednessByHour = [];
+var positiveByDay = [];
+var negativeByDay = [];
+var tirednessByDay = [];
 var getAverageData = $.when(
     positiveAverageGet,
     negativeAverageGet,
     tirednessAverageGet
 ).done(function () {
-    positiveByHour = positiveAverageGet.responseJSON;
-    negativeByHour = negativeAverageGet.responseJSON;
+    function byDay(byHour) {
+        var result = [];
+        for(var i = 0; i < byHour.length/24; i++) {
+            result[i] = byHour.slice(i * 7, i * 7 + 7).reduce(function (a, b) { return a + b; });
+        }
+        return result;
+    }
+    positiveByHour  = positiveAverageGet.responseJSON;
+    negativeByHour  = negativeAverageGet.responseJSON;
     tirednessByHour = tirednessAverageGet.responseJSON;
+    positiveByDay   = byDay(positiveByHour);
+    negativeByDay   = byDay(negativeByHour);
+    tirednessByDay = byDay(tirednessByHour);
 });

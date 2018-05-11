@@ -34,8 +34,8 @@ var radarOptions = {
     radar : [
         {
             indicator : [
-                { text: '积极', max: 1},
-                { text: '消极', max: 1},
+                { text: '正向', max: 1},
+                { text: '负向', max: 1},
                 { text: '疲倦', max: 1},
             ],
             center: ['50%', '55%']
@@ -57,7 +57,7 @@ var radarOptions = {
 
 };
 
-function updateradarData() {
+function updateRadarData() {
     var index = getCurrentIndex();
     currentdata[0] = positiveByHour[index];
     currentdata[1] = negativeByHour[index];
@@ -66,8 +66,8 @@ function updateradarData() {
 }
 
 // Binding callback
-onTimeChangeCallbacks.updateradarData    = [];
-onDateSelectionCallbacks.updateradarData = [];
+onTimeChangeCallbacks.updateRadarData    = [];
+onDateSelectionCallbacks.updateRadarData = [];
 
 // The initialization of data options should be delayed until the average
 // data get requests are done.

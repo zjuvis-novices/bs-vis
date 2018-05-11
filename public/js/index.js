@@ -109,9 +109,8 @@ function dateSlashString(date) {
 function onTimeChange(id) {
     currentHour = parseInt($('#' + id).val());
     $('.hour[id!="' + id + '"]').val(currentHour);
-    var callback;
     // Call all the associated callbacks
-    for(callback in onTimeChangeCallbacks) {
+    for(var callback in onTimeChangeCallbacks) {
         // Function call
         window[callback].apply(this, onTimeChangeCallbacks[callback]);
     }
@@ -124,8 +123,7 @@ var onDateSelectionCallbacks = {
 function onDateSelection(date) {
     currentDate = date;
     $('.date-selection').val(dateSlashString(date));
-    var callback;
-    for(callback in onDateSelectionCallbacks) {
+    for(var callback in onDateSelectionCallbacks) {
         // Function call
         window[callback].apply(this, onDateSelectionCallbacks[callback]);
     }
@@ -177,7 +175,7 @@ function updateDisplayStatus() {
 var onToggleEmotionCallbacks = {};
 function onToggleEmotion() {
     updateDisplayStatus();
-    for(callback in onToggleEmotionCallbacks) {
+    for(var callback in onToggleEmotionCallbacks) {
         // Function call
         window[callback].apply(this, onToggleEmotionCallbacks[callback]);
     }
@@ -186,7 +184,7 @@ function onToggleEmotion() {
 var onChangeVisualCallbacks = {};
 function onChangeVisual() {
     updateDisplayStatus();
-    for(callback in onChangeVisualCallbacks) {
+    for(var callback in onChangeVisualCallbacks) {
         // Function call
         window[callback].apply(this, onChangeVisualCallbacks[callback]);
     }
@@ -195,8 +193,24 @@ function onChangeVisual() {
 var onToggleDispalyCallbacks = {};
 function onToggleDispaly() {
     updateDisplayStatus();
-    for(callback in onToggleDispalyCallbacks) {
+    for(var callback in onToggleDispalyCallbacks) {
         // Function call
         window[callback].apply(this, onToggleDispalyCallbacks[callback]);
+    }
+}
+
+var currentCalendarType = 'positive';
+var onToggleCalendarCallbacks = {};
+function onToggleCalendar() {
+    if($('#positive-calendar').is(':checked')) {
+        currentCalendarType = 'positive';
+    } else if($('#negative-calendar').is(':checked')) {
+        currentCalendarType = 'negative';
+    } else {
+        currentCalendarType = 'tiredness';
+    }
+    for(var callback in onToggleCalendarCallbacks) {
+        // Function call
+        window[callback].apply(this, onToggleCalendarCallbacks[callback]);
     }
 }
