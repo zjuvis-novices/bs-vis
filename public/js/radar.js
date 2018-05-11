@@ -1,45 +1,46 @@
 // Visualization
 // Use function 'getCurrentIndex' to know the index of current hour
-var rader;
-var positiveByHour = []
-var negativeByHour = []
-var tirednessByHour = []
-$('#rader-container').promise().then(function() {
-    rader = echarts.init(document.getElementById('rader-container'));
+var radar;
+var positiveByHour = [];
+var negativeByHour = [];
+var tirednessByHour = [];
+$('#radar-container').promise().then(function() {
+    radar = echarts.init(document.getElementById('radar-container'));
 });
 
 var currentdata = [];
-// Example data
-raderOptions = {
-    title : {
-        text: '情感分布',
-        subtext: ''
-    },
+
+radarOptions = {
+    // title : {
+    //     text: '情感分布',
+    //     subtext: ''
+    // },
     tooltip : {
         trigger: 'axis'
     },
-    legend: {
-        orient : 'vertical',
-        x : 'right',
-        y : 'bottom',
-        data:'情感分布'
-    },
-    toolbox: {
-        show : true,
-        feature : {
-            mark : {show: true},
-            dataView : {show: true, readOnly: false},
-            restore : {show: true},
-            saveAsImage : {show: true}
-        }
-    },
-    polar : [
+    // legend: {
+    //     orient : 'vertical',
+    //     x : 'right',
+    //     y : 'bottom',
+    //     data:'情感分布'
+    // },
+    // toolbox: {
+    //     show : true,
+    //     feature : {
+    //         mark : {show: true},
+    //         dataView : {show: true, readOnly: false},
+    //         restore : {show: true},
+    //         saveAsImage : {show: true}
+    //     }
+    // },
+    radar : [
         {
             indicator : [
-                { text: '积极（Positive）', max: 1},
-                { text: '消极（Negative）', max: 1},
-                { text: '疲惫（Tiredness）', max: 1},
-            ]
+                { text: '积极', max: 1},
+                { text: '消极', max: 1},
+                { text: '疲倦', max: 1},
+            ],
+            center: ['50%', '55%']
         }
     ],
     calculable : true,
@@ -52,25 +53,23 @@ raderOptions = {
                     value: currentdata,
                     name: '情感分布'
                 }
-                ]
+            ]
         }
     ]
 
 };
 
-// This test function MUST stay in the global scope
-// Note that this is only an example for test use
-function testUpdateData() {
+function updateradarData() {
     var index = getCurrentIndex();
     currentdata[0] = positiveByHour[index];
     currentdata[1] = negativeByHour[index];
     currentdata[2] = negativeByHour[index];
-    rader.setOption(raderOptions);
+    radar.setOption(radarOptions);
 }
 
 // Binding callback
-onTimeChangeCallbacks.testUpdateData    = [];
-onDateSelectionCallbacks.testUpdateData = [];
+onTimeChangeCallbacks.updateradarData    = [];
+onDateSelectionCallbacks.updateradarData = [];
 
 // The initialization of data options should be delayed until the average
 // data get requests are done.
@@ -83,11 +82,10 @@ $.when(
     positiveByHour = positiveAverageGet.responseJSON;
     negativeByHour = negativeAverageGet.responseJSON;
     tirednessByHour = tirednessAverageGet.responseJSON;
-    console.log(positiveByHour)
     // Do initial data/option binding
     var index = getCurrentIndex();
     currentdata[0] = positiveByHour[index];
     currentdata[1] = negativeByHour[index];
     currentdata[2] = negativeByHour[index];
-    rader.setOption(raderOptions);
+    radar.setOption(radarOptions);
 });
