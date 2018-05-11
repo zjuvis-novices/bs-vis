@@ -1,41 +1,70 @@
 // Visualization
 // Use function 'getCurrentIndex' to know the index of current hour
 var rader;
+var positiveByHour = []
+var negativeByHour = []
+var tirednessByHour = []
 $('#rader-container').promise().then(function() {
     rader = echarts.init(document.getElementById('rader-container'));
 });
 
+var currentdata = [];
 // Example data
 raderOptions = {
-    title: {
-        text: 'ECharts 入门示例'
+    title : {
+        text: '情感分布',
+        subtext: ''
     },
-    tooltip: {},
+    tooltip : {
+        trigger: 'axis'
+    },
     legend: {
-        data:['销量']
+        orient : 'vertical',
+        x : 'right',
+        y : 'bottom',
+        data:'情感分布'
     },
-    xAxis: {
-        data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
     },
-    yAxis: {},
-    series: [{
-        name: '销量',
-        type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
-    }]
+    polar : [
+        {
+            indicator : [
+                { text: '积极（Positive）', max: 1},
+                { text: '消极（Negative）', max: 1},
+                { text: '疲惫（Tiredness）', max: 1},
+            ]
+        }
+    ],
+    calculable : true,
+    series: [
+        {
+            name: '情感分布',
+            type: 'radar',
+            data:[
+                {
+                    value: currentdata,
+                    name: '情感分布'
+                }
+                ]
+        }
+    ]
+
 };
 
 // This test function MUST stay in the global scope
 // Note that this is only an example for test use
 function testUpdateData() {
-    function generateRandomData() {
-        var result = [];
-        for(var i = 0; i < 6; i++) {
-            result.push(Math.random());
-        }
-        return result;
-    }
-    raderOptions.series[0].data = generateRandomData();
+    var index = getCurrentIndex();
+    currentdata[0] = positiveByHour[index];
+    currentdata[1] = negativeByHour[index];
+    currentdata[2] = negativeByHour[index];
     rader.setOption(raderOptions);
 }
 
@@ -51,10 +80,14 @@ $.when(
     tirednessAverageGet
 ).done(function () {
     // These data are only available when the initialization is done
-    var positiveByHour = positiveAverageGet.responseJSON;
-    var negativeByHour = negativeAverageGet.responseJSON;
-    var tirednessByHour = tirednessAverageGet.responseJSON;
-
+    positiveByHour = positiveAverageGet.responseJSON;
+    negativeByHour = negativeAverageGet.responseJSON;
+    tirednessByHour = tirednessAverageGet.responseJSON;
+    console.log(positiveByHour)
     // Do initial data/option binding
+    var index = getCurrentIndex();
+    currentdata[0] = positiveByHour[index];
+    currentdata[1] = negativeByHour[index];
+    currentdata[2] = negativeByHour[index];
     rader.setOption(raderOptions);
 });
