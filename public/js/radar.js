@@ -4,6 +4,17 @@ var radar;
 
 $('#radar-container').promise().then(function() {
     radar = echarts.init(document.getElementById('radar-container'));
+}).then(function init() {
+    // The initialization of data options should be delayed until the average
+    // data get requests are done.
+    getAverageData = getAverageData.done(function () {
+        // Do initial data/option binding
+        var index = getCurrentIndex();
+        currentdata[0] = positiveByHour[index];
+        currentdata[1] = negativeByHour[index];
+        currentdata[2] = negativeByHour[index];
+        radar.setOption(radarOptions);
+    });
 });
 
 var currentdata = [];
@@ -68,14 +79,3 @@ function updateRadarData() {
 // Binding callback
 onTimeChangeCallbacks.updateRadarData    = [];
 onDateSelectionCallbacks.updateRadarData = [];
-
-// The initialization of data options should be delayed until the average
-// data get requests are done.
-getAverageData = getAverageData.done(function () {
-    // Do initial data/option binding
-    var index = getCurrentIndex();
-    currentdata[0] = positiveByHour[index];
-    currentdata[1] = negativeByHour[index];
-    currentdata[2] = negativeByHour[index];
-    radar.setOption(radarOptions);
-});

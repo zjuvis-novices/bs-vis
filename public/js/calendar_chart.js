@@ -1,6 +1,15 @@
 var calendar;
 $('#calendar-container').promise().then(function() {
     calendar = echarts.init(document.getElementById('calendar-container'));
+}).then(function init() {    
+    getAverageData = getAverageData.done(function () {
+        // These are ready to use:
+
+        // positiveByDay
+        // negativeByDay
+        // tirednessByDay
+        calendar.setOption(calendarOptions);
+    });
 });
 
 var calendarOptions = {
@@ -40,17 +49,3 @@ function dayToDateString(index) {
     var indexDate = new Date(epoch.getTime() + index * 24 * 3600 * 1000);
     return dateString(indexDate);
 }
-
-getAverageData = getAverageData.done(function () {
-    // These are ready to use:
-
-    // positiveByDay
-    // negativeByDay
-    // tirednessByDay
-    calendar.setOption(calendarOptions);
-});
-
-
-
-
-
