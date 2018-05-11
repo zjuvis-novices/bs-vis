@@ -145,6 +145,9 @@ var tirednessByHour = [];
 var positiveByDay = [];
 var negativeByDay = [];
 var tirednessByDay = [];
+var positiveCalendarData = [];
+var negativeCalendarData = [];
+var tirednessCalendarData = [];
 var getAverageData = $.when(
     positiveAverageGet,
     negativeAverageGet,
