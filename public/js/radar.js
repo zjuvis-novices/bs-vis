@@ -8,6 +8,8 @@ $('#radar-container').promise().then(function() {
     // The initialization of data options should be delayed until the average
     // data get requests are done.
     getAverageData = getAverageData.done(function () {
+        // Make the data initialization here!
+        // ========
         // Do initial data/option binding
         var index = getCurrentIndex();
         currentdata[0] = positiveByHour[index];

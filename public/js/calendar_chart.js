@@ -1,10 +1,11 @@
 var calendar;
 $('#calendar-container').promise().then(function() {
     calendar = echarts.init(document.getElementById('calendar-container'));
-}).then(function init() {    
+}).then(function init() {
     getAverageData = getAverageData.done(function () {
+        // Make the data initialization here!
+        // ========
         // These are ready to use:
-
         // positiveByDay
         // negativeByDay
         // tirednessByDay
