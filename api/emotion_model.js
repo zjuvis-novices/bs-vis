@@ -76,7 +76,7 @@ function getPositive() {
     }
     if(trafficModel.getTrafficIndexByDate(index) !== null)
         return trafficModel.getTrafficIndexByDate(index)
-                .map((base) => pow((1 - base), 2) * weatherPostive[index]);
+                .map((base) => Math.pow((1 - base), 2) * weatherPostive[index]);
     return null;
 }
 
