@@ -183,40 +183,40 @@ onDateSelectionCallbacks.updateDataByTime       = [];
 positiveLayer.setOptions({
     style: {
         radius: function (data) { return data.value['positive' + currentHour] * 15; },
-        fill: '#08519c',
+        fill: positiveColor,
         opacity: function (data) { return data.value['positive' + currentHour]; },
         lineWidth: 0.2,
-        stroke: '#50abff'
+        stroke: "#FF4432"
     }
 });
 
 negativeLayer.setOptions({
     style: {
         radius: function (data) { return data.value['negative' + currentHour] * 15; },
-        fill: '#08519c',
+        fill: negativeColor,
         opacity: function (data) { return data.value['negative' + currentHour]; },
         lineWidth: 0.2,
-        stroke: '#50abff'
+        stroke: "#F199F3"
     }
 });
 
 tirednessLayer.setOptions({
     style: {
         radius: function (data) { return data.value['tiredness' + currentHour] * 15; },
-        fill: '#08519c',
+        fill: tirednessColor,
         opacity: function (data) { return data.value['tiredness' + currentHour]; },
         lineWidth: 1,
-        stroke: '#50abff'
+        stroke: "#CFFF3F"
     }
 });
 
 trafficLayer.setOptions({
     style: {
         radius: function (data) { return Math.pow(data.value['traffic' + currentHour], 5) * 200; },
-        fill: '#08519c',
+        fill: trafficColor,
         opacity: function (data) { return Math.pow(data.value['traffic' + currentHour], 2); },
         lineWidth: 1,
-        stroke: '#50abff'
+        stroke: '#ffea00'
     }
 });
 

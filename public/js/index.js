@@ -4,6 +4,7 @@
 var positiveColor   = '#893412';
 var negativeColor   = '#9289A1';
 var tirednessColor  = '#CFED45';
+var trafficColor =  "#DB8912"
 
 // Global variables for current selected time
 const epoch = new Date('2017/7/1');
