@@ -68,8 +68,7 @@ function updateCalendarData(){
     calendar.setOption(calendarOptions)
 }
 
-onToggleCalendarCallbacks.updateCalendarType = [];
-onToggleCalendarCallbacks.updateCalendarData    = [];
+onToggleCalendarCallbacks.updateCalendarData = [];
 
 
 // This function converts the index of days to date strings
