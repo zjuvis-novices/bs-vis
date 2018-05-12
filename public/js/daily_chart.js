@@ -18,6 +18,7 @@ var lineOptions = {
 }
 
 $('#line-container').promise().then(function() {
+    updateLineDisplayStatus();
     lineChart = echarts.init(document.getElementById('line-container'));
 }).then(function init() {
     // The initialization of data options should be delayed until the average

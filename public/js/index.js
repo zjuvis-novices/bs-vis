@@ -117,9 +117,7 @@ function onTimeChange(id) {
 }
 
 // This stuff is similar to the one above
-var onDateSelectionCallbacks = {
-
-};
+var onDateSelectionCallbacks = {};
 function onDateSelection(date) {
     currentDate = date;
     $('.date-selection').val(dateSlashString(date));
@@ -202,24 +200,23 @@ function onToggleDispaly() {
 function updateLineDisplayStatus(){
     if($('#positiveLine').is(':checked')) {
         currentLineDisplay['positive'] = true;
+    } else {
+        delete currentLineDisplay['positive'];
     }
-    else{
-        currentLineDisplay['tiredness'] = false;
-    }
+
     if($('#negativeLine').is(':checked')) {
         currentLineDisplay['negative'] = true;
-    }
-    else{
-        currentLineDisplay['tiredness'] = false;
+    } else{
+        delete currentLineDisplay['negative'];
     }
     if($('#tirednessLine').is(':checked')) {
         currentLineDisplay['tiredness'] = true;
-    }
-    else{
-        currentLineDisplay['tiredness'] = false;
+    } else{
+        delete currentLineDisplay['tiredness'];
     }
 }
-var currentLineDisplay = {};
+
+var currentLineDisplay = {positive: true, negative: true, tiredness: true};
 var onToggleLineCallbacks = {};
 function  onToggleLine() {
     updateLineDisplayStatus();
@@ -227,6 +224,7 @@ function  onToggleLine() {
         window[callback].apply(this, onToggleLineCallbacks[callback]);
     }
 }
+
 var currentCalendarType = 'positive';
 var onToggleCalendarCallbacks = {};
 function onToggleCalendar() {
