@@ -182,9 +182,9 @@ onDateSelectionCallbacks.updateDataByTime       = [];
 // These are the visual style options of layers
 positiveLayer.setOptions({
     style: {
-        radius: function (data) { return Math.pow(data.value['positive' + currentHour], 1.5) * 40; },
+        radius: function (data) { return (Math.pow(data.value['positive' + currentHour], 1.2) + 0.2) * 60; },
         fill: positiveColor,
-        opacity: function (data) {return Math.pow(data.value['positive' + currentHour], 5); },
+        opacity: function (data) {return Math.pow(data.value['positive' + currentHour], 3); },
         lineWidth: 0.2,
         stroke: "#FFFFFF"
     }
@@ -192,9 +192,9 @@ positiveLayer.setOptions({
 
 negativeLayer.setOptions({
     style: {
-        radius: function (data) { return Math.pow(data.value['negative' + currentHour], 1.5) * 40; },
+        radius: function (data) { return (Math.pow(data.value['negative' + currentHour], 1.2) + 0.2) * 60; },
         fill: negativeColor,
-        opacity: function (data) { return Math.pow(data.value['negative' + currentHour], 5); },
+        opacity: function (data) { return Math.pow(data.value['negative' + currentHour], 3); },
         lineWidth: 0.2,
         stroke: "#FFFFFF"
     }
@@ -202,7 +202,7 @@ negativeLayer.setOptions({
 
 tirednessLayer.setOptions({
     style: {
-        radius: function (data) { return Math.pow(data.value['tiredness' + currentHour], 0.2) * 20; },
+        radius: function (data) { return (Math.pow(data.value['tiredness' + currentHour], 0.2) + 0.2) * 20; },
         fill: tirednessColor,
         opacity: function (data) { return Math.pow(data.value['tiredness' + currentHour], 1.8); },
         lineWidth: 1,
