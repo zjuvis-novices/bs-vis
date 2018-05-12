@@ -20,6 +20,7 @@ function getCurrentDay(){
     var dDays = Math.ceil(dTime/(1000*3600*24));
     return dDays
 }
+
 // Resize element to fit the screen width and height
 function containerResize(selector) {
     $(selector).css('width', $(window).width());

@@ -1,21 +1,21 @@
 var lineChart;
 var dataSeries = {
     positive: {
-        name: 'positive',
+        name: '正向',
         color: positiveColor,
         data: [.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,.8,0,0,0,0,0,0,],
         type: 'line',
         areaStyle: {normal: {}}
     },
     negative: {
-        name: 'negative',
+        name: '负向',
         color: negativeColor,
         data: [.5,0,0,0,0,0,0,.1,0,0,0,.7,0,0,0,0,.5,0,0,0,0,0,],
         type: 'line',
         areaStyle: {normal: {}}
     },
     tiredness: {
-        name: 'tiredness',
+        name: '疲惫',
         color: tirednessColor,
         data: [1,0,0,0,0,.3,0,0,0,0,0,0.4,0,0,0,0,0,.3,0,0,0,0,],
         type: 'line',
