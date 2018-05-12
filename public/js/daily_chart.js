@@ -24,6 +24,9 @@ var dataSeries = {
 };
 
 var lineOptions = {
+    tooltip : {
+        trigger: 'axis'
+    },
     grid: {
         left:   '5px',
         right:  '5px',
@@ -57,7 +60,6 @@ function updateLineEmotionOptions() {
 onToggleLineCallbacks.updateLineEmotionOptions = [];
 
 function updateLineData() {
-    console.log(getCurrentDay())
     var deltaDay = getCurrentDay()
     dataSeries.positive.data = positiveByHour.slice(deltaDay*24, deltaDay*24+24)
     dataSeries.negative.data = negativeByHour.slice(deltaDay*24, deltaDay*24+24)
