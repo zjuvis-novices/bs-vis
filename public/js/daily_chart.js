@@ -57,8 +57,12 @@ function updateLineEmotionOptions() {
 onToggleLineCallbacks.updateLineEmotionOptions = [];
 
 function updateLineData() {
-    // TODO:
-
+    console.log(getCurrentDay())
+    var deltaDay = getCurrentDay()
+    dataSeries.positive.data = positiveByHour.slice(deltaDay*24, deltaDay*24+24)
+    dataSeries.negative.data = negativeByHour.slice(deltaDay*24, deltaDay*24+24)
+    dataSeries.tiredness.data = tirednessByHour.slice(deltaDay*24, deltaDay*24+24)
+    updateLineEmotionOptions();
 }
 onDateSelectionCallbacks.updateLineData = [];
 
@@ -74,8 +78,3 @@ $('#line-container').promise().then(function() {
     });
 });
 
-function updateDate(){
-    //TODO
-}
-
-onToggleLineCallbacks.updateDate = [];

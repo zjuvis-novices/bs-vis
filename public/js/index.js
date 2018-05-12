@@ -15,6 +15,11 @@ function getCurrentIndex() {
     return dDays * 24 + currentHour;
 }
 
+function getCurrentDay(){
+    var dTime = Math.abs(currentDate.getTime() - epoch.getTime());
+    var dDays = Math.ceil(dTime/(1000*3600*24));
+    return dDays
+}
 // Resize element to fit the screen width and height
 function containerResize(selector) {
     $(selector).css('width', $(window).width());
