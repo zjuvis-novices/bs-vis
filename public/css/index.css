@@ -50,3 +50,7 @@ button, input, optgroup, select, textarea {
 .location-title {
     font-size: 26pt;
 }
+
+.tag-title {
+    font-size: 15pt;
+}

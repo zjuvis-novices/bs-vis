@@ -45,7 +45,7 @@ positiveLayer.on('click', function (ev) {
     var rawData = ev.rawData;
     var originalEvent = ev.originalEvent;
     var lnglat = ev.lnglat;
-    infoWin.setContent("经纬度："+rawData.lnglat + '<br/>' + "正向：" +rawData["positive" + currentHour]);
+    infoWin.setContent('<span class="tag-title">' + rawData.name + '</span><br/>' + "正向：" + rawData["positive" + currentHour].toFixed(2));
     infoWin.open(map.getMap(), new AMap.LngLat(lnglat[0], lnglat[1]));
 
 });
@@ -58,7 +58,7 @@ negativeLayer.on('click', function (ev) {
     var rawData = ev.rawData;
     var originalEvent = ev.originalEvent;
     var lnglat = ev.lnglat;
-    infoWin.setContent("经纬度："+rawData.lnglat + '<br/>' + "负向：" +rawData["negative" + currentHour]);
+    infoWin.setContent('<span class="tag-title">' + rawData.name + '</span><br/>' + "负向：" +rawData["negative" + currentHour].toFixed(2));
     infoWin.open(map.getMap(), new AMap.LngLat(lnglat[0], lnglat[1]));
 
 });
@@ -72,7 +72,7 @@ tirednessLayer.on('click', function (ev) {
     var originalEvent = ev.originalEvent;
     var lnglat = ev.lnglat;
     console.log(rawData)
-    infoWin.setContent("经纬度："+rawData.lnglat + '<br/>' + "疲惫：" +rawData["tiredness"+currentHour]);
+    infoWin.setContent('<span class="tag-title">' + rawData.name + '</span><br/>' + "疲惫：" +rawData["tiredness"+currentHour].toFixed(2));
     infoWin.open(map.getMap(), new AMap.LngLat(lnglat[0], lnglat[1]));
 
 });

@@ -74,6 +74,7 @@ poiData = poiData.done(function (poiDataContent) {
     currentVisualData = poiDataContent.map(function (x) {
         return new function () {
             this['lnglat'] = x['location'];
+            this['name']   = x['name'];
             for(var i = 0; i < 24; i++) {
                 this['positive' + i]    = Array.from(new Array(24), function () {return null;});
                 this['negative' + i]    = Array.from(new Array(24), function () {return null;});
