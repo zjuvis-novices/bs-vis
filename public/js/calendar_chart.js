@@ -58,13 +58,6 @@ $('#calendar-container').promise().then(function() {
     });
 });
 
-
-
-function updateCalendarType() {
-    // Here to update the calendar data and rendering
-    console.log(currentCalendarType);
-}
-
 function updateCalendarData(){
     switch (currentCalendarType){
         case 'positive':    currentCalendarData = positiveCalendarData; break;

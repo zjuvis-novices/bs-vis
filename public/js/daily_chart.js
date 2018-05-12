@@ -49,8 +49,6 @@ function updateLineEmotionOptions() {
         data.push(dataSeries.negative);
     if(currentLineDisplay['tiredness'])
         data.push(dataSeries.tiredness);
-    console.log(data);
-    console.log($.extend({}, lineOptions, {series: data}));
     lineChart.setOption(
         $.extend({}, lineOptions, {series: data}),
         {notMerge: true}
@@ -60,7 +58,7 @@ onToggleLineCallbacks.updateLineEmotionOptions = [];
 
 function updateLineData() {
     // TODO:
-    
+
 }
 onDateSelectionCallbacks.updateLineData = [];
 
