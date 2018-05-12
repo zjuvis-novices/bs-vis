@@ -5,23 +5,30 @@ var calendarOptions = {
         min: 0,
         max: 8,
         top: 0,
-        show: true,
+        show: false,
+        inRange: {
+            color: positiveColor,
+            opacity: [0.2, 1.0]
+        },
         type: 'piecewise',
         orient: 'horizontal',
         left: 'center',
         top: 10,
     },
     calendar: {
-        top:    60,
+        top:    20,
         bottom: 10,
         left:   80,
         right:  40,
         range: ['2017-07-01', '2017-12-31']
     },
     series: {
-        type: 'heatmap',
+        type: 'scatter',
         coordinateSystem: 'calendar',
         data: [],
+        symbolSize: function (val) {
+            return Math.pow(val[1], 0.2) * 10;
+        }
     }
 }
 $('#calendar-container').promise().then(function() {
@@ -60,12 +67,21 @@ $('#calendar-container').promise().then(function() {
 
 function updateCalendarData(){
     switch (currentCalendarType){
-        case 'positive':    currentCalendarData = positiveCalendarData; break;
-        case 'negative':    currentCalendarData = negativeCalendarData; break;
-        case 'tiredness':   currentCalendarData = tirednessCalendarData; break;
+        case 'positive':
+            currentCalendarData = positiveCalendarData;
+            calendarOptions.visualMap.inRange.color = positiveColor;
+            break;
+        case 'negative':
+            currentCalendarData = negativeCalendarData;
+            calendarOptions.visualMap.inRange.color = negativeColor;
+            break;
+        case 'tiredness':
+            currentCalendarData = tirednessCalendarData;
+            calendarOptions.visualMap.inRange.color = tirednessColor;
+            break;
     }
-    calendarOptions.series.data = currentCalendarData
-    calendar.setOption(calendarOptions)
+    calendarOptions.series.data = currentCalendarData;
+    calendar.setOption(calendarOptions);
 }
 
 onToggleCalendarCallbacks.updateCalendarData = [];

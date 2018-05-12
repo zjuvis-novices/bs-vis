@@ -76,7 +76,7 @@ function getPositive() {
     }
     if(trafficModel.getTrafficIndexByDate(index) !== null)
         return trafficModel.getTrafficIndexByDate(index)
-                .map((base) => (1 - base) * 0.5 + weatherPostive[index] * 0.5);
+                .map((base) => pow((1 - base), 2) * weatherPostive[index]);
     return null;
 }
 
@@ -89,7 +89,7 @@ function getNegative() {
     }
     if(trafficModel.getTrafficIndexByDate(index) !== null)
         return trafficModel.getTrafficIndexByDate(index)
-                .map((base) => base * 0.5 + weatherNegative[index] * 0.5);
+                .map((base) => base * weatherNegative[index]);
     return null;
 }
 
@@ -102,7 +102,7 @@ function getTiredness() {
     }
     if(trafficModel.getTrafficIndexByDate(index) !== null)
         return trafficModel.getTrafficIndexByDate(index)
-                .map((base) => base * 0.5 + weatherTiredness[index] * 0.5);
+                .map((base) => base * weatherTiredness[index]);
     return null;
 }
 

@@ -182,31 +182,31 @@ onDateSelectionCallbacks.updateDataByTime       = [];
 // These are the visual style options of layers
 positiveLayer.setOptions({
     style: {
-        radius: function (data) { return data.value['positive' + currentHour] * 15; },
+        radius: function (data) { return Math.pow(data.value['positive' + currentHour], 1.5) * 40; },
         fill: positiveColor,
-        opacity: function (data) { return data.value['positive' + currentHour]; },
+        opacity: function (data) {return Math.pow(data.value['positive' + currentHour], 5); },
         lineWidth: 0.2,
-        stroke: "#FF4432"
+        stroke: "#FFFFFF"
     }
 });
 
 negativeLayer.setOptions({
     style: {
-        radius: function (data) { return data.value['negative' + currentHour] * 15; },
+        radius: function (data) { return Math.pow(data.value['negative' + currentHour], 1.5) * 40; },
         fill: negativeColor,
-        opacity: function (data) { return data.value['negative' + currentHour]; },
+        opacity: function (data) { return Math.pow(data.value['negative' + currentHour], 5); },
         lineWidth: 0.2,
-        stroke: "#F199F3"
+        stroke: "#FFFFFF"
     }
 });
 
 tirednessLayer.setOptions({
     style: {
-        radius: function (data) { return data.value['tiredness' + currentHour] * 15; },
+        radius: function (data) { return Math.pow(data.value['tiredness' + currentHour], 0.2) * 20; },
         fill: tirednessColor,
-        opacity: function (data) { return data.value['tiredness' + currentHour]; },
+        opacity: function (data) { return Math.pow(data.value['tiredness' + currentHour], 1.8); },
         lineWidth: 1,
-        stroke: "#CFFF3F"
+        stroke: "#FFFFFF"
     }
 });
 
@@ -214,9 +214,9 @@ trafficLayer.setOptions({
     style: {
         radius: function (data) { return Math.pow(data.value['traffic' + currentHour], 5) * 200; },
         fill: trafficColor,
-        opacity: function (data) { return Math.pow(data.value['traffic' + currentHour], 2); },
+        opacity: function (data) { return Math.pow(data.value['traffic' + currentHour], 5); },
         lineWidth: 1,
-        stroke: '#ffea00'
+        stroke: '#FFFFFF'
     }
 });
 

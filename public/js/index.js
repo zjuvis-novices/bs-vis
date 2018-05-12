@@ -1,10 +1,10 @@
 // UI control
 // This file is all about UI control and view
 // Colors
-var positiveColor   = '#893412';
-var negativeColor   = '#9289A1';
-var tirednessColor  = '#CFED45';
-var trafficColor =  "#DB8912"
+var positiveColor   = '#B5495B';
+var negativeColor   = '#0089A7';
+var tirednessColor  = '#E98B2A';
+var trafficColor    = '#91989F';
 
 // Global variables for current selected time
 const epoch = new Date('2017/7/1');
