@@ -1,5 +1,9 @@
 // UI control
 // This file is all about UI control and view
+// Colors
+var positiveColor   = '#893412';
+var negativeColor   = '#9289A1';
+var tirednessColor  = '#CFED45';
 
 // Global variables for current selected time
 const epoch = new Date('2017/7/1');
