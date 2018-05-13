@@ -71,7 +71,6 @@ tirednessLayer.on('click', function (ev) {
     var rawData = ev.rawData;
     var originalEvent = ev.originalEvent;
     var lnglat = ev.lnglat;
-    console.log(rawData)
     infoWin.setContent('<span class="tag-title">' + rawData.name + '</span><br/>' + "疲惫：" +rawData["tiredness"+currentHour].toFixed(2));
     infoWin.open(map.getMap(), new AMap.LngLat(lnglat[0], lnglat[1]));
 
