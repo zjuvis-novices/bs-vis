@@ -3,7 +3,7 @@ var currentCalendarData  = [];
 var calendarOptions = {
     visualMap: {
         min: 0,
-        max: 8,
+        max: 1,
         top: 0,
         show: false,
         inRange: {
@@ -15,6 +15,7 @@ var calendarOptions = {
         left: 'center',
         top: 10,
     },
+    tooltip: {},
     calendar: {
         top:    20,
         bottom: 10,
@@ -27,7 +28,7 @@ var calendarOptions = {
         coordinateSystem: 'calendar',
         data: [],
         symbolSize: function (val) {
-            return Math.pow(val[1], 0.2) * 10;
+            return Math.pow(val[1], 0.5) * 18;
         }
     }
 }
