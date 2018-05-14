@@ -157,7 +157,7 @@ var getAverageData = $.when(
     function byDay(byHour) {
         var result = [];
         for(var i = 0; i < byHour.length/24; i++) {
-            result[i] = byHour.slice(i * 24, i * 24 + 24).reduce(function (a, b) { return a + b; });
+            result[i] = byHour.slice(i * 24, i * 24 + 24).reduce(function (a, b) { return a + b; })/24;
         }
         return result;
     }
