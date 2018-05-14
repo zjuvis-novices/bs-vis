@@ -6,7 +6,7 @@ var app = express();
 const hostname = 'localhost';
 const port = 8080;
 
-var path = 'city-emotion';
+var path = '/city-emotion';
 
 // Static pages
 app.use(path, express.static('public'));
