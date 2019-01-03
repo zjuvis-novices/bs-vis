@@ -1,30 +1,6 @@
 // ================ POI ================
 var poiData = $.get('api/poi.json');
 
-
-// ================ Temperature ================
-// Temperature by hour used by the basic info
-var getTemperatureByHour = $.get('api/weather/temperature.json');
-var temperatureByHour;
-function refreshHourlyTemperature() {
-    $('.temperature-value').text(
-        Math.round(temperatureByHour[getCurrentIndex()])
-    );
-};
-// If the async ajax of requesting temperature by hour data is done,
-// refresh the hourly temperature
-// Binding callbacks
-// Make sure that the function is called when the hour/date is changed
-onTimeChangeCallbacks.refreshHourlyTemperature = [];
-onDateSelectionCallbacks.refreshHourlyTemperature = [];
-// The getTemperatureByHour promises this is to be done when the async get is done
-getTemperatureByHour.done(function() {
-    // Data returned from the server
-    temperatureByHour = getTemperatureByHour.responseJSON;
-    refreshHourlyTemperature();
-});
-
-
 // ================ PPD ================
 // PPD by hour used by the basic info
 var getPPDbyHour = $.get('api/weather/ppd.json');
