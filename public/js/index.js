@@ -98,6 +98,7 @@ function refreshTimeString() {
     $('.time-string').text(currentHour + ':00');
 }
 
+// TODO: Refactor the callbacks to events
 // On time change event
 // Format:
 //      functionName: [arguments],
@@ -119,7 +120,10 @@ function dateSlashString(date) {
 }
 function onTimeChange(id) {
     currentHour = parseInt($('#' + id).val());
+    // Sync all time selector
     $('.hour[id!="' + id + '"]').val(currentHour);
+    // Dispatch event
+    document.dispatchEvent(new CustomEvent('timechanged'));
     // Call all the associated callbacks
     for(var callback in onTimeChangeCallbacks) {
         // Function call

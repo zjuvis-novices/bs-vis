@@ -36,45 +36,6 @@ heatLayer.updateData = function() {
     return this;
 };
 
-var infoWin;
-positiveLayer.on('click', function (ev) {
-    if (!infoWin) {
-        infoWin = new AMap.InfoWindow();
-    }
-    var type = ev.type;
-    var rawData = ev.rawData;
-    var originalEvent = ev.originalEvent;
-    var lnglat = ev.lnglat;
-    infoWin.setContent('<span class="tag-title">' + rawData.name + '</span><br/>' + "正向：" + rawData["positive" + currentHour].toFixed(2));
-    infoWin.open(map.getMap(), new AMap.LngLat(lnglat[0], lnglat[1]));
-
-});
-
-negativeLayer.on('click', function (ev) {
-    if (!infoWin) {
-        infoWin = new AMap.InfoWindow();
-    }
-    var type = ev.type;
-    var rawData = ev.rawData;
-    var originalEvent = ev.originalEvent;
-    var lnglat = ev.lnglat;
-    infoWin.setContent('<span class="tag-title">' + rawData.name + '</span><br/>' + "负向：" +rawData["negative" + currentHour].toFixed(2));
-    infoWin.open(map.getMap(), new AMap.LngLat(lnglat[0], lnglat[1]));
-
-});
-
-tirednessLayer.on('click', function (ev) {
-    if (!infoWin) {
-        infoWin = new AMap.InfoWindow();
-    }
-    var type = ev.type;
-    var rawData = ev.rawData;
-    var originalEvent = ev.originalEvent;
-    var lnglat = ev.lnglat;
-    infoWin.setContent('<span class="tag-title">' + rawData.name + '</span><br/>' + "疲惫：" +rawData["tiredness"+currentHour].toFixed(2));
-    infoWin.open(map.getMap(), new AMap.LngLat(lnglat[0], lnglat[1]));
-
-});
 // Update data binding of layers
 function updateVisualDataBinding() {
     if(currentDisplay['heat']) {
