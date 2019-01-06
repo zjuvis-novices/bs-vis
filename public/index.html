@@ -74,17 +74,6 @@
                         <label>日期</label>
                         <input type="text" class="datepicker no-autoinit date-selection">
                     </div>
-                    <div class="row" style="margin-bottom: 0">
-                        <form action="#" class="col s9">
-                            <label>时间</label>
-                            <p class="range-field">
-                                <input type="range" class="hour" id="hour0" min="0" max="23" value="8" oninput="onTimeChange('hour0')">
-                            </p>
-                        </form>
-                        <div class="col s3 time-string" style="margin-top:28px">
-                            8:00
-                        </div>
-                    </div>
                 </div>
                 <div class="col s6" style="padding-left: 10px">
                     <div class="row" style="margin-top: 20px;">
@@ -117,22 +106,17 @@
                             <option value="2">气泡图</option>
                         </select>
                     </div>
-                    <div class="row" style="padding-top: 5px">
-                        <div class="switch col s6">
-                            <label>
-                                情感显示
-                                <input id ="emotion-display" type="checkbox" checked="true" onclick="onToggleDispaly()">
-                                <span class="lever"></span>
-                            </label>
-                        </div>
-                        <div class="switch col s6">
-                            <label>
-                                交通显示
-                                <input id="traffic-display" type="checkbox" onclick="onToggleDispaly()">
-                                <span class="lever"></span>
-                            </label>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 0">
+                <form action="#" class="col s11">
+                    <label>时间</label>
+                    <p class="range-field">
+                        <input type="range" class="hour" id="hour0" min="0" max="23" value="8" oninput="onTimeChange('hour0')">
+                    </p>
+                </form>
+                <div class="col s1 time-string" style="margin-top:28px">
+                    8:00
                 </div>
             </div>
         </div>

@@ -66,7 +66,8 @@ function updateLineData() {
     dataSeries.tiredness.data = tirednessByHour.slice(deltaDay*24, deltaDay*24+24)
     updateLineEmotionOptions();
 }
-onDateSelectionCallbacks.updateLineData = [];
+// TODO: refactor this
+// onDateSelectionCallbacks.updateLineData = [];
 
 $('#line-container').promise().then(function() {
     updateLineDisplayStatus();

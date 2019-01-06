@@ -10,7 +10,7 @@ var map = Loca.create('container', {
 var heatLayer = Loca.visualLayer({
     container: map,
     type: 'heatmap',
-    shape: 'normal'
+    shape: 'hexagon'
 });
 heatLayer.hide = hideLayer;    heatLayer.show = showLayer;
 // Bubble layer initialization
@@ -27,18 +27,21 @@ var trafficLayer = Loca.visualLayer(new BubbleLayerOptions());
 trafficLayer.hide   = hideLayer;    trafficLayer.show   = showLayer;
 trafficLayer.updateData = updateLayerData('traffic');
 
-var currentHeat = 'positive';
 heatLayer.updateData = function() {
-    heatLayer.setData(currentVisualData, {
+    const c = currentVisualData;
+    var data = c.ad.concat(c.illegal).concat(c.scam).concat(c.others);
+    heatLayer.setData(data, {
         lnglat  : 'lnglat',
-        value   : currentHeat + currentHour
-    })
+        value   : 'value'
+    });
     return this;
 };
 
 // Update data binding of layers
 function updateVisualDataBinding() {
     if(currentDisplay['heat']) {
+        heatLayer.updateData();
+    } else {
         if(currentDisplay['emotion']) {
             if(currentDisplay['positive']) {
                 positiveLayer.updateData();
@@ -51,39 +54,17 @@ function updateVisualDataBinding() {
         if(currentDisplay['traffic']) {
             trafficLayer.updateData();
         }
-    } else {
-        if(currentDisplay['emotion']) {
-            if(currentDisplay['positive']) {
-                currentHeat = 'positive';
-            } else if(currentDisplay['negative']) {
-                currentHeat = 'negative';
-            } else {
-                currentHeat = 'tiredness';
-            }
-            heatLayer.updateData();
-        } else if(currentDisplay['traffic']) {
-            currentHeat = 'traffic';
-            heatLayer.updateData();
-        }
     }
 }
 
-// This code fragment is to:
-// When getting POI data is done asyncly,
-// update current visual data asyncly.
-// When updating current visual data is done,
-// update the data binding to the layers
-// and update the layers' visibility syncly.
-poiData.done(function () {
-    updateDisplayStatus();
-    updateVisualData().done(function() {
-        positiveLayer.updateData();
-        negativeLayer.updateData();
-        tirednessLayer.updateData();
-        trafficLayer.updateData();
-        heatLayer.updateData();
-    }).done(updateLayerVisibility);
-});
+updateDisplayStatus();
+updateVisualData().done(function() {
+    positiveLayer.updateData();
+    negativeLayer.updateData();
+    tirednessLayer.updateData();
+    trafficLayer.updateData();
+    heatLayer.updateData();
+}).done(updateLayerVisibility);
 
 function updateLayerVisibility() {
     if(currentDisplay['bubble']) {
@@ -101,23 +82,7 @@ function updateLayerVisibility() {
         if(currentDisplay['traffic'])   trafficLayer.show();
         else                            trafficLayer.hide();
     } else {
-        positiveLayer.hide();   negativeLayer.hide();
-        tirednessLayer.hide();  trafficLayer.hide();
-        if(currentDisplay['traffic']) {
-            currentHeat = 'traffic';
-            heatLayer.updateData();
-            if(!heatLayer.shown) heatLayer.show();
-            else heatLayer.render()
-        } else if(currentDisplay['emotion']) {
-            if(currentDisplay['positive'])  currentHeat = 'positive';
-            if(currentDisplay['negative'])  currentHeat = 'negative';
-            if(currentDisplay['tiredness']) currentHeat = 'tiredness';
-            heatLayer.updateData();
-            if(!heatLayer.shown) heatLayer.show();
-            else heatLayer.render();
-        } else {
-            if(heatLayer.shown) heatLayer.hide();
-        }
+        heatLayer.show();
     }
 }
 
@@ -134,8 +99,8 @@ function updateDataByTime() {
 // Update binding to event
 onToggleEmotionCallbacks.updateLayerVisibility  = [];
 onToggleDispalyCallbacks.updateLayerVisibility  = [];
-onTimeChangeCallbacks.updateDataByTime          = [];
-onDateSelectionCallbacks.updateDataByTime       = [];
+document.addEventListener('timechanged', updateDataByTime);
+document.addEventListener('datechanged', updateDataByTime);
 
 // --------------------------------
 // These are the visual style options of layers
@@ -181,15 +146,10 @@ trafficLayer.setOptions({
 
 heatLayer.setOptions({
     style: {
-        radius: 25,
-        opacity: [0, 0.7],
-    },
-    gradient: {
-        0.5: 'blue',
-        0.65: 'rgb(117,211,248)',
-        0.7: 'rgb(0, 255, 0)',
-        0.9: '#ffea00',
-        1.0: 'red'
+        radius: 20,
+        opacity: [0, 1],
+        gap: 0,
+        color: ['#ecda9a', '#efc47e', '#f3ad6a', '#f7945d', '#f97b57', '#f66356', '#ee4d5a']
     }
 });
 

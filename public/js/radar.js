@@ -79,5 +79,6 @@ function updateRadarData() {
 }
 
 // Binding callback
-onTimeChangeCallbacks.updateRadarData    = [];
-onDateSelectionCallbacks.updateRadarData = [];
+// TODO: refactor these
+// onTimeChangeCallbacks.updateRadarData    = [];
+// onDateSelectionCallbacks.updateRadarData = [];

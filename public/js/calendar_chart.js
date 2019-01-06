@@ -32,39 +32,6 @@ var calendarOptions = {
         }
     }
 }
-$('#calendar-container').promise().then(function() {
-    calendar = echarts.init(document.getElementById('calendar-container'));
-}).then(function init() {
-    getAverageData = getAverageData.done(function () {
-        // Make the data initialization here!
-        // ========
-        // These are ready to use:
-        // positiveByDay
-        // negativeByDay
-        // tirednessByDay
-        var currentIndex = 0;
-        var currentDateString = null;
-        var tmpArray = [];
-        for(var i=0; i<184; i++,currentIndex=currentIndex+24){
-            currentDateString = dayToDateString(currentIndex)
-            tmpArray.push(currentDateString);
-            tmpArray.push(positiveByDay[i]);
-            positiveCalendarData.push(tmpArray)
-            tmpArray = [];
-            tmpArray.push(currentDateString);
-            tmpArray.push(negativeByDay[i]);
-            negativeCalendarData.push(tmpArray)
-            tmpArray = [];
-            tmpArray.push(currentDateString);
-            tmpArray.push(tirednessByDay[i]);
-            tirednessCalendarData.push(tmpArray)
-            tmpArray = [];
-        }
-        currentCalendarData = positiveCalendarData
-        calendarOptions.series.data = currentCalendarData
-        calendar.setOption(calendarOptions);
-    });
-});
 
 function updateCalendarData(){
     switch (currentCalendarType){
@@ -85,11 +52,7 @@ function updateCalendarData(){
     calendar.setOption(calendarOptions);
 }
 
-onToggleCalendarCallbacks.updateCalendarData = [];
-
-
-// This function converts the index of days to date strings
-function dayToDateString(index) {
-    var indexDate = new Date(epoch.getTime() + index * 3600 * 1000);
-    return dateString(indexDate);
-}
+$('#calendar-container').promise().then(function() {
+    calendar = echarts.init(document.getElementById('calendar-container'));
+    calendar.setOption(calendarOptions);
+});

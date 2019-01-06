@@ -71,9 +71,9 @@ function initDatePicker(elems) {
         autoClose:      true,
         showMonthAfterYear: true,
         format:         'yyyy/mm/dd',
-        defaultDate:    new Date('2017/07/01'),
-        minDate:        new Date('2017/07/01'),
-        maxDate:        new Date('2017/12/31'),
+        defaultDate:    new Date('2017/02/23'),
+        minDate:        new Date('2017/02/23'),
+        maxDate:        new Date('2017/04/26'),
         setDefaultDate: true,
         container:      '#dialog-container',
         // Localization
@@ -93,24 +93,6 @@ function initDatePicker(elems) {
     return instances;
 }
 
-// Refresh the UI element of time display
-function refreshTimeString() {
-    $('.time-string').text(currentHour + ':00');
-}
-
-// TODO: Refactor the callbacks to events
-// On time change event
-// Format:
-//      functionName: [arguments],
-// To add new callbacks for this event,
-// use
-//      onTimeChangeCallbacks.newFunctionName = [arguments]
-// or
-//      onTimeChangeCallbacks['newFunctionName'] = [arguments]
-var onTimeChangeCallbacks = {
-    refreshTimeString: []
-};
-
 function dateSlashString(date) {
     var year    = date.getFullYear();
     var month   = date.getMonth() + 1;
@@ -118,28 +100,31 @@ function dateSlashString(date) {
     return '' + year + '/' + (month<10?'0'+month:month) + '/'
             + (date<10?'0'+date:date);
 }
+
+// On time change function
 function onTimeChange(id) {
     currentHour = parseInt($('#' + id).val());
     // Sync all time selector
     $('.hour[id!="' + id + '"]').val(currentHour);
     // Dispatch event
     document.dispatchEvent(new CustomEvent('timechanged'));
-    // Call all the associated callbacks
-    for(var callback in onTimeChangeCallbacks) {
-        // Function call
-        window[callback].apply(this, onTimeChangeCallbacks[callback]);
-    }
 }
 
+// Refresh the UI element of time display
+function refreshTimeString() {
+    $('.time-string').text(currentHour + ':00');
+}
+
+document.addEventListener('timechanged', function() {
+    refreshTimeString();
+});
+
 // This stuff is similar to the one above
-var onDateSelectionCallbacks = {};
 function onDateSelection(date) {
     currentDate = date;
     $('.date-selection').val(dateSlashString(date));
-    for(var callback in onDateSelectionCallbacks) {
-        // Function call
-        window[callback].apply(this, onDateSelectionCallbacks[callback]);
-    }
+    updateVisualData();
+    document.dispatchEvent(new CustomEvent('datechanged'));
 }
 
 var currentDisplay = {};
@@ -152,18 +137,6 @@ function updateDisplayStatus() {
     } else {
         currentDisplay['bubble'] = true;
         delete currentDisplay['heat'];
-    }
-
-    if($('#emotion-display').is(':checked')) {
-        currentDisplay['emotion'] = true;
-    } else {
-        delete currentDisplay['emotion'];
-    }
-
-    if($('#traffic-display').is(':checked')) {
-        currentDisplay['traffic'] = true;
-    } else {
-        delete currentDisplay['traffic'];
     }
 
     if($('#positive').is(':checked')) {
