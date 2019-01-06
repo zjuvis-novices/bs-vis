@@ -1,5 +1,6 @@
 const express = require('express');
 const requestHandler = require('./api/request_handler');
+const heatHandler = require('./api/heat');
 var app = express();
 
 // Hostname
@@ -29,6 +30,8 @@ app.get(path + '/api/emotion/:type/average', requestHandler.getAverage);
 app.get(path + '/api/emotion/:type/average.*', requestHandler.getAverage);
 app.get(path + '/api/emotion/:type/:date/:hour', requestHandler.getEmotionByDate);
 app.get(path + '/api/emotion/:type/:index', requestHandler.getEmotionByIndex);
+
+app.get(path + '/api/heat/:type/:date', heatHandler.getHeat);
 
 var server = app.listen(port, () => {
     console.log('Server running at ' + hostname + ':' + port);

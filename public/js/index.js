@@ -7,8 +7,8 @@ var tirednessColor  = '#E98B2A';
 var trafficColor    = '#91989F';
 
 // Global variables for current selected time
-const epoch = new Date('2017/7/1');
-var currentDate = new Date('2017/7/1');
+const epoch = new Date('2017/2/23');
+var currentDate = new Date('2017/2/23');
 var currentHour = 8;
 function getCurrentIndex() {
     var dTime = Math.abs(currentDate.getTime() - epoch.getTime());
@@ -19,7 +19,7 @@ function getCurrentIndex() {
 function getCurrentDay(){
     var dTime = Math.abs(currentDate.getTime() - epoch.getTime());
     var dDays = Math.ceil(dTime/(1000*3600*24));
-    return dDays
+    return dDays;
 }
 
 // Resize element to fit the screen width and height
@@ -147,11 +147,11 @@ var currentDisplay = {};
 // This stuff is ugly. It should have better design.
 function updateDisplayStatus() {
     if($('#display-type').val() === '1') {
-        currentDisplay['bubble'] = true;
-        delete currentDisplay['heat'];
-    } else {
         currentDisplay['heat'] = true;
         delete currentDisplay['bubble'];
+    } else {
+        currentDisplay['bubble'] = true;
+        delete currentDisplay['heat'];
     }
 
     if($('#emotion-display').is(':checked')) {
@@ -194,14 +194,10 @@ function onToggleEmotion() {
     }
 }
 
-var onChangeVisualCallbacks = {};
-function onChangeVisual() {
+$('#display-type').on('change', function() {
     updateDisplayStatus();
-    for(var callback in onChangeVisualCallbacks) {
-        // Function call
-        window[callback].apply(this, onChangeVisualCallbacks[callback]);
-    }
-}
+});
+
 
 var onToggleDispalyCallbacks = {};
 function onToggleDispaly() {

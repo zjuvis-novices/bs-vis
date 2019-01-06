@@ -2,7 +2,7 @@
 var map = Loca.create('container', {
     resizeEnable: true,
     zoom: 10,
-    center:[120.2,30.25],
+    center:[116.4,39.95],
     mapStyle: 'amap://styles/grey'
 });
 
@@ -134,7 +134,6 @@ function updateDataByTime() {
 // Update binding to event
 onToggleEmotionCallbacks.updateLayerVisibility  = [];
 onToggleDispalyCallbacks.updateLayerVisibility  = [];
-onChangeVisualCallbacks.updateLayerVisibility   = [];
 onTimeChangeCallbacks.updateDataByTime          = [];
 onDateSelectionCallbacks.updateDataByTime       = [];
 
