@@ -29,7 +29,7 @@
     </ul>
     <!-- Head nav -->
     <nav class="z-depth-2">
-        <div class="nav-wrapper red lighten-2" id="top_navi">
+        <div class="nav-wrapper cyan darken-4" id="top_navi">
             <a class="brand-logo left" id="header-title">CitySpam</a>
             <ul id="nav-mobile" class="right">
                 <li>
@@ -42,7 +42,7 @@
     </nav>
 
     <!-- FAB -->
-    <a class="btn-floating btn-large waves-effect waves-light red lighten-1 scale-transition" id="big-fab" onclick="toggleControl()">
+    <a class="btn-floating btn-large waves-effect waves-light cyan scale-transition" id="big-fab" onclick="toggleControl()">
         <i class="material-icons">face</i>
     </a>
 
@@ -60,7 +60,7 @@
                 </ul>
                 <div class="divider"></div>
             </div>
-            <a class="btn-floating halfway-fab waves-effect waves-light red" onclick="toggleControl()">
+            <a class="btn-floating halfway-fab waves-effect waves-light cyan" onclick="toggleControl()">
                 <i class="material-icons">close</i>
             </a>
         </div>
@@ -79,22 +79,22 @@
                     <div class="row" style="margin-top: 20px;">
                         <div class="switch col s4">
                             <label>
-                                正向
-                                <input id = "positive" type="checkbox" checked="true" onclick = "onToggleEmotion()">
-                                <span class="lever positive"/>
-                            </label>
-                        </div>
-                        <div class="switch col s4">
-                            <label>
-                                负向
-                                <input id = "negative" type="checkbox" onclick = "onToggleEmotion()">
+                                广告
+                                <input id = "ad" type="checkbox" checked="true" onclick = "onToggleType()">
                                 <span class="lever"/>
                             </label>
                         </div>
                         <div class="switch col s4">
                             <label>
-                                疲倦
-                                <input id = "tiredness" type="checkbox" onclick = "onToggleEmotion()">
+                                违法
+                                <input id = "illegal" type="checkbox" checked="true" onclick = "onToggleType()">
+                                <span class="lever"/>
+                            </label>
+                        </div>
+                        <div class="switch col s4">
+                            <label>
+                                诈骗
+                                <input id = "scam" type="checkbox" checked="true" onclick = "onToggleType()">
                                 <span class="lever"/>
                             </label>
                         </div>
@@ -103,7 +103,7 @@
                         <label>展示形式</label>
                         <select id = "display-type">
                             <option value="1">热力图</option>
-                            <option value="2">气泡图</option>
+                            <option value="2">散点图</option>
                         </select>
                     </div>
                 </div>
@@ -132,21 +132,21 @@
                 <div class="switch col s2" style="margin-top: 40px; text-align: center">
                     <label>
                         积极
-                        <input id = "positiveLine" type="checkbox" checked="true" onClick="onToggleLine()"/>
+                        <input id = "ad-line" type="checkbox" checked="true" onClick="onToggleLine()"/>
                         <span class="lever"></span>
                     </label>
                 </div>
                 <div class="switch col s2" style="margin-top: 40px; text-align: center">
                     <label>
                         消极
-                        <input id = "negativeLine" type="checkbox" checked="true" onClick="onToggleLine()"/>
+                        <input id = "illegal-line" type="checkbox" checked="true" onClick="onToggleLine()"/>
                         <span class="lever"></span>
                     </label>
                 </div>
                 <div class="switch col s2" style="margin-top: 40px; text-align: center">
                     <label>
                         疲惫
-                        <input id = "tirednessLine" type="checkbox" checked="true" onClick="onToggleLine()"/>
+                        <input id = "scam-line" type="checkbox" checked="true" onClick="onToggleLine()"/>
                         <span class="lever"></span>
                     </label>
                 </div>
@@ -184,7 +184,7 @@
                 <div class="switch col s4" style="text-align: center">
                     <p>
                     <label>
-                    <input name="calendar-radio" id="positive-calendar" class="with-gap" type="radio" onclick="onToggleCalendar()" checked/>
+                    <input name="calendar-radio" id="ad-calendar" class="with-gap" type="radio" onclick="onToggleCalendar()" checked/>
                     <span>正向</span>
                     </label>
                     </p>
@@ -192,7 +192,7 @@
                 <div class="switch col s4" style="text-align: center">
                     <label>
                     <p>
-                    <input name="calendar-radio" id="negative-calendar" class="with-gap" type="radio" onclick="onToggleCalendar()"/>
+                    <input name="calendar-radio" id="illegal-calendar" class="with-gap" type="radio" onclick="onToggleCalendar()"/>
                     <span>负向</span>
                     </label>
                     </p>
@@ -200,7 +200,7 @@
                 <div class="switch col s4" style="text-align: center">
                     <label>
                     <p>
-                    <input name="calendar-radio" id="tiredness-calendar" class="with-gap" onclick="onToggleCalendar()" type="radio"/>
+                    <input name="calendar-radio" id="scam-calendar" class="with-gap" onclick="onToggleCalendar()" type="radio"/>
                     <span>疲倦</span>
                     </p>
                     </label>
@@ -218,7 +218,7 @@
     </script>
     <!-- Preloader -->
     <div class="preloader-wrapper active" id="preloader">
-        <div class="spinner-layer spinner-red-only">
+        <div class="spinner-layer spinner-cyan-only">
             <div class="circle-clipper left">
                 <div class="circle"></div>
             </div>

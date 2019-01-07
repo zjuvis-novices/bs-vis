@@ -15,8 +15,8 @@ var heatLayer = Loca.visualLayer({
 
 heatLayer.setOptions({
     style: {
-        radius: 20,
-        opacity: [0, 1]
+        radius: 15,
+        opacity: [0, 0.8]
     },
     gradient: {
         0.5: '#2c7bb6',
@@ -39,118 +39,84 @@ heatLayer.updateData = function() {
 
 heatLayer.hide = hideLayer;    heatLayer.show = showLayer;
 // Bubble layer initialization
-var positiveLayer = Loca.visualLayer(new BubbleLayerOptions());
-positiveLayer.hide = hideLayer;     positiveLayer.show = showLayer;
-positiveLayer.updateData = updateLayerData('positive');
-var negativeLayer = Loca.visualLayer(new BubbleLayerOptions());
-negativeLayer.hide = hideLayer;     negativeLayer.show = showLayer;
-negativeLayer.updateData = updateLayerData('negative');
-var tirednessLayer = Loca.visualLayer(new BubbleLayerOptions());
-tirednessLayer.hide = hideLayer;    tirednessLayer.show = showLayer;
-tirednessLayer.updateData = updateLayerData('tiredness');
-var trafficLayer = Loca.visualLayer(new BubbleLayerOptions());
-trafficLayer.hide   = hideLayer;    trafficLayer.show   = showLayer;
-trafficLayer.updateData = updateLayerData('traffic');
+var adLayer = Loca.visualLayer(new BubbleLayerOptions());
+adLayer.hide = hideLayer;     adLayer.show = showLayer;
+adLayer.updateData = updateLayerData('ad');
+adLayer.setData([], { lnglat: 'lnglat', value: 'value' });
+var illegalLayer = Loca.visualLayer(new BubbleLayerOptions());
+illegalLayer.hide = hideLayer;     illegalLayer.show = showLayer;
+illegalLayer.updateData = updateLayerData('illegal');
+illegalLayer.setData([], { lnglat: 'lnglat', value: 'value' });
+var scamLayer = Loca.visualLayer(new BubbleLayerOptions());
+scamLayer.hide = hideLayer;    scamLayer.show = showLayer;
+scamLayer.updateData = updateLayerData('scam');
+scamLayer.setData([], { lnglat: 'lnglat', value: 'value' });
 
 // Update data binding of layers
 function updateVisualDataBinding() {
     if(currentDisplay['heat']) {
         heatLayer.updateData();
     } else {
-        if(currentDisplay['emotion']) {
-            if(currentDisplay['positive']) {
-                positiveLayer.updateData();
-            } else if(currentDisplay['negative']) {
-                negativeLayer.updateData();
-            } else if(currentDisplay['tiredness']) {
-                tirednessLayer.updateData();
-            }
-        }
-        if(currentDisplay['traffic']) {
-            trafficLayer.updateData();
+        if(currentDisplay['ad']) {
+            adLayer.updateData();
+        } else if(currentDisplay['illegal']) {
+            illegalLayer.updateData();
+        } else if(currentDisplay['scam']) {
+            scamLayer.updateData();
         }
     }
 }
 
-// updateDisplayStatus();
-// getDailyData().done(function() {
-//     updateVisualData();
-//     positiveLayer.updateData();
-//     negativeLayer.updateData();
-//     tirednessLayer.updateData();
-//     trafficLayer.updateData();
-//     heatLayer.updateData();
-// }).done(updateLayerVisibility);
-
 function updateLayerVisibility() {
     if(currentDisplay['bubble']) {
         heatLayer.hide();
-        if(currentDisplay['emotion']) {
-            if(currentDisplay['positive'])  positiveLayer.show();
-            else                            positiveLayer.hide();
-            if(currentDisplay['negative'])  negativeLayer.show();
-            else                            negativeLayer.hide();
-            if(currentDisplay['tiredness']) tirednessLayer.show();
-            else                            tirednessLayer.hide();
-        } else {
-            positiveLayer.hide(); negativeLayer.hide(); tirednessLayer.hide();
-        }
+        if(currentDisplay['ad']) adLayer.show();
+        else adLayer.hide();
+        if(currentDisplay['illegal']) illegalLayer.show();
+        else illegalLayer.hide();
+        if(currentDisplay['scam']) scamLayer.show();
+            else scamLayer.hide();
     } else {
         heatLayer.show();
     }
 }
 
 function updateDataByTime() {
-    if(positiveLayer.shown)     { positiveLayer.updateData().render();  }
-    if(negativeLayer.shown)     { negativeLayer.updateData().render();  }
-    if(tirednessLayer.shown)    { tirednessLayer.updateData().render(); }
-    if(trafficLayer.shown)      { trafficLayer.updateData().render();   }
-    if(heatLayer.shown)         { heatLayer.updateData().render();      }
+    if(adLayer.shown)       { adLayer.updateData().render();        }
+    if(illegalLayer.shown)  { illegalLayer.updateData().render();   }
+    if(scamLayer.shown)     { scamLayer.updateData().render();      }
+    if(heatLayer.shown)     { heatLayer.updateData().render();      }
 }
 
 // Update binding to event
-onToggleEmotionCallbacks.updateLayerVisibility  = [];
 onToggleDispalyCallbacks.updateLayerVisibility  = [];
 
 // --------------------------------
 // These are the visual style options of layers
-positiveLayer.setOptions({
+adLayer.setOptions({
     style: {
-        radius: function (data) { return (Math.pow(data.value['positive' + currentHour], 1.2) + 0.2) * 60; },
-        fill: positiveColor,
-        opacity: function (data) {return Math.pow(data.value['positive' + currentHour], 3); },
-        lineWidth: 0.2,
-        stroke: "#FFFFFF"
+        radius: 2,
+        fill: adColor,
+        opacity: 0.4,
+        lineWidth: 0
     }
 });
 
-negativeLayer.setOptions({
+illegalLayer.setOptions({
     style: {
-        radius: function (data) { return (Math.pow(data.value['negative' + currentHour], 1.2) + 0.2) * 60; },
-        fill: negativeColor,
-        opacity: function (data) { return Math.pow(data.value['negative' + currentHour], 3); },
-        lineWidth: 0.2,
-        stroke: "#FFFFFF"
+        radius: 2,
+        fill: illegalColor,
+        opacity: 0.1,
+        lineWidth: 0
     }
 });
 
-tirednessLayer.setOptions({
+scamLayer.setOptions({
     style: {
-        radius: function (data) { return (Math.pow(data.value['tiredness' + currentHour], 0.2) + 0.2) * 20; },
-        fill: tirednessColor,
-        opacity: function (data) { return Math.pow(data.value['tiredness' + currentHour], 1.8); },
-        lineWidth: 1,
-        stroke: "#FFFFFF"
-    }
-});
-
-trafficLayer.setOptions({
-    style: {
-        radius: function (data) { return Math.pow(data.value['traffic' + currentHour], 5) * 200; },
-        fill: trafficColor,
-        opacity: function (data) { return Math.pow(data.value['traffic' + currentHour], 5); },
-        lineWidth: 1,
-        stroke: '#FFFFFF'
+        radius: 2,
+        fill: scamColor,
+        opacity: 0.6,
+        lineWidth: 0
     }
 });
 
@@ -163,7 +129,7 @@ function BubbleLayerOptions() {
     this.container  = map;
     this.type       = 'point';
     this.shape      = 'circle';
-    this.eventSupport =  true;
+    this.eventSupport = false;
 }
 
 function hideLayer() {
@@ -189,7 +155,7 @@ function updateLayerData(typeStr) {
     return function() {
         this.setData(currentVisualData[typeStr], {
             lnglat  : 'lnglat',
-            value   : typeStr + currentHour
+            value   : 'value'
         });
         return this;
     };

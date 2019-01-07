@@ -1,10 +1,9 @@
 // UI control
 // This file is all about UI control and view
 // Colors
-var positiveColor   = '#B5495B';
-var negativeColor   = '#0089A7';
-var tirednessColor  = '#E98B2A';
-var trafficColor    = '#91989F';
+var adColor         = '#0089A7';
+var illegalColor    = '#E98B2A';
+var scamColor       = '#B5495B';
 
 // Global variables for current selected time
 const epoch = new Date('2017/2/23');
@@ -108,36 +107,35 @@ function updateDisplayStatus() {
         delete currentDisplay['heat'];
     }
 
-    if($('#positive').is(':checked')) {
-        currentDisplay['positive'] = true;
+    if($('#ad').is(':checked')) {
+        currentDisplay['ad'] = true;
     } else {
-        delete currentDisplay['positive'];
+        delete currentDisplay['ad'];
     }
 
-    if($('#negative').is(':checked')) {
-        currentDisplay['negative'] = true;
+    if($('#illegal').is(':checked')) {
+        currentDisplay['illegal'] = true;
     } else {
-        delete currentDisplay['negative'];
+        delete currentDisplay['illegal'];
     }
 
-    if($('#tiredness').is(':checked')) {
-        currentDisplay['tiredness'] = true;
+    if($('#scam').is(':checked')) {
+        currentDisplay['scam'] = true;
     } else {
-        delete currentDisplay['tiredness'];
+        delete currentDisplay['scam'];
     }
 }
 
-var onToggleEmotionCallbacks = {};
-function onToggleEmotion() {
+function onToggleType() {
     updateDisplayStatus();
-    for(var callback in onToggleEmotionCallbacks) {
-        // Function call
-        window[callback].apply(this, onToggleEmotionCallbacks[callback]);
-    }
+    updateLayerVisibility();
+    updateDataByTime();
 }
 
 $('#display-type').on('change', function() {
     updateDisplayStatus();
+    updateLayerVisibility();
+    updateDataByTime();
 });
 
 
@@ -150,43 +148,15 @@ function onToggleDispaly() {
     }
 }
 
-function updateLineDisplayStatus(){
-    if($('#positiveLine').is(':checked')) {
-        currentLineDisplay['positive'] = true;
-    } else {
-        delete currentLineDisplay['positive'];
-    }
-
-    if($('#negativeLine').is(':checked')) {
-        currentLineDisplay['negative'] = true;
-    } else{
-        delete currentLineDisplay['negative'];
-    }
-    if($('#tirednessLine').is(':checked')) {
-        currentLineDisplay['tiredness'] = true;
-    } else{
-        delete currentLineDisplay['tiredness'];
-    }
-}
-
-var currentLineDisplay = {positive: true, negative: true, tiredness: true};
-var onToggleLineCallbacks = {};
-function  onToggleLine() {
-    updateLineDisplayStatus();
-    for(var callback in onToggleLineCallbacks){
-        window[callback].apply(this, onToggleLineCallbacks[callback]);
-    }
-}
-
-var currentCalendarType = 'positive';
+var currentCalendarType = 'ad';
 var onToggleCalendarCallbacks = {};
 function onToggleCalendar() {
-    if($('#positive-calendar').is(':checked')) {
-        currentCalendarType = 'positive';
-    } else if($('#negative-calendar').is(':checked')) {
-        currentCalendarType = 'negative';
+    if($('#ad-calendar').is(':checked')) {
+        currentCalendarType = 'ad';
+    } else if($('#illegal-calendar').is(':checked')) {
+        currentCalendarType = 'illegal';
     } else {
-        currentCalendarType = 'tiredness';
+        currentCalendarType = 'scam';
     }
     for(var callback in onToggleCalendarCallbacks) {
         // Function call

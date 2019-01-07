@@ -7,7 +7,7 @@ var calendarOptions = {
         top: 0,
         show: false,
         inRange: {
-            color: positiveColor,
+            color: adColor,
             opacity: [0.2, 1.0]
         },
         type: 'piecewise',
@@ -37,15 +37,15 @@ function updateCalendarData(){
     switch (currentCalendarType){
         case 'positive':
             currentCalendarData = positiveCalendarData;
-            calendarOptions.visualMap.inRange.color = positiveColor;
+            calendarOptions.visualMap.inRange.color = adColor;
             break;
         case 'negative':
             currentCalendarData = negativeCalendarData;
-            calendarOptions.visualMap.inRange.color = negativeColor;
+            calendarOptions.visualMap.inRange.color = illegalColor;
             break;
         case 'tiredness':
             currentCalendarData = tirednessCalendarData;
-            calendarOptions.visualMap.inRange.color = tirednessColor;
+            calendarOptions.visualMap.inRange.color = scamColor;
             break;
     }
     calendarOptions.series.data = currentCalendarData;
