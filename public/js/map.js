@@ -75,9 +75,12 @@ function updateLayerVisibility() {
         if(currentDisplay['illegal']) illegalLayer.show();
         else illegalLayer.hide();
         if(currentDisplay['scam']) scamLayer.show();
-            else scamLayer.hide();
+        else scamLayer.hide();
     } else {
         heatLayer.show();
+        adLayer.hide();
+        illegalLayer.hide();
+        scamLayer.hide();
     }
 }
 
@@ -97,7 +100,7 @@ adLayer.setOptions({
     style: {
         radius: 2,
         fill: adColor,
-        opacity: 0.4,
+        opacity: 0.3,
         lineWidth: 0
     }
 });
@@ -106,7 +109,7 @@ illegalLayer.setOptions({
     style: {
         radius: 2,
         fill: illegalColor,
-        opacity: 0.1,
+        opacity: 0.3,
         lineWidth: 0
     }
 });
@@ -115,7 +118,7 @@ scamLayer.setOptions({
     style: {
         radius: 2,
         fill: scamColor,
-        opacity: 0.6,
+        opacity: 0.3,
         lineWidth: 0
     }
 });
