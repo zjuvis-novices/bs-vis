@@ -4,22 +4,39 @@ var poiData = $.get('api/poi.json');
 // dataDate is the date of currentVisualData
 // currentVisualData is the current data
 // it updates when a new date is picked on UI
-var dataDate = new Date(epoch);
-var currentVisualData = [];
+var dailyData = [];
+var currentVisualData = {};
 
-// Update visual data and return a promise object
-function updateVisualData() {
-    console.log(dataDate);
+// This function updates the daily data and returns a promise object
+function getDailyData() {
     var promises = [];
-    var dateString = dataDate.toLocaleDateString('zh', { year: 'numeric', month: '2-digit', day: '2-digit'});
-    dateString = dateString.replace(/\//g, '-') + '-' + String(dataDate.getHours()).padStart(2, '0');
-    function getVisualDataPromises(type) {
-        return $.get('api/heat/' + type + '/' + dateString + '.json').done(function(data) {
-            currentVisualData[type] = data.map(function(val) { return { lnglat: val, value: 1 } });
-        });
+    var dateString = currentDate.toLocaleDateString('zh', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    dateString = dateString.replace(/\//g, '-');
+    function getDataPromise(type) {
+        return function (hour) {
+            return $.get('api/heat/' + type + '/' + dateString + '-' + String(hour).padStart(2, '0'))
+                .done(function (data) {
+                    if(!dailyData[hour]) { dailyData[hour] = {}; }
+                    dailyData[hour][type] = data;
+                });
+        }
     }
-    promises = ['ad', 'illegal', 'scam', 'others'].map(getVisualDataPromises);
-    return $.when.apply(this, promises);
+    var functions = ['ad', 'illegal', 'scam', 'others'].map(getDataPromise);
+    for(var i = 0; i < functions.length; i++) {
+        var func = functions[i];
+        var localPromises = new Array(24).fill(null).map(function (val, i) { return i; }).map(func);
+        promises.push.apply(promises, localPromises);
+    }
+    return $.when.apply(this, promises).then(updateVisualData);
+}
+
+// Update visual data
+function updateVisualData() {
+    ['ad', 'illegal', 'scam', 'others']
+        .forEach(function (type) {
+            currentVisualData[type] = dailyData[currentHour][type]
+                .map(function (lnglat) { return { lnglat: lnglat, value: 1 } });
+        });
 }
 
 var positiveAverageGet  = $.get('api/emotion/positive/average.json');

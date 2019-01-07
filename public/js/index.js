@@ -15,44 +15,11 @@ function getCurrentIndex() {
     var dDays = Math.ceil(dTime/(1000*3600*24));
     return dDays * 24 + currentHour;
 }
-
 function getCurrentDay(){
     var dTime = Math.abs(currentDate.getTime() - epoch.getTime());
     var dDays = Math.ceil(dTime/(1000*3600*24));
     return dDays;
 }
-
-// Resize element to fit the screen width and height
-function containerResize(selector) {
-    $(selector).css('width', $(window).width());
-    $(selector).css('height', $(window).height() - 20);
-}
-
-// Resize element to fit the screen width only
-function containerResizeWidth(selector) {
-    $(selector).css('width', $(window).width());
-}
-
-// Document ready function
-$(document).ready(function (){
-    M.AutoInit();
-    // Initialize date pickers
-    var elems = document.querySelectorAll('.date-selection');
-    initDatePicker(elems);
-    $('#preloader').hide();
-    containerResize('#container');
-});
-
-// Window resize callback
-$(window).resize(function (){
-    containerResize('#container');
-});
-
-// Ajax loading animation
-$(document).on({
-    ajaxStart: function() { $('#preloader').show(1000); },
-    ajaxStop: function()  { $('#preloader').hide(1000); }    
-});
 
 // Toggle control
 function toggleControl() {
@@ -101,34 +68,36 @@ function dateSlashString(date) {
             + (date<10?'0'+date:date);
 }
 
+// This stuff is similar to the one above
+function onDateSelection(date) {
+    currentDate = date;
+    $('.date-selection').val(dateSlashString(date));
+    // Update daily data
+    getDailyData().done(updateDataByTime);
+    // Update display data
+    updateVisualData();
+    document.dispatchEvent(new CustomEvent('datechanged'));
+}
+
 // On time change function
 function onTimeChange(id) {
     currentHour = parseInt($('#' + id).val());
     // Sync all time selector
     $('.hour[id!="' + id + '"]').val(currentHour);
+    // Refresh UI element for time display
+    $('.time-string').text(currentHour + ':00');
+    // Update display data
+    updateVisualData();
+    // Update data binding
+    updateVisualDataBinding();
+    // Update display data
+    updateDataByTime();
     // Dispatch event
     document.dispatchEvent(new CustomEvent('timechanged'));
 }
 
-// Refresh the UI element of time display
-function refreshTimeString() {
-    $('.time-string').text(currentHour + ':00');
-}
-
-document.addEventListener('timechanged', function() {
-    refreshTimeString();
-});
-
-// This stuff is similar to the one above
-function onDateSelection(date) {
-    currentDate = date;
-    $('.date-selection').val(dateSlashString(date));
-    updateVisualData();
-    document.dispatchEvent(new CustomEvent('datechanged'));
-}
-
+// Display flags
 var currentDisplay = {};
-
 // This stuff is ugly. It should have better design.
 function updateDisplayStatus() {
     if($('#display-type').val() === '1') {
@@ -224,3 +193,33 @@ function onToggleCalendar() {
         window[callback].apply(this, onToggleCalendarCallbacks[callback]);
     }
 }
+
+// Ajax loading animation
+$(document).on({
+    ajaxStart: function() { $('#preloader').show(1000); },
+    ajaxStop: function()  { $('#preloader').hide(1000); }    
+});
+
+// Window resize callback
+$(window).resize(function (){
+    $('#container').css('width', $(window).width());
+    $('#container').css('height', $(window).height() - 20);
+});
+
+// Initialization
+$(document).ready(function() {
+    // Initialize materialize.css
+    M.AutoInit();
+    // Initialize date pickers
+    var elems = document.querySelectorAll('.date-selection');
+    initDatePicker(elems);
+    $('#preloader').hide();
+    // Container size
+    $('#container').css('width', $(window).width());
+    $('#container').css('height', $(window).height() - 20);
+    updateDisplayStatus();
+    getDailyData().then(function () {
+        updateLayerVisibility();
+        updateDataByTime();
+    });
+});

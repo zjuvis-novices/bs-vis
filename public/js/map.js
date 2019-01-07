@@ -10,8 +10,33 @@ var map = Loca.create('container', {
 var heatLayer = Loca.visualLayer({
     container: map,
     type: 'heatmap',
-    shape: 'hexagon'
+    shape: 'normal'
 });
+
+heatLayer.setOptions({
+    style: {
+        radius: 20,
+        opacity: [0, 1]
+    },
+    gradient: {
+        0.5: '#2c7bb6',
+        0.65: '#abd9e9',
+        0.7: '#ffffbf',
+        0.9: '#fde468',
+        1.0: '#d7191c'
+    }
+});
+
+heatLayer.updateData = function() {
+    const c = currentVisualData;
+    var data = c.ad.concat(c.illegal).concat(c.scam).concat(c.others);
+    heatLayer.setData(data, {
+        lnglat  : 'lnglat',
+        value   : 'value'
+    });
+    return this;
+};
+
 heatLayer.hide = hideLayer;    heatLayer.show = showLayer;
 // Bubble layer initialization
 var positiveLayer = Loca.visualLayer(new BubbleLayerOptions());
@@ -26,16 +51,6 @@ tirednessLayer.updateData = updateLayerData('tiredness');
 var trafficLayer = Loca.visualLayer(new BubbleLayerOptions());
 trafficLayer.hide   = hideLayer;    trafficLayer.show   = showLayer;
 trafficLayer.updateData = updateLayerData('traffic');
-
-heatLayer.updateData = function() {
-    const c = currentVisualData;
-    var data = c.ad.concat(c.illegal).concat(c.scam).concat(c.others);
-    heatLayer.setData(data, {
-        lnglat  : 'lnglat',
-        value   : 'value'
-    });
-    return this;
-};
 
 // Update data binding of layers
 function updateVisualDataBinding() {
@@ -57,14 +72,15 @@ function updateVisualDataBinding() {
     }
 }
 
-updateDisplayStatus();
-updateVisualData().done(function() {
-    positiveLayer.updateData();
-    negativeLayer.updateData();
-    tirednessLayer.updateData();
-    trafficLayer.updateData();
-    heatLayer.updateData();
-}).done(updateLayerVisibility);
+// updateDisplayStatus();
+// getDailyData().done(function() {
+//     updateVisualData();
+//     positiveLayer.updateData();
+//     negativeLayer.updateData();
+//     tirednessLayer.updateData();
+//     trafficLayer.updateData();
+//     heatLayer.updateData();
+// }).done(updateLayerVisibility);
 
 function updateLayerVisibility() {
     if(currentDisplay['bubble']) {
@@ -79,28 +95,22 @@ function updateLayerVisibility() {
         } else {
             positiveLayer.hide(); negativeLayer.hide(); tirednessLayer.hide();
         }
-        if(currentDisplay['traffic'])   trafficLayer.show();
-        else                            trafficLayer.hide();
     } else {
         heatLayer.show();
     }
 }
 
 function updateDataByTime() {
-    setTimeout(function () {
-        if(positiveLayer.shown)     positiveLayer.updateData().render();
-        if(negativeLayer.shown)     negativeLayer.updateData().render();
-        if(tirednessLayer.shown)    tirednessLayer.updateData().render();
-        if(trafficLayer.shown)      trafficLayer.updateData().render();
-        if(heatLayer.shown)         heatLayer.updateData().render();
-    });
+    if(positiveLayer.shown)     { positiveLayer.updateData().render();  }
+    if(negativeLayer.shown)     { negativeLayer.updateData().render();  }
+    if(tirednessLayer.shown)    { tirednessLayer.updateData().render(); }
+    if(trafficLayer.shown)      { trafficLayer.updateData().render();   }
+    if(heatLayer.shown)         { heatLayer.updateData().render();      }
 }
 
 // Update binding to event
 onToggleEmotionCallbacks.updateLayerVisibility  = [];
 onToggleDispalyCallbacks.updateLayerVisibility  = [];
-document.addEventListener('timechanged', updateDataByTime);
-document.addEventListener('datechanged', updateDataByTime);
 
 // --------------------------------
 // These are the visual style options of layers
@@ -144,14 +154,6 @@ trafficLayer.setOptions({
     }
 });
 
-heatLayer.setOptions({
-    style: {
-        radius: 20,
-        opacity: [0, 1],
-        gap: 0,
-        color: ['#ecda9a', '#efc47e', '#f3ad6a', '#f7945d', '#f97b57', '#f66356', '#ee4d5a']
-    }
-});
 
 // --------------------------------
 // These functions are used to extend the functionality
@@ -165,31 +167,27 @@ function BubbleLayerOptions() {
 }
 
 function hideLayer() {
-    if(this._dataSet) {
+    if(this.shown) {
         if(this.shown) {
-            if(this.shown !== undefined) {
-                map.removeLayer(this);
-            }
-            this.shown = false;
+            map.removeLayer(this);
         }
+        this.shown = false;
     }
     return this;
 }
 
 function showLayer() {
-    if(this._dataSet) {
-        if(!this.shown) {
-            this.shown = true;
-            map.addLayer(this);
-            this.render();
-        }
+    if(!this.shown) {
+        this.shown = true;
+        map.addLayer(this);
+        this.render();
     }
     return this;
 }
 
 function updateLayerData(typeStr) {
     return function() {
-        this.setData(currentVisualData, {
+        this.setData(currentVisualData[typeStr], {
             lnglat  : 'lnglat',
             value   : typeStr + currentHour
         });
