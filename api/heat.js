@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 var dir = path.basename(__dirname);
+const counts = fs.readFileSync(path.join(dir, 'gather/counts.json'));
+const wordFreq = fs.readFileSync(path.join(dir, 'gather/word-freq.json'));
 
 exports.getHeat = function (req, res) {
     // Get parameter list
@@ -29,5 +31,22 @@ exports.getHeat = function (req, res) {
         res.statusCode = 404;
         res.end();
     }
-    
+}
+
+exports.getCounts = function (req, res) {
+    res.statusCode = 200;
+    res.set({
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Cache-Control': 'public, max-age=31557600'
+    });
+    res.end(counts);
+}
+
+exports.getWordFreq = function (req, res) {
+    res.statusCode = 200;
+    res.set({
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Cache-Control': 'public, max-age=31557600'
+    });
+    res.end(wordFreq);
 }
