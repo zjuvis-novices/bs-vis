@@ -1,6 +1,3 @@
-// ================ POI ================
-var poiData = $.get('api/poi.json');
-
 // dataDate is the date of currentVisualData
 // currentVisualData is the current data
 // it updates when a new date is picked on UI
@@ -39,34 +36,8 @@ function updateVisualData() {
         });
 }
 
-var positiveAverageGet  = $.get('api/emotion/positive/average.json');
-var negativeAverageGet  = $.get('api/emotion/negative/average.json');
-var tirednessAverageGet = $.get('api/emotion/tiredness/average.json');
-var positiveByHour = [];
-var negativeByHour = [];
-var tirednessByHour = [];
-var positiveByDay = [];
-var negativeByDay = [];
-var tirednessByDay = [];
-var positiveCalendarData = [];
-var negativeCalendarData = [];
-var tirednessCalendarData = [];
-var getAverageData = $.when(
-    positiveAverageGet,
-    negativeAverageGet,
-    tirednessAverageGet
-).done(function () {
-    function byDay(byHour) {
-        var result = [];
-        for(var i = 0; i < byHour.length/24; i++) {
-            result[i] = byHour.slice(i * 24, i * 24 + 24).reduce(function (a, b) { return a + b; })/24;
-        }
-        return result;
-    }
-    positiveByHour  = positiveAverageGet.responseJSON;
-    negativeByHour  = negativeAverageGet.responseJSON;
-    tirednessByHour = tirednessAverageGet.responseJSON;
-    positiveByDay   = byDay(positiveByHour);
-    negativeByDay   = byDay(negativeByHour);
-    tirednessByDay = byDay(tirednessByHour);
-});
+// Get counts & word frequencies
+var spamCounts = {};
+var countsPromise = $.get('api/counts.json').done(function (data) { spamCounts = data; });
+var wordFreqs = [];
+var wordFreqPromise = $.get('api/word-freq.json');

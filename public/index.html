@@ -122,35 +122,10 @@
             </div>
         </div>
         <div class="card-content" id="panel-content2">
-            <div class="row" style="margin-bottom: 0">
-                <div id="line-container" style="width: 750px; height: 200px;"></div>
-            </div>
-            <div class="row" style="margin-bottom: 0">
-                <div class="col s6">
-                    <label>日期</label>
-                    <input type="text" class="datepicker no-autoinit date-selection">
-                </div>
-                <div class="switch col s2" style="margin-top: 40px; text-align: center">
-                    <label>
-                        积极
-                        <input id = "ad-line" type="checkbox" checked="true" onClick="onToggleLine()"/>
-                        <span class="lever"></span>
-                    </label>
-                </div>
-                <div class="switch col s2" style="margin-top: 40px; text-align: center">
-                    <label>
-                        消极
-                        <input id = "illegal-line" type="checkbox" checked="true" onClick="onToggleLine()"/>
-                        <span class="lever"></span>
-                    </label>
-                </div>
-                <div class="switch col s2" style="margin-top: 40px; text-align: center">
-                    <label>
-                        疲惫
-                        <input id = "scam-line" type="checkbox" checked="true" onClick="onToggleLine()"/>
-                        <span class="lever"></span>
-                    </label>
-                </div>
+            <div id="daily-container" style="width: 750px; height: 320px;"></div>
+            <div class="col s6" style="z-index:10; position: absolute; bottom: 0; left: 32px; margin: 16px;">
+                <label>日期</label>
+                <input type="text" class="datepicker no-autoinit date-selection">
             </div>
         </div>
         <div class="card-content" id="panel-content3">

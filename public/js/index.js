@@ -4,6 +4,7 @@
 var adColor         = '#0089A7';
 var illegalColor    = '#E98B2A';
 var scamColor       = '#B5495B';
+var otherColor      = '#23A286';
 
 // Global variables for current selected time
 const epoch = new Date('2017/2/23');
