@@ -56,7 +56,7 @@
                     <script>var tabNumber = 4;</script>
                     <li class="tab"><a class="active" href="#panel-content1">控制</a></li>
                     <li class="tab"><a href="#panel-content2">今日</a></li>
-                    <li class="tab"><a href="#panel-content3">雷达图</a></li>
+                    <li class="tab"><a href="#panel-content3">文字云</a></li>
                     <li class="tab"><a href="#panel-content4">日历图</a></li>
                 </ul>
                 <div class="divider"></div>
@@ -69,7 +69,7 @@
             <div class="row" style="margin-bottom: 0">
                 <div class="col s6" style="padding-right: 10px">
                     <div class="row" style="height: 30pt">
-                        <div class="col s3 valign-wrapper location-title" style="height: inherit;">北京</div>
+                        <div class="col s12 valign-wrapper location-title" style="height: inherit;">北京</div>
                     </div>
                     <div class="row" style="padding: 10px; margin-bottom: 0">
                         <label>日期</label>
@@ -78,21 +78,21 @@
                 </div>
                 <div class="col s6" style="padding-left: 10px">
                     <div class="row" style="margin-top: 20px;">
-                        <div class="switch col s4">
+                        <div class="switch col s4 ad">
                             <label>
                                 广告
                                 <input id = "ad" type="checkbox" checked="true" onclick = "onToggleType()">
                                 <span class="lever"/>
                             </label>
                         </div>
-                        <div class="switch col s4">
+                        <div class="switch col s4 illegal">
                             <label>
                                 违法
                                 <input id = "illegal" type="checkbox" checked="true" onclick = "onToggleType()">
                                 <span class="lever"/>
                             </label>
                         </div>
-                        <div class="switch col s4">
+                        <div class="switch col s4 scam">
                             <label>
                                 诈骗
                                 <input id = "scam" type="checkbox" checked="true" onclick = "onToggleType()">
@@ -123,19 +123,19 @@
         </div>
         <div class="card-content" id="panel-content2">
             <div id="daily-container" style="width: 750px; height: 320px;"></div>
-            <div class="col s6" style="z-index:10; position: absolute; bottom: 0; left: 32px; margin: 16px;">
+            <div style="width:240px; position: absolute; bottom: 0; left: 32px; margin: 16px;">
                 <label>日期</label>
                 <input type="text" class="datepicker no-autoinit date-selection">
             </div>
         </div>
         <div class="card-content" id="panel-content3">
             <div class="row" style="margin-bottom: 0">
-                <div class="col s5" style="padding-right: 10px">
-                    <div id="radar-container" style="width: 230px; height: 230px;"></div>
+                <div class="col s7" style="padding-right: 10px">
+                    <div id="wordcloud-container" style="width: 400px; height: 230px;"></div>
                 </div>
-                <div class="col s7" style="padding-left: 10px">
+                <div class="col s5" style="padding-left: 10px">
                     <div class="row" style="height: 30pt">
-                        <div class="col s3 valign-wrapper location-title" style="height: inherit;">北京</div>
+                        <div class="col s12 valign-wrapper location-title" style="height: inherit;">北京</div>
                     </div>
                     <div class="row" style="padding: 10px; margin-bottom: 0">
                         <label>日期</label>
@@ -211,7 +211,7 @@
 <script src="js/index.js"></script>
 <script src="js/data_handler.js"></script>
 <script src="js/map.js"></script>
-<script src="js/radar.js"></script>
+<script src="js/wordcloud.js"></script>
 <script src="js/daily_chart.js"></script>
 <script src="js/calendar_chart.js"></script>
 </html>

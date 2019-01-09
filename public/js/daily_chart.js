@@ -57,9 +57,8 @@ var dailyOptions = {
 }
 
 function updateDailyData() {
-    let c = getCurrentDay() * 24;
-    let data = [];
-    let srcData = spamCounts;
+    var c = getCurrentDay() * 24;
+    var data = [];
     data.push.apply(data,
         spamCounts['ad'].slice(c, c + 24)
             .map(function(val, i) { return [i, val, '广告']; }));

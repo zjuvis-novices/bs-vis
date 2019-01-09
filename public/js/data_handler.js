@@ -40,4 +40,4 @@ function updateVisualData() {
 var spamCounts = {};
 var countsPromise = $.get('api/counts.json').done(function (data) { spamCounts = data; });
 var wordFreqs = [];
-var wordFreqPromise = $.get('api/word-freq.json');
+var wordFreqPromise = $.get('api/word-freq.json').done(function (data) { wordFreqs = data; });

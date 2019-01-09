@@ -54,3 +54,25 @@ button, input, optgroup, select, textarea {
 .tag-title {
     font-size: 15pt;
 }
+
+.ad.switch label input[type=checkbox]:checked+.lever {
+    background: #33D9F7 !important;
+}
+.ad.switch label input[type=checkbox]:checked+.lever:after {
+    background: #0089A7 !important;    
+}
+
+.illegal.switch label input[type=checkbox]:checked+.lever {
+    background: #FFCB8A !important;
+}
+.illegal.switch label input[type=checkbox]:checked+.lever:after {
+    background: #E98B2A !important;    
+}
+
+.scam.switch label input[type=checkbox]:checked+.lever {
+    background: #D5697B !important;
+}
+.scam.switch label input[type=checkbox]:checked+.lever:after {
+    background: #B5495B !important;    
+}
+
