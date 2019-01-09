@@ -149,22 +149,6 @@ function onToggleDispaly() {
     }
 }
 
-var currentCalendarType = 'ad';
-var onToggleCalendarCallbacks = {};
-function onToggleCalendar() {
-    if($('#ad-calendar').is(':checked')) {
-        currentCalendarType = 'ad';
-    } else if($('#illegal-calendar').is(':checked')) {
-        currentCalendarType = 'illegal';
-    } else {
-        currentCalendarType = 'scam';
-    }
-    for(var callback in onToggleCalendarCallbacks) {
-        // Function call
-        window[callback].apply(this, onToggleCalendarCallbacks[callback]);
-    }
-}
-
 // Ajax loading animation
 $(document).on({
     ajaxStart: function() { $('#preloader').show(1000); },
