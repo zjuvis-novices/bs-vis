@@ -44,7 +44,7 @@
 
     <!-- FAB -->
     <a class="btn-floating btn-large waves-effect waves-light cyan scale-transition" id="big-fab" onclick="toggleControl()">
-        <i class="material-icons">face</i>
+        <i class="material-icons">settings</i>
     </a>
 
     <!-- Bottom panel -->
@@ -53,11 +53,12 @@
             <div class="nav-content">
                 <ul class="tabs">
                     <!-- Don't forget to modify this tabNumber when tab changed. -->
-                    <script>var tabNumber = 4;</script>
+                    <script>var tabNumber = 5;</script>
                     <li class="tab"><a class="active" href="#panel-content1">控制</a></li>
                     <li class="tab"><a href="#panel-content2">今日</a></li>
                     <li class="tab"><a href="#panel-content3">文字云</a></li>
                     <li class="tab"><a href="#panel-content4">日历图</a></li>
+                    <li class="tab"><a href="#panel-content5">热力图</a></li>
                 </ul>
                 <div class="divider"></div>
             </div>
@@ -194,6 +195,45 @@
                 <div id="calendar-container" style="width: 750px; height: 200px;"></div>
             </div>
         </div>
+        <div class="card-content" id="panel-content5">
+            <div class="row" style="margin-bottom: 0">
+                <div class="switch col s3" style="text-align: center">
+                    <p>
+                    <label>
+                    <input name="punch-radio" id="ad-punch" class="with-gap" type="radio" value="ad"/>
+                    <span>广告</span>
+                    </label>
+                    </p>
+                </div>
+                <div class="switch col s3" style="text-align: center">
+                    <label>
+                    <p>
+                    <input name="punch-radio" id="illegal-punch" class="with-gap" type="radio" value="illegal"/>
+                    <span>违法</span>
+                    </label>
+                    </p>
+                </div>
+                <div class="switch col s3" style="text-align: center">
+                    <label>
+                    <p>
+                    <input name="punch-radio" id="scam-punch" class="with-gap" type="radio" value="scam"/>
+                    <span>诈骗</span>
+                    </p>
+                    </label>
+                </div>
+                <div class="switch col s3" style="text-align: center">
+                    <label>
+                    <p>
+                    <input name="punch-radio" id="scam-punch" class="with-gap" type="radio" value="total" checked/>
+                    <span>总计</span>
+                    </p>
+                    </label>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 0">
+                <div id="heat-container" style="width: 750px; height: 400px;"></div>
+            </div>
+        </div>
     </div>
     <!-- A short script to hide the panel and tab page contents -->
     <script>
@@ -222,4 +262,5 @@
 <script src="js/wordcloud.js"></script>
 <script src="js/daily_chart.js"></script>
 <script src="js/calendar_chart.js"></script>
+<script src="js/daily_heat.js"></script>
 </html>
