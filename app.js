@@ -1,5 +1,4 @@
 const express = require('express');
-const requestHandler = require('./api/request_handler');
 const heatHandler = require('./api/heat');
 var app = express();
 
